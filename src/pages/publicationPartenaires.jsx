@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import { Footer } from '../components/footer';
 import { TitleHeader } from '../components/titleHeader';
+import { API_BASE } from '../hooks/config';
 
 const PublicationsPartenaires = () => {
     const [logo, setLogo] = useState(null);
@@ -46,7 +47,7 @@ const PublicationsPartenaires = () => {
         formData.append("name", name)
 
         try {
-            const response = await fetch("http://127.0.0.1:8000/rapport/publication", {
+            const response = await fetch(`${API_BASE}/rapport/publication`, {
                 method: "POST",
                 body: formData,
             });

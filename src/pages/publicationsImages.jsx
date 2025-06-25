@@ -10,6 +10,7 @@ import {
     Alert,
 } from '@mui/material';
 import { TitleHeader } from '../components/titleHeader';
+import { API_BASE } from '../hooks/config';
 
 const PublicationsImages = () => {
     const [image, setImage] = useState(null);
@@ -42,7 +43,7 @@ const PublicationsImages = () => {
         formData.append("image", image);
 
         try {
-            const response = await fetch("http://127.0.0.1:8000/galerie/publication", {
+            const response = await fetch(`${API_BASE}/galerie/publication`, {
                 method: "POST",
                 body: formData,
             });

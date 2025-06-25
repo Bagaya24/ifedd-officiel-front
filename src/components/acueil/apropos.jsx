@@ -1,77 +1,93 @@
-import { useState, useEffect } from "react";
-import { Grid, Typography, Box, Container } from "@mui/material";
-import { Image } from "../image";
+import { useEffect, useState } from "react";
+import { Typography, Box, Container } from "@mui/material";
 
 export function Apropos() {
-  const [leftGrid, setLeftGrid] = useState(8);
-  const [rightGrid, setRightGrid] = useState(4);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const updateGridSize = () => {
-      const width = window.innerWidth;
-      if (width < 600) {
-        // Mobile : image en dessous, texte pleine largeur
-        setLeftGrid(12);
-        setRightGrid(12);
-      } else if (width < 960) {
-        // Tablette : 2/3 texte, 1/3 image
-        setLeftGrid(8);
-        setRightGrid(4);
-      } else {
-        // Desktop : 2/3 texte, 1/3 image
-        setLeftGrid(8);
-        setRightGrid(4);
-      }
+    const checkScreen = () => {
+      setIsMobile(window.innerWidth < 600);
     };
 
-    updateGridSize();
-    window.addEventListener("resize", updateGridSize);
-    return () => window.removeEventListener("resize", updateGridSize);
+    checkScreen();
+    window.addEventListener("resize", checkScreen);
+    return () => window.removeEventListener("resize", checkScreen);
   }, []);
 
   return (
-    <Container sx={{ py: 5 }}>
-      <Grid container spacing={4}>
-        {/* Texte */}
-        <Grid size={leftGrid}>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              height: "100%",
-            }}
-          >
-            <Typography
-              variant="h3"
-              color="info.main"
-              gutterBottom
-              textAlign="center"
-            >
-              Qui sommes-nous ?
-            </Typography>
-            <Typography variant="h6" color="text.secondary" align="justify" sx={{ fontSize: { xs: '1rem', sm: '1.1rem' } }}>
-              Initiative des Femmes Entrepreneurs pour le Développement Durable « IFEDD »,
-              est une organisation locale non gouvernementale des droits congolais créée en 2016 à
-              GOMA, dans la province du Nord-Kivu, dans l’Est de la République Démocratique du Congo.
-              IFEDD vise à créer un monde où chaque individu est traité avec dignité et a la possibilité
-              de réaliser son plein potentiel, surtout les catégories des personnes les plus marginalisées
-              et prône ainsi une gestion responsable des ressources naturelles. Tenant compte des besoins de
-              développement des communautés locales ainsi que de la protection de l’environnement, IFEDD adopte
-              l’approche holistique et participative.
-            </Typography>
-          </Box>
-        </Grid>
+    <Container
+      disableGutters
+      maxWidth="xl"
+      sx={{
+        position: "relative",
+        height: { xs: "auto", md: 600 },
+        overflow: "hidden",
+        display: "flex",
+        alignItems: "stretch",
+        px: 0,
+      }}
+    >
+      {/* Image avec overlay semi-transparent */}
+      <Box
+        sx={{
+          position: "relative",
+          width: { xs: "100%", md: "50%" },
+          height: { xs: 300, md: "100%" },
+          ml: "auto", // pousse l'image à droite
+          backgroundImage: "url('/image_a_propos.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          borderTopRightRadius: "20px",
+          borderBottomRightRadius: "20px",
+          flexShrink: 0,
+        
+        }}
+      />
 
-        {/* Image */}
-        <Grid size={rightGrid}>
-          <Image
-            src="/kelli-mcclintock-dJ0MxSIasGs-unsplash.jpg"
-            height={400}
-            style={{ width: "100%", objectFit: "cover" }}
-          />
-        </Grid>
-      </Grid>
+      {/* Texte placé à gauche (pas couvert par overlay) */}
+      <Box
+        sx={{
+          position: "absolute",
+          top: 0,
+          left: 130,
+          width: { xs: "100%", md: "60%" },
+         
+          zIndex: 2,
+          p: { xs: 3, sm: 5, md: 8 },
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          color: { xs: "black", md: "#eceff1" },
+          backgroundColor: "rgba(255, 255, 255, 0.15)", // Fond semi-transparent pour le texte
+      backdropFilter: "blur(2px)", // Effet de flou pour améliorer la lisibilité
+      borderRadius: "20px",
+      m: { xs: 2, md: 8 },
+          
+        }}
+      >
+        <Typography
+          variant="h3"
+          gutterBottom
+          sx={{ fontWeight: "bold", color: "#2a3eb1" }}	
+        >
+          Qui sommes-nous ?
+        </Typography>
+        <Typography
+          variant="h6"
+          align="justify"
+          sx={{
+            fontSize: { xs: "1rem", sm: "1.5rem" },
+            color: "#557392" 
+          }}
+        >
+          Initiative des Femmes Entrepreneurs pour le Développement Durable « IFEDD »,
+          est une organisation locale non gouvernementale des droits congolais créée en 2016 à
+          GOMA, dans la province du Nord-Kivu, dans l’Est de la République Démocratique du Congo.
+          IFEDD vise à créer un monde où chaque individu est traité avec dignité et a la possibilité
+          de réaliser son plein potentiel, surtout les catégories des personnes les plus marginalisées
+          et prône ainsi une gestion responsable des ressources naturelles...
+        </Typography>
+      </Box>
     </Container>
   );
 }

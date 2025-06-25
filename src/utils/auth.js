@@ -3,7 +3,7 @@ import { API_BASE } from '../hooks/config';
 export const verifyToken = async () => {
   const token = localStorage.getItem('token');
   const username = localStorage.getItem('username');
-
+  
   if (!token) return { isConnected: false, username: '' };
 
   try {

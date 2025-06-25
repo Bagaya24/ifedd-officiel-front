@@ -1,5 +1,5 @@
 // config.js
-export const API_BASE = "http://127.0.0.1:8000";
+export const API_BASE = "https://api.officiel.ifedd-rdc.org";
 
 export async function safeFetch(url) {
   const res = await fetch(url);

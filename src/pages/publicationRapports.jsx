@@ -12,6 +12,7 @@ import {
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { Footer } from '../components/footer';
 import { TitleHeader } from '../components/titleHeader';
+import { API_BASE } from '../hooks/config';
 
 const PublicationRapports = () => {
     const [title, setTitle] = useState('');
@@ -48,7 +49,7 @@ const PublicationRapports = () => {
         formData.append("types", type);
 
         try {
-            const response = await fetch("http://127.0.0.1:8000/rapport/publication", {
+            const response = await fetch(`${API_BASE}/rapport/publication`, {
                 method: "POST",
                 body: formData,
             });

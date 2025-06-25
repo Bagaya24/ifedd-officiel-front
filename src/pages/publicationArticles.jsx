@@ -3,6 +3,7 @@ import { Editor } from '@tinymce/tinymce-react';
 import { Container, TextField, Button, Paper, Box, Alert } from '@mui/material';
 import { Footer } from '../components/footer';
 import { TitleHeader } from '../components/titleHeader';
+import { API_BASE } from '../hooks/config';
 
 const PublicationArticles = () => {
     const [title, setTitle] = useState('');
@@ -38,7 +39,7 @@ const PublicationArticles = () => {
         formData.append("image", image);
 
         try {
-            const response = await fetch("http://127.0.0.1:8000/articles/publication", {
+            const response = await fetch(`${API_BASE}/articles/publication/`, {
                 method: "POST",
                 body: formData,
             });

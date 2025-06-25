@@ -26,7 +26,8 @@ export default function Header() {
     <>
       <AppBar position="fixed" color="inherit">
         <Toolbar>
-          <Typography variant="h6" sx={{ flexGrow: 1, fontWeight: 'bold' }}>IFEDD</Typography>
+          <img src="/Logo.png" alt="logo de IFEDD" style={{width:120}} />
+          <Typography variant="h6" sx={{ flexGrow: 1, fontWeight: 'bold' }}></Typography>
 
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <HoverButton component={NavLink} to="/">Accueil</HoverButton>

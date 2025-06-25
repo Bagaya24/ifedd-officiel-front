@@ -1,3 +1,5 @@
+import { API_BASE } from "../hooks/config";
+
 // src/services/authService.js
 export const validateLoginForm = (username, password, setError) => {
   if (!username || !password) {
@@ -14,7 +16,7 @@ export const loginUser = async (username, password) => {
   formDetails.append("password", password);
 
   try {
-    const response = await fetch("http://127.0.0.1:8000/connexion/token", {
+    const response = await fetch(`${API_BASE}/connexion/token` , {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"
