@@ -38,7 +38,7 @@ export function ImageHeaderAccueil() {
             }
           }}
         >
-          Initiative de Femmes pour le Développement Durable (IFEDD)
+          Initiative des Femmes Entrepreneurs pour le Développement Durable (IFEDD)
         </Typography>
 
         <Button
