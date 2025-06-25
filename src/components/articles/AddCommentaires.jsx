@@ -1,7 +1,7 @@
 
 import { Box, Button, Container, Paper, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
-import { TitleHeader } from '../titleHeader';
+import { API_BASE } from '../../hooks/config';
 
 export default function AddCommentaires({id}) {
     const [auteur, setAuteur] = useState('');
@@ -21,7 +21,7 @@ export default function AddCommentaires({id}) {
         formData.append("content", content);
 
         try {
-            const response = await fetch(`http://127.0.0.1:8000/articles/add-commentaire/${id}`, {
+            const response = await fetch(`${API_BASE}/add-commentaire/${id}`, {
                 method: "POST",
                 body: formData,
             });
