@@ -75,7 +75,7 @@ export function Apropos() {
           variant="h6"
           align="justify"
           sx={{
-            fontSize: { xs: "1rem", sm: "1.3rem" },
+            fontSize: { xs: "0.8rem", sm: "1.3rem" },
             color: {xs: "#dedede" , md:"#3c3c3c"}
           }}
         >

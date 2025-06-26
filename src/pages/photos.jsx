@@ -6,7 +6,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { Container, Grid, Dialog, DialogTitle, DialogContent, IconButton, Box } from '@mui/material';
+import { Container, Grid, Dialog, DialogTitle, DialogContent, Box } from '@mui/material';
 import { RemoveRedEyeOutlined } from '@mui/icons-material';
 import { Footer } from '../components/footer';
 import { TitleHeader } from '../components/titleHeader';
