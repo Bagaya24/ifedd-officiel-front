@@ -6,3 +6,4 @@ export async function safeFetch(url) {
   if (!res.ok) throw new Response("Erreur serveur", { status: 500 });
   return res.json();
 }
+
