@@ -43,16 +43,16 @@ export function Photos() {
 
         <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ mt: 4 }}>
           {paginatedPhotos.map((photo, index) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+            <Grid size={{xs:12, sm:6, md:4, lg:3}} key={index}>
               <Card sx={{ maxWidth: 460, minWidth: 460 }}>
                 <CardMedia
                   component="img"
                   height="250"
 
                   image={
-                    photo.photo
-                      ? `data:image/jpeg;base64,${photo.photo}`
-                      : 'https://via.placeholder.com/300x180?text=No+Image'
+                    photo.photo_url
+                      ? photo.photo_url
+                      : 'https://images.unsplash.com/photo-1455849318743-b2233052fcff?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cmFuZG9tfGVufDB8fDB8fHww'
                   }
                   alt={photo.legende}
                   sx={{ objectFit: 'cover' }}
@@ -90,7 +90,7 @@ export function Photos() {
             <DialogTitle>Image en grand</DialogTitle>
             <DialogContent>
               <img
-                src={`data:image/jpeg;base64,${selectedPhoto.photo}`}
+                src={selectedPhoto.photo_url ||' https://images.unsplash.com/photo-1455849318743-b2233052fcff?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cmFuZG9tfGVufDB8fDB8fHww'}
                 alt={selectedPhoto.legende}
                 style={{ width: '100%', height: 'auto', objectFit: 'contain' }}
               />
