@@ -41,9 +41,9 @@ export function Photos() {
       <Container maxWidth="xl" sx={{ mt: 10, mb: 4 }}>
         <TitleHeader>Photos</TitleHeader>
 
-        <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ mt: 4 }}>
+        <Grid container rowSpacing={{xs:1, md:2}} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ mt: 4 }}>
           {paginatedPhotos.map((photo, index) => (
-            <Grid size={{xs:12, sm:6, md:4, lg:3}} key={index}>
+            <Grid size={{xs:12, sm:6, md:4}} key={index}>
               <Card sx={{ maxWidth: 460, minWidth: 460 }}>
                 <CardMedia
                   component="img"

@@ -15,7 +15,7 @@ export function Footer() {
       const fetchAuth = async () => {
         const result = await verifyToken();
         setIsConnected(result.isConnected);
-        setUsername(result.username);
+        
       };
       fetchAuth();
     }, []);
