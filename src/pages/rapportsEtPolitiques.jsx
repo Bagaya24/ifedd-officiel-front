@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -11,6 +10,8 @@ import { Container, Typography } from '@mui/material';
 import { Footer } from '../components/footer';
 import UseFetch from '../hooks/useFetch';
 import { useEffect } from 'react';
+import { useState } from 'react';
+import { useLoaderData } from 'react-router';
 
 
 const columns = [
@@ -63,13 +64,9 @@ function createData(index, rapport) {
 }
 
 export function RapportsEtPolitiques() {
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
-    const {rapports, getRapport} =  UseFetch()
-    useEffect(() => {
-        getRapport()
-    })
-    
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const {rapports} = useLoaderData();
     const rows = rapports ? rapports.map((rapport, index) => createData(index, rapport)) : [];
 
     const handleChangePage = (event, newPage) => {

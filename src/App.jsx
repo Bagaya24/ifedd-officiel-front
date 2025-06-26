@@ -39,12 +39,22 @@ const router = createBrowserRouter([
       },
       {
         path:"photos",
-        loader: async () => await fetch(`${API_BASE}/galerie/see`),
+        loader: async () => {
+          const [photos] = await Promise.all([
+            safeFetch(`${API_BASE}/galerie/see`)
+          ]);
+          return {photos};
+        },
         element: <Photos/>
       },
       {
         path:"rapports et politiques",
-        loader: async () =>  await fetch(`${API_BASE}/rapport/`),
+        loader: async () => {
+          const [rapports] = await Promise.all([
+            safeFetch(`${API_BASE}/rapport/`)
+          ]);
+          return {rapports};
+        },
         element: <RapportsEtPolitiques/>
       },
       {
@@ -54,12 +64,22 @@ const router = createBrowserRouter([
         children: [
           {
             path: "",
-            loader: async () => await fetch(`${API_BASE}/articles/`),
+            loader: async () => {
+              const [articles] = await Promise.all([
+                safeFetch(`${API_BASE}/articles/`)
+              ]);
+              return { articles};
+            },
             element: <Articles/>
           },
           {
             path: ":id",
-            loader: async () => await fetch(`${API_BASE}/articles/`),
+            loader: async () =>{
+              const [articles] = await Promise.all([
+              safeFetch(`${API_BASE}/articles/`)
+              ]);
+              return { articles };
+            },
             element: <ArticleDetail/>
           }
         ]

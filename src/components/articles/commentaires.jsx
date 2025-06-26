@@ -1,12 +1,13 @@
 import { Box, Container, Typography } from '@mui/material'
 import React, { useEffect } from 'react'
 import { useState } from 'react'
+import { API_BASE } from '../../hooks/config'
 
 export default function Commentaires({id}) {
     const [comentaires, setComentaire] = useState()
     useEffect(() => {
         const v = async () => {
-            const response = await fetch(`http://127.0.0.1:8000/articles/commentaire/${id}`,
+            const response = await fetch(`${API_BASE}/articles/commentaire/${id}`,
                 {
                     method: "GET",
                 }

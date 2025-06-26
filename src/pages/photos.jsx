@@ -13,10 +13,10 @@ import { TitleHeader } from '../components/titleHeader';
 import { useLoaderData } from 'react-router';
 
 export function Photos() {
-  const data = useLoaderData();
+  const {photos} = useLoaderData();
   const [page, setPage] = useState(0);
   const photosPerPage = 9;
-
+  console.log(photos)
   const [open, setOpen] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState(null);
 
@@ -31,23 +31,23 @@ export function Photos() {
   };
 
   const startIndex = page * photosPerPage;
-  const paginatedPhotos = data.slice(startIndex, startIndex + photosPerPage);
+  const paginatedPhotos = photos ? photos.slice(startIndex, startIndex + photosPerPage) : [].slice(startIndex, startIndex + photosPerPage);
 
   const hasPrev = page > 0;
-  const hasNext = startIndex + photosPerPage < data.length;
+  const hasNext = startIndex + photosPerPage < photos.length;
 
   return (
     <>
       <Container maxWidth="xl" sx={{ mt: 10, mb: 4 }}>
         <TitleHeader>Photos</TitleHeader>
 
-        <Grid container rowSpacing={{xs:1, md:2}} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ mt: 4 }}>
+        <Grid container rowSpacing={{xs:1, md:2}} columnSpacing={{ xs: 1, sm: 2, md: 3, lg: 3 }} sx={{ mt: 4 }}>
           {paginatedPhotos.map((photo, index) => (
             <Grid size={{xs:12, sm:6, md:4}} key={index}>
-              <Card sx={{ maxWidth: 460, minWidth: 460 }}>
+              <Card sx={{ width: {xs: 360, sm: 380, md: 460} }}>
                 <CardMedia
                   component="img"
-                  height="250"
+                  
 
                   image={
                     photo.photo_url
@@ -55,7 +55,7 @@ export function Photos() {
                       : 'https://images.unsplash.com/photo-1455849318743-b2233052fcff?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cmFuZG9tfGVufDB8fDB8fHww'
                   }
                   alt={photo.legende}
-                  sx={{ objectFit: 'cover' }}
+                  sx={{ objectFit: 'cover', height: {xs: 200, md:250} }}
                 />
                 <CardContent>
                   <Typography variant="body2" sx={{ color: 'text.secondary' }}>

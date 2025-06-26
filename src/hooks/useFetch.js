@@ -17,7 +17,7 @@ function UseFetch() {
     
     if (response.ok) {
       setGalerie(response.json().then((d) => d))
-      console.log(response.json().then((d) => d))
+      
     }
   }
  

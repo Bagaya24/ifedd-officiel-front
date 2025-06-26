@@ -16,15 +16,15 @@ import { Footer } from '../components/footer';
 import { TitleHeader } from '../components/titleHeader';
 
 export function Articles() {
-    const data = useLoaderData();
+    const {articles} = useLoaderData();
    
     const [currentPage, setCurrentPage] = useState(1);
     const articlesPerPage = 6;
 
-    const totalPages = Math.ceil(data.length / articlesPerPage);
+    const totalPages = Math.ceil(articles.length / articlesPerPage);
     const startIndex = (currentPage - 1) * articlesPerPage;
     const endIndex = startIndex + articlesPerPage;
-    const currentArticles = data.slice(startIndex, endIndex);
+    const currentArticles = articles.slice(startIndex, endIndex);
 
     const handlePageChange = (page) => {
         if (page >= 1 && page <= totalPages) {
@@ -38,7 +38,7 @@ export function Articles() {
             <Container maxWidth="xl" sx={{ py: 10 }}>
                 <TitleHeader>Articles</TitleHeader>
 
-                <Grid container spacing={4}>
+                <Grid container spacing={{xs:2, sm:3, md:4}} sx={{ mt: 4 }}>
                     {currentArticles.map((article) => (
                         <Grid item key={article.idArticle} size={{xs: 12, sm: 6, md: 4}}>
                             <Card
