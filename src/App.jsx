@@ -39,7 +39,7 @@ const router = createBrowserRouter([
       },
       {
         path:"photos",
-        loader: async () => await fetch(`${API_BASE}/galerie/`),
+        loader: async () => await fetch(`${API_BASE}/galerie/see`),
         element: <Photos/>
       },
       {

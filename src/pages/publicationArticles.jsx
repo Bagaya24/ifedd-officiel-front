@@ -37,6 +37,7 @@ const PublicationArticles = () => {
         formData.append("title", title);
         formData.append("content", editorRef.current.getContent());
         formData.append("image", image);
+        formData.append("redacteur", redacteur);
 
         try {
             const response = await fetch(`${API_BASE}/articles/publication/`, {

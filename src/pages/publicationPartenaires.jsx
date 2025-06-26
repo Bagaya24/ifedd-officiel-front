@@ -47,7 +47,7 @@ const PublicationsPartenaires = () => {
         formData.append("name", name)
 
         try {
-            const response = await fetch(`${API_BASE}/rapport/publication`, {
+            const response = await fetch(`${API_BASE}/partenaire/publication`, {
                 method: "POST",
                 body: formData,
             });

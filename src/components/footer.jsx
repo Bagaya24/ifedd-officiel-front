@@ -1,27 +1,40 @@
-import { Box, Container, Grid, Link, Typography, IconButton } from '@mui/material';
+import { Box, Container, Grid, Link, Typography, IconButton, Button } from '@mui/material';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import { EmailOutlined, LanguageOutlined, PhoneEnabled, RoomOutlined } from '@mui/icons-material';
+import { NavLink } from 'react-router';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { verifyToken } from '../utils/auth';
 
 export function Footer() {
+  const [isConnected, setIsConnected] = useState(false);
+  useEffect(() => {
+      const fetchAuth = async () => {
+        const result = await verifyToken();
+        setIsConnected(result.isConnected);
+        
+      };
+      fetchAuth();
+    }, []);
   return (
     <Box sx={{ backgroundColor: '#121858', py: 4, mt: 8}}>
       <Container maxWidth="lg">
         <Grid container spacing={4}>
           {/* Colonne 1 : Titre / description */}
-          <Grid  sx={{ xs:12, sm: 6, md: 4 }}>
+          <Grid  size={{ xs:12, sm: 6, md: 3 }}>
             <Typography variant="h6" fontWeight="bold" color='#eceff1' gutterBottom>
               IFEDD
             </Typography>
             <Typography variant="body2" color="#eceff1">
-              Initiative des Femmes pour le Développement Durable.
+              Initiative des Femmes Entrepreneurs pour le Développement Durable.
             </Typography>
           </Grid>
 
           {/* Colonne 2 : Liens utiles */}
-          <Grid sx={{ xs:12, sm: 6, md: 4 }}>
+          <Grid size={{ xs:12, sm: 6, md: 3 }}>
             <Typography variant="h6" fontWeight="bold" gutterBottom color='#eceff1'>
               Nos adresses
             </Typography>
@@ -38,7 +51,7 @@ export function Footer() {
               <EmailOutlined/>  ifeddrdc@gmail.com
             </Link>
           </Grid>
-          <Grid sx={{ xs:12, sm: 6, md: 4 }}>
+          <Grid size={{ xs:12, sm: 6, md: 3 }}>
             <Typography color='#eceff1' variant="h6" fontWeight="bold" gutterBottom>
               Heures de travail
             </Typography>
@@ -52,9 +65,19 @@ export function Footer() {
               Dimanche: fermé
             </Typography>
           </Grid>
-
+           <Grid size={{ xs:12, sm: 6, md: 3 }}>
+            <Button
+                color="primary"
+                variant="contained"
+                sx={{ ml: 2 }}
+                component={NavLink}
+                to={isConnected ? "/deconnexion" : "/connexion"}
+              >
+                {isConnected ? 'Déconnexion' : 'Connexion'}
+              </Button>
+            </Grid>
           {/* Colonne 3 : Réseaux sociaux */}
-          <Grid sx={{ xs:12, sm: 6, md: 4 }}>
+          <Grid size={{ xs:12, sm: 6, md: 3 }}>
             <Typography variant="h6" fontWeight="bold" gutterBottom color='#eceff1'>
               Suivez-nous
             </Typography>
@@ -73,6 +96,7 @@ export function Footer() {
               </IconButton>
             </Box>
           </Grid>
+         
         </Grid>
 
         {/* Ligne de bas de page */}
