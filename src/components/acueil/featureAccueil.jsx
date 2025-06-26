@@ -9,7 +9,6 @@ import {
   Grid,
   Container
 } from "@mui/material";
-import { useEffect, useState } from "react";
 
 const featureBoxStyle = {
   p: { xs: 2, sm: 3 },
@@ -24,30 +23,7 @@ const featureBoxStyle = {
 };
 
 export function FeatureAccueil() {
-  const [gridSize, setGridSize] = useState(4); // valeur par défaut (1/3 de la grille)
-
-  useEffect(() => {
-    const handleResize = () => {
-      const width = window.innerWidth;
-      if (width < 600) {
-        setGridSize(12); // pleine largeur sur mobile
-      } else if (width < 960) {
-        setGridSize(6); // moitié sur tablette
-      } else {
-        setGridSize(4); // un tiers sur desktop
-      }
-    };
-
-    // Exécuter une fois au chargement
-    handleResize();
-    // Réécoute sur redimensionnement
-    window.addEventListener("resize", handleResize);
-
-    // Nettoyage de l'écouteur
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+ 
 
   return (
     <Container sx={{ py: { xs: 4, md: 6 } }}>
@@ -55,7 +31,7 @@ export function FeatureAccueil() {
         container
         spacing={{ xs: 2, sm: 3, md: 4 }}
       >
-        <Grid size={gridSize}>
+        <Grid size={{ xs: 12, sm: 6, md: 4 }}>
           <Box sx={featureBoxStyle}>
             <VisibilityOutlined fontSize="large" sx={{ mb: 2, color: 'primary.main' }} />
             <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
@@ -68,7 +44,7 @@ export function FeatureAccueil() {
           </Box>
         </Grid>
 
-        <Grid size={gridSize}>
+        <Grid size={{ xs: 12, sm: 6, md: 4 }}>
           <Box sx={featureBoxStyle}>
             <DirectionsRunOutlined fontSize="large" sx={{ mb: 2, color: 'primary.main' }} />
             <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
@@ -81,7 +57,7 @@ export function FeatureAccueil() {
           </Box>
         </Grid>
 
-        <Grid size={gridSize}>
+        <Grid size={{ xs: 12, sm: 6, md: 4 }}>
           <Box sx={featureBoxStyle}>
             <FlagOutlined fontSize="large" sx={{ mb: 2, color: 'primary.main' }} />
             <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>

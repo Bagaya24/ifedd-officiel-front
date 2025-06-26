@@ -51,9 +51,9 @@ export function Partenaire() {
               }}
             >
               <img src={
-                            partenaire.logo 
-                                ? `data:image/jpeg;base64,${partenaire.logo}`
-                                : 'https://via.placeholder.com/300x180?text=No+Image'
+                            partenaire.logo_url 
+                                ? partenaire.logo_url
+                                : "https://via.placeholder.com/60?text=Logo"
                         } 
               alt={partenaire.name} 
               style={{ width: 60, height: 60, objectFit: "contain" }}/>

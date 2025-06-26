@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Container,
     Grid,
@@ -13,121 +13,151 @@ import {
 } from '@mui/material';
 import { NavLink, useLoaderData } from 'react-router';
 import { Footer } from '../components/footer';
-import {TitleHeader} from '../components/titleHeader'
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { TitleHeader } from '../components/titleHeader';
 
 export function Articles() {
     const data = useLoaderData();
-    const [gridSize, setGridSize] = useState(4); // valeur par défaut (1/3 de la grille)
+   
+    const [currentPage, setCurrentPage] = useState(1);
+    const articlesPerPage = 6;
 
-  useEffect(() => {
-    const handleResize = () => {
-      const width = window.innerWidth;
-      if (width < 600) {
-        setGridSize(12); // pleine largeur sur mobile
-      } else if (width < 960) {
-        setGridSize(6); // moitié sur tablette
-      } else {
-        setGridSize(4); // un tiers sur desktop
-      }
+    const totalPages = Math.ceil(data.length / articlesPerPage);
+    const startIndex = (currentPage - 1) * articlesPerPage;
+    const endIndex = startIndex + articlesPerPage;
+    const currentArticles = data.slice(startIndex, endIndex);
+
+    const handlePageChange = (page) => {
+        if (page >= 1 && page <= totalPages) {
+            setCurrentPage(page);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
     };
-
-    // Exécuter une fois au chargement
-    handleResize();
-    // Réécoute sur redimensionnement
-    window.addEventListener("resize", handleResize);
-
-    // Nettoyage de l'écouteur
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
     return (
         <>
-        <Container maxWidth="xl" sx={{ py: 10 }}>
-            <TitleHeader>Article</TitleHeader>
+            <Container maxWidth="xl" sx={{ py: 10 }}>
+                <TitleHeader>Articles</TitleHeader>
 
-            <Grid container spacing={4}>
-                {data.map((article) => (
-                    <Grid item key={article.idArticle} size={gridSize}>
-                        <Card
-                            sx={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                height: '100%',
-                                borderRadius: 4,
-
-                                color: '#121858',
-                                overflow: 'hidden',
-                                boxShadow: 6,
-                                transition: 'transform 0.2s',
-                                '&:hover': {
-                                    transform: 'translateY(-6px)',
-                                    boxShadow: 10,
-                                },
-                            }}
-                        >
-                            <CardMedia
-                                component="img"
-                                height="180"
-                                image={
-                                    article.picture
-                                        ? `data:image/jpeg;base64,${article.picture}`
-                                        : 'https://via.placeholder.com/300x180?text=No+Image'
-                                }
-                                alt={article.titre}
-                                sx={{ objectFit: 'cover' }}
-                            />
-
-                            <CardContent sx={{ flexGrow: 1 }}>
-                                <Typography variant="caption" color="gray">
-                                    {'Actualité'}
-                                </Typography>
-
-                                <Typography
-                                    variant="h6"
-                                    fontWeight="bold"
-                                    gutterBottom
-
-                                    sx={{ mt: 1 }}
-                                >
-                                    {article.titre}
-                                </Typography>
-                                <Typography variant="body2" color="gray" dangerouslySetInnerHTML={{__html:article.prelude?.slice(0, 100)}}>
-                                    
-                                </Typography>
-                            </CardContent>
-                            <CardActions>
-                                <Button size="small" component={NavLink} to={`/articles/${article.idArticle}`}>Lire suite</Button>
-                            </CardActions>
-                            <Box
+                <Grid container spacing={4}>
+                    {currentArticles.map((article) => (
+                        <Grid item key={article.idArticle} size={{xs: 12, sm: 6, md: 4}}>
+                            <Card
                                 sx={{
                                     display: 'flex',
-                                    justifyContent: 'space-between',
-                                    alignItems: 'center',
-                                    px: 2,
-                                    pb: 2,
+                                    flexDirection: 'column',
+                                    height: '100%',
+                                    borderRadius: 4,
+                                    color: '#121858',
+                                    overflow: 'hidden',
+                                    boxShadow: 6,
+                                    transition: 'transform 0.2s',
+                                    '&:hover': {
+                                        transform: 'translateY(-6px)',
+                                        boxShadow: 10,
+                                    },
                                 }}
                             >
-                                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                    <Avatar sx={{ width: 24, height: 24, mr: 1 }} />
-                                    <Typography variant="body2">
-                                        {article.redacteur || 'Auteur inconnu'}
+                                <CardMedia
+                                    component="img"
+                                    height="180"
+                                    image={
+                                        article.picture_url
+                                            ? article.picture_url
+                                            : 'https://images.unsplash.com/photo-1455849318743-b2233052fcff?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cmFuZG9tfGVufDB8fDB8fHww'
+                                    }
+                                    alt={article.titre}
+                                    sx={{ objectFit: 'cover' }}
+                                />
+                                <CardContent sx={{ flexGrow: 1 }}>
+                                    <Typography variant="caption" color="gray">Actualité</Typography>
+                                    <Typography
+                                        variant="h6"
+                                        fontWeight="bold"
+                                        gutterBottom
+                                        sx={{ mt: 1 }}
+                                    >
+                                        {article.titre}
+                                    </Typography>
+                                    <Typography
+                                        variant="body2"
+                                        color="gray"
+                                        dangerouslySetInnerHTML={{
+                                            __html: article.prelude?.slice(0, 100),
+                                        }}
+                                    />
+                                </CardContent>
+                                <CardActions>
+                                    <Button
+                                        size="small"
+                                        component={NavLink}
+                                        to={`/articles/${article.idArticle}`}
+                                    >
+                                        Lire suite
+                                    </Button>
+                                </CardActions>
+                                <Box
+                                    sx={{
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center',
+                                        px: 2,
+                                        pb: 2,
+                                    }}
+                                >
+                                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                        <Avatar sx={{ width: 24, height: 24, mr: 1 }} />
+                                        <Typography variant="body2">
+                                            {article.redacteur || 'Auteur inconnu'}
+                                        </Typography>
+                                    </Box>
+                                    <Typography variant="caption" color="gray">
+                                        {new Date(article.DatePublication).toLocaleDateString()}
                                     </Typography>
                                 </Box>
-                                <Typography variant="caption" color="gray">
-                                    {new Date(article.DatePublication).toLocaleDateString()}
-                                </Typography>
-                            </Box>
-                        </Card>
-                    </Grid>
-                ))}
-            </Grid>
-        </Container>
-        <Footer/>
+                            </Card>
+                        </Grid>
+                    ))}
+                </Grid>
+
+                {/* Pagination Controls */}
+                <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        gap: 1,
+                        mt: 4,
+                        flexWrap: 'wrap',
+                    }}
+                >
+                    <Button
+                        variant="outlined"
+                        onClick={() => handlePageChange(currentPage - 1)}
+                        disabled={currentPage === 1}
+                    >
+                        Précédent
+                    </Button>
+
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                        <Button
+                            key={page}
+                            variant={page === currentPage ? 'contained' : 'outlined'}
+                            onClick={() => handlePageChange(page)}
+                        >
+                            {page}
+                        </Button>
+                    ))}
+
+                    <Button
+                        variant="outlined"
+                        onClick={() => handlePageChange(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                    >
+                        Suivant
+                    </Button>
+                </Box>
+            </Container>
+
+            <Footer />
         </>
-        
     );
 }

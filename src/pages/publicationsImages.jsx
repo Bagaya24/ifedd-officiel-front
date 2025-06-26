@@ -43,7 +43,7 @@ const PublicationsImages = () => {
         formData.append("image", image);
 
         try {
-            const response = await fetch(`${API_BASE}/galerie/publication`, {
+            const response = await fetch(`${API_BASE}/galerie/add`, {
                 method: "POST",
                 body: formData,
             });
