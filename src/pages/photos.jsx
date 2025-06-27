@@ -12,30 +12,21 @@ import { Footer } from '../components/footer';
 import { TitleHeader } from '../components/titleHeader';
 ;
 import { api } from '../api/Api';
+import UseFetch from '../hooks/useFetch';
 
 export function Photos() {
-  const [photos, setPhotos] = useState([]); 
+  const {galeries, getGalerie, loader} = UseFetch()
   const [page, setPage] = useState(0);
   const photosPerPage = 9;
-  console.log(photos)
+  
   const [open, setOpen] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState(null);
-  const [loader, setLoarder]=useState(false)
+ 
 
-  const getPhoto=async()=>{
-    setLoarder(true);
-    try {
-      const respose=await api.get("galerie/see");
-      setPhotos(respose.data);
-       setLoarder(false);
-    } catch (error) {
-       setLoarder(false);
-      
-    }
-  }
+ 
 
   React.useEffect(()=>{
-    getPhoto();
+    getGalerie();
   },[])
 
   const handleOpenModal = (photo) => {
@@ -49,17 +40,19 @@ export function Photos() {
   };
 
   const startIndex = page * photosPerPage;
-  const paginatedPhotos = photos ? photos.slice(startIndex, startIndex + photosPerPage) : [].slice(startIndex, startIndex + photosPerPage);
+  const paginatedPhotos = galeries.slice(startIndex, startIndex + photosPerPage);
 
   const hasPrev = page > 0;
-  const hasNext = startIndex + photosPerPage < photos.length;
+  const hasNext = startIndex + photosPerPage < galeries.length;
 
   return (
     <>
     {
       loader===true?(
         <div>
-          <p>Chargemnt....</p>
+          <Typography variant='h5' align='center'>
+            Chargement...
+          </Typography>
         </div>
       ):<>
       <Container maxWidth="xl" sx={{ mt: 10, mb: 4 }}>
@@ -129,10 +122,10 @@ export function Photos() {
         )}
       </Dialog>
 
-      <Footer />
+      
       </>
     }
-      
+      <Footer />
     </>
   );
 }

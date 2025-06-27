@@ -1,4 +1,4 @@
-import { API_BASE } from "../hooks/config";
+import { urlbase } from "../api/Api";
 
 // src/services/authService.js
 export const validateLoginForm = (username, password, setError) => {
@@ -16,7 +16,7 @@ export const loginUser = async (username, password) => {
   formDetails.append("password", password);
 
   try {
-    const response = await fetch(`${API_BASE}/connexion/token` , {
+    const response = await fetch(`${urlbase}connexion/token` , {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"

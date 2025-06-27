@@ -11,16 +11,21 @@ import {
     CardActions,
     Button,
 } from '@mui/material';
-import { NavLink, useLoaderData } from 'react-router';
+import { NavLink} from 'react-router-dom';
 import { Footer } from '../components/footer';
 import { TitleHeader } from '../components/titleHeader';
+import UseFetch from '../hooks/useFetch';
 
 export function Articles() {
-    const {articles} = useLoaderData();
+    const {articles, getArticle, loader} = UseFetch()
    
     const [currentPage, setCurrentPage] = useState(1);
-    const articlesPerPage = 6;
 
+    useEffect(() => {
+        getArticle()
+    }, [])
+
+    const articlesPerPage = 6;
     const totalPages = Math.ceil(articles.length / articlesPerPage);
     const startIndex = (currentPage - 1) * articlesPerPage;
     const endIndex = startIndex + articlesPerPage;

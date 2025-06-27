@@ -3,7 +3,9 @@ import { Editor } from '@tinymce/tinymce-react';
 import { Container, TextField, Button, Paper, Box, Alert } from '@mui/material';
 import { Footer } from '../components/footer';
 import { TitleHeader } from '../components/titleHeader';
-import { API_BASE } from '../hooks/config';
+
+
+const key = import.meta.env.VITE_TINY_API_KEY
 
 const PublicationArticles = () => {
     const [title, setTitle] = useState('');
@@ -15,7 +17,7 @@ const PublicationArticles = () => {
     const [alertMessage, setAlertMessage] = useState('');
 
     const editorRef = useRef(null);
-
+   
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -119,7 +121,7 @@ const PublicationArticles = () => {
 
                         <Box sx={{ mt: 3, mb: 3 }}>
                             <Editor
-                                apiKey="i0jabxt3qx35s06pd1bpnqslp7ccb1qgghndca3cpu35r67m"
+                                apiKey={`${key}`}
                                 onInit={(evt, editor) => (editorRef.current = editor)}
                                 value={content}
                                 onEditorChange={(newContent) => setContent(newContent)}

@@ -4,13 +4,13 @@ import {
     Box,
     Button,
     TextField,
-    Typography,
+  
     Paper,
     Container,
     Alert,
 } from '@mui/material';
 import { TitleHeader } from '../components/titleHeader';
-import { API_BASE } from '../hooks/config';
+import { urlbase } from '../api/Api';
 
 const PublicationsImages = () => {
     const [image, setImage] = useState(null);
@@ -43,7 +43,7 @@ const PublicationsImages = () => {
         formData.append("image", image);
 
         try {
-            const response = await fetch(`${API_BASE}/galerie/add`, {
+            const response = await fetch(`${urlbase}galerie/add`, {
                 method: "POST",
                 body: formData,
             });

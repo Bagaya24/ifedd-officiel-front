@@ -1,9 +1,10 @@
 import { Container, Grid, Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useLoaderData } from "react-router";
+import UseFetch from "../../hooks/useFetch";
 
 export function Partenaire() {
-  const {partenaires} = useLoaderData()
+  const {partenaires, getPartenaires} = UseFetch()
   const [gridSize, setGridSize] = useState(2); // valeur par défaut (1/3 de la grille)
   
     useEffect(() => {
@@ -28,6 +29,10 @@ export function Partenaire() {
         window.removeEventListener("resize", handleResize);
       };
     }, []);
+
+    useEffect(() => {
+      getPartenaires()
+    },[])
   return (
     <Container sx={{ py: 4 }}>
         <Typography variant="h3" align="center" color="#1769aa" gutterBottom sx={{ fontWeight: 600, mb: 4 }}>

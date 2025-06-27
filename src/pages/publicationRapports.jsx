@@ -12,7 +12,7 @@ import {
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { Footer } from '../components/footer';
 import { TitleHeader } from '../components/titleHeader';
-import { API_BASE } from '../hooks/config';
+import { urlbase } from '../api/Api';
 
 const PublicationRapports = () => {
     const [title, setTitle] = useState('');
@@ -49,7 +49,7 @@ const PublicationRapports = () => {
         formData.append("types", type);
 
         try {
-            const response = await fetch(`${API_BASE}/rapport/publication`, {
+            const response = await fetch(`${urlbase}rapport/publication`, {
                 method: "POST",
                 body: formData,
             });
@@ -62,7 +62,7 @@ const PublicationRapports = () => {
 
             const result = await response.json();
 
-            console.log(result)
+            
             setReport(null)
             setCoverPage(null);
             setType("")

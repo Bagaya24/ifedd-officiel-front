@@ -5,18 +5,48 @@ import {
     CardMedia,
     Typography,
     Button,
+    Box,
 } from '@mui/material';
-import { NavLink, useLoaderData } from 'react-router';
+import { NavLink, useLoaderData } from 'react-router-dom';
 import CustomCarousel from './cunstomeCarousel';
+import UseFetch from '../../hooks/useFetch';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 
 export function Realisation() {
-    const {articles} = useLoaderData()
+    const {articles, getArticle} = UseFetch()
+    const [textSize, setTextSize] = useState("0.7rem");
 
+    useEffect(() => {
+        getArticle()
+    }, [])
+       useEffect(() => {
+      const handleResize = () => {
+        const width = window.innerWidth;
+        if (width < 600) {
+          setTextSize("0.5rem"); // pleine largeur sur mobile
+        } else if (width < 960) {
+          setTextSize("0.6rem"); // moitié sur tablette
+        } else {
+          setTextSize("0.7rem"); // un tiers sur desktop
+        }
+      };
+  
+      // Exécuter une fois au chargement
+      handleResize();
+      // Réécoute sur redimensionnement
+      window.addEventListener("resize", handleResize);
+  
+      // Nettoyage de l'écouteur
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
+    }, []);
 
     return (
                    
-            <CustomCarousel title={"Réalisations"} slide={
+            <CustomCarousel title={"Nos Réalisations"} slide={
                 articles.map((article, index) => {
                 const paragraphs = article.prelude?.slice(0, 200);
                 
@@ -33,12 +63,12 @@ export function Realisation() {
                             title={article.titre}
                         />
                         <CardContent>
-                            <Typography gutterBottom component="div" align='center' sx={{ fontWeight: 'bold', fontSize: {xs:"0.8rem", sm:"0.9rem", md:"1rem"} }}>
+                            <Typography gutterBottom component="div" align='center' sx={{ fontWeight: 'bold', fontSize: {xs:"0.7rem", sm:"0.9rem", md:"1rem"} }}>
                                 {article.titre.slice(0, 80)+"..."}
                             </Typography>
                             
-                                    <div dangerouslySetInnerHTML={{__html:paragraphs}} style={{textAlign: "justify", fontSize:{xs:"0.1rem", sm:"0.6rem", md:"0.7rem"}}}></div>
-                        
+                                    <Box dangerouslySetInnerHTML={{__html:paragraphs}} style={{textAlign: "justify", fontSize:{textSize}}}></Box>
+                   
                         </CardContent>
                         <CardActions>
                             <CardActions>

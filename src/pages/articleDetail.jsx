@@ -1,32 +1,36 @@
-
 import {
-    Container,
-    Grid,
-    Card,
-    CardMedia,
-    CardContent,
-    Typography,
-    Avatar,
-    Box,
-    Divider,
-    Paper,
+  Container, Grid, Card, CardMedia, CardContent,
+  Typography, Avatar, Box, Divider, Paper,
 } from '@mui/material';
-import { NavLink, useLoaderData, useParams } from 'react-router';
+import { NavLink, useParams } from 'react-router-dom';
 import { Footer } from '../components/footer';
 import AddCommentaires from '../components/articles/AddCommentaires';
 import Commentaires from '../components/articles/commentaires';
+import UseFetch from '../hooks/useFetch';
 import { useEffect } from 'react';
 
 
 export function ArticleDetail() {
-    const {articles} = useLoaderData();
-    const { id } = useParams();
-    // const [commentaires, setCommentaires] = useState(false);
-    const article = articles.find((a) => a.idArticle.toString() === id);
-    const autresArticles = articles.filter((a) => a.idArticle.toString() !== id);
-    
+  const { articles, getArticle, commentaires, getCommentaires } = UseFetch();
+  const { id } = useParams();
+  
 
-    if (!article) return <Typography>Article non trouvé</Typography>;
+  // Récupère les articles
+  useEffect(() => {
+    getArticle();
+    getCommentaires(id)
+  }, []);
+
+
+
+  useEffect(() => {
+    getCommentaires(id);
+  }, [id]);
+
+  const article = articles.find((a) => a.idArticle.toString() === id);
+  const autresArticles = articles.filter((a) => a.idArticle.toString() !== id);
+
+  if (!article) return <Typography>Article non trouvé</Typography>;
 
     return (<>
         <Container
@@ -156,10 +160,14 @@ export function ArticleDetail() {
             </Grid>
 
         </Container>
-        <Grid container spacing={2} sx={{ mt: 4, px: 2, backgroundColor: "#eceff1" }}>
-            <Grid size={{ xs: 12, md: 4 }}><AddCommentaires id={id} /></Grid>
-            <Grid size={{ xs: 12, md: 8 }}><Commentaires id={id} /></Grid>
+      <Grid container spacing={2} sx={{ mt: 4, px: 2, backgroundColor: "#eceff1" }}>
+        <Grid xs={12} md={4}>
+          <AddCommentaires id={id} onCommentAdded={getCommentaires} />
         </Grid>
+        <Grid xs={12} md={8}>
+          <Commentaires commentaires={commentaires} />
+        </Grid>
+      </Grid>
 
         <Footer />
     </>

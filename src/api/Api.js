@@ -1,10 +1,10 @@
 import axios from "axios";
 
 // const urlbase = import.meta.env.VITE_APP_URL_DEVELOPEMENT;
-const urlbase="https://api.officiel.ifedd-rdc.org/";
+const urlbase = import.meta.env.VITE_URL
 
-const tokenString = localStorage.getItem("token") ?? "{}";
-const jwtToken= JSON.parse(tokenString);
+
+const jwtToken= localStorage.getItem("token");
 
 const api = axios.create({
   baseURL: urlbase,
