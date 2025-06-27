@@ -7,7 +7,7 @@ const jwtToken = localStorage.getItem("token");
 
 const api = axios.create({
   baseURL: urlbase,
-  timeout: 80000,
+  timeout: 100000,
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
@@ -17,7 +17,7 @@ const api = axios.create({
 
 const apiFormData = axios.create({
   baseURL: urlbase,
-  timeout: 80000,
+  timeout: 100000,
   headers: {
     "Content-Type": "multipart/form-data",
     Authorization: `Bearer ${jwtToken}`,
