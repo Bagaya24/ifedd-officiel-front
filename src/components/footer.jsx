@@ -4,7 +4,7 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import { EmailOutlined, LanguageOutlined, PhoneEnabled, RoomOutlined } from '@mui/icons-material';
-import { NavLink } from 'react-router';
+import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { verifyToken } from '../utils/auth';
@@ -39,7 +39,10 @@ export function Footer() {
               Nos adresses
             </Typography>
             <Link href="https://maps.app.goo.gl/KjuT43mASjtUDT1G7" underline="none" color="#eceff1" display="block" sx={{ mb: 1, ":hover": {color: "blue" } }}>
-              <RoomOutlined/> Localisation
+              <RoomOutlined/> Notre adresse à Goma: N° 81 Av présidentielle,  Quartier Himbi, commune de Goma, ville de Goma/RDC
+            </Link>
+            <Link href="https://maps.app.goo.gl/KjuT43mASjtUDT1G7" underline="none" color="#eceff1" display="block" sx={{ mb: 1, ":hover": {color: "blue" } }}>
+              <RoomOutlined/> Notre adresse à Kolwezi: N°03, avenue Mumba 1, Quartier Dilungu, Commune de Dilala, Ville de Kolwezi.
             </Link>
             <Link href="#" underline="none" color="#eceff1" display="block" sx={{ mb: 1 }}>
               <PhoneEnabled/> +243 823 938 632

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     Card, CardMedia, CardContent, CardActions,
     Button, Typography, Dialog, DialogTitle, DialogContent,
@@ -6,14 +6,17 @@ import {
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import CustomCarousel from './cunstomeCarousel';
-import { useLoaderData } from 'react-router';
+import UseFetch from '../../hooks/useFetch';
 
 export function BookCard() {
     const [open, setOpen] = useState(false);
     const [selectedBook, setSelectedBook] = useState(null);
 
-    const { rapports } = useLoaderData();
+    const {rapports, getRapport} = UseFetch()
     
+    useEffect(() => {
+        getRapport()
+    }, [])
     const handleReadClick = (rapport) => {
         setSelectedBook(rapport);
         setOpen(true);
@@ -25,7 +28,7 @@ export function BookCard() {
     };
 
     return (
-        <CustomCarousel title={"Rapports"} slide={
+        <CustomCarousel title={"Nos Rapports"} slide={
             rapports.map((rapport, index) => (
                 <div key={index}>
                     <Card sx={{ maxWidth: 300 }}>

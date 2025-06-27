@@ -4,14 +4,14 @@ import {
     Box,
     Button,
     TextField,
-    Typography,
+  
     Paper,
     Container,
     Alert,
 } from '@mui/material';
 import { Footer } from '../components/footer';
 import { TitleHeader } from '../components/titleHeader';
-import { API_BASE } from '../hooks/config';
+import { urlbase } from '../api/Api';
 
 const PublicationsPartenaires = () => {
     const [logo, setLogo] = useState(null);
@@ -47,7 +47,7 @@ const PublicationsPartenaires = () => {
         formData.append("name", name)
 
         try {
-            const response = await fetch(`${API_BASE}/partenaire/publication`, {
+            const response = await fetch(`${urlbase}partenaire/publication`, {
                 method: "POST",
                 body: formData,
             });

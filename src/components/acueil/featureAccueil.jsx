@@ -12,7 +12,7 @@ import {
 
 const featureBoxStyle = {
   p: { xs: 2, sm: 3 },
-  height: '100%',
+  height: {xs: "80%", md: "100%"},
   backgroundColor: '#f5f5f5',
   borderRadius: 2,
   display: 'flex',
@@ -26,7 +26,7 @@ export function FeatureAccueil() {
  
 
   return (
-    <Container sx={{ py: { xs: 4, md: 6 } }}>
+    <Container sx={{ py: { xs: 4, md: 8 } }} maxWidth="xl">
       <Grid
         container
         spacing={{ xs: 2, sm: 3, md: 4 }}

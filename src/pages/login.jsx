@@ -3,11 +3,11 @@ import React, { useState } from 'react';
 import {
   Container, Box, Typography, TextField, Button, CircularProgress, Alert, Paper
 } from '@mui/material';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { loginUser, validateLoginForm } from '../utils/autheService';
 
 
-export function Login() {
+export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');

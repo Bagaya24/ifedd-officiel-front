@@ -1,28 +1,36 @@
-
 import {
-    Container,
-    Grid,
-    Card,
-    CardMedia,
-    CardContent,
-    Typography,
-    Avatar,
-    Box,
-    Divider,
-    Paper,
+  Container, Grid, Card, CardMedia, CardContent,
+  Typography, Avatar, Box, Divider, Paper,
 } from '@mui/material';
-import { useLoaderData, useParams } from 'react-router';
+import { NavLink, useParams } from 'react-router-dom';
 import { Footer } from '../components/footer';
 import AddCommentaires from '../components/articles/AddCommentaires';
 import Commentaires from '../components/articles/commentaires';
+import UseFetch from '../hooks/useFetch';
+import { useEffect } from 'react';
+
 
 export function ArticleDetail() {
-    const articles = useLoaderData();
-    const { id } = useParams();
-    const article = articles.find((a) => a.idArticle.toString() === id);
-    const autresArticles = articles.filter((a) => a.idArticle.toString() !== id);
+  const { articles, getArticle, commentaires, getCommentaires } = UseFetch();
+  const { id } = useParams();
+  
 
-    if (!article) return <Typography>Article non trouvé</Typography>;
+  // Récupère les articles
+  useEffect(() => {
+    getArticle();
+    getCommentaires(id)
+  }, []);
+
+
+
+  useEffect(() => {
+    getCommentaires(id);
+  }, [id]);
+
+  const article = articles.find((a) => a.idArticle.toString() === id);
+  const autresArticles = articles.filter((a) => a.idArticle.toString() !== id);
+
+  if (!article) return <Typography>Article non trouvé</Typography>;
 
     return (<>
         <Container
@@ -53,7 +61,7 @@ export function ArticleDetail() {
                             image={
                                 article.picture_url
                                     ? article.picture_url
-                                    : 'https://images.unsplash.com/photo-1455849318743-b2233052fcff?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cmFuZG9tfGVufDB8fDB8fHww'
+                                    : '/Logo.png'
                             }
                             alt={article.titre}
                             sx={{ objectFit: 'cover', borderRadius: 2 }}
@@ -73,11 +81,8 @@ export function ArticleDetail() {
                                 </Typography>
                             </Box>
                             <Divider sx={{ my: 2 }} />
-                            <div dangerouslySetInnerHTML={{ __html: article.texte }} >
-
+                            <div dangerouslySetInnerHTML={{ __html: article.texte }} style={{textAlign: "justify"}} >
                             </div>
-
-
                         </Box>
                     </Paper>
                 </Grid>
@@ -126,7 +131,8 @@ export function ArticleDetail() {
                                         transform: 'scale(1.01)',
                                     },
                                 }}
-                                onClick={() => (window.location.href = `/articles/${a.idArticle}`)}
+                                component={NavLink}
+                                to={`/articles/${a.idArticle}`}     
                             >
                                 <CardMedia
                                     component="img"
@@ -154,10 +160,14 @@ export function ArticleDetail() {
             </Grid>
 
         </Container>
-        <Grid container spacing={2} sx={{ mt: 4, px: 2, backgroundColor: "#eceff1" }}>
-            <Grid size={{ xs: 12, md: 4 }}><AddCommentaires id={id} /></Grid>
-            <Grid size={{ xs: 12, md: 8 }}><Commentaires id={id} /></Grid>
+      <Grid container spacing={2} sx={{ mt: 4, px: 2, backgroundColor: "#eceff1" }}>
+        <Grid xs={12} md={4}>
+          <AddCommentaires id={id} onCommentAdded={getCommentaires} />
         </Grid>
+        <Grid xs={12} md={8}>
+          <Commentaires commentaires={commentaires} />
+        </Grid>
+      </Grid>
 
         <Footer />
     </>

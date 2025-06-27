@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -10,7 +9,7 @@ import TableRow from '@mui/material/TableRow';
 import { Container, Typography } from '@mui/material';
 import { Footer } from '../components/footer';
 import UseFetch from '../hooks/useFetch';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 
 const columns = [
@@ -63,14 +62,16 @@ function createData(index, rapport) {
 }
 
 export function RapportsEtPolitiques() {
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
-    const {rapports, getRapport} =  UseFetch()
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
+
+    const { rapports, getRapport, loader } = UseFetch()
+   
     useEffect(() => {
-        getRapport()
-    })
-    
-    const rows = rapports ? rapports.map((rapport, index) => createData(index, rapport)) : [];
+        getRapport();
+    }, [])
+
+    const rows = rapports.map((rapport, index) => createData(index, rapport));
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -82,55 +83,60 @@ export function RapportsEtPolitiques() {
     };
 
     return (
-        <>
-            <Container maxWidth="lg" sx={{ mt: 10, mb: 4 }}>
-                <Typography variant="h3" align="center" sx={{ mt: 6, mb: 3, fontWeight: 600 }}>
-                    Rapports et Politiques
-                </Typography>
-                <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+        <>{
+            loader===true ? <div>Chargement...{loader}</div> :
+                <>
+                    <Container maxWidth="lg" sx={{ mt: 10, mb: 4 }}>
+                        <Typography variant="h3" align="center" sx={{ mt: 6, mb: 3, fontWeight: 600 }}>
+                            Rapports et Politiques
+                        </Typography>
+                        <Paper sx={{ width: '100%', overflow: 'hidden' }}>
 
-                    <TableContainer sx={{ maxHeight: 440 }}>
-                        <Table stickyHeader aria-label="sticky table">
-                            <TableHead>
-                                <TableRow>
-                                    {columns.map((column) => (
-                                        <TableCell
-                                            key={column.id}
-                                            align={column.align}
-                                            style={{ minWidth: column.minWidth }}
-                                        >
-                                            {column.label}
-                                        </TableCell>
-                                    ))}
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {rows
-                                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                    .map((row, rowIndex) => (
-                                        <TableRow hover role="checkbox" tabIndex={-1} key={row.numero}>
+                            <TableContainer sx={{ maxHeight: 440 }}>
+                                <Table stickyHeader aria-label="sticky table">
+                                    <TableHead>
+                                        <TableRow>
                                             {columns.map((column) => (
-                                                <TableCell key={column.id} align={column.align}>
-                                                    {row[column.id]}
+                                                <TableCell
+                                                    key={column.id}
+                                                    align={column.align}
+                                                    style={{ minWidth: column.minWidth }}
+                                                >
+                                                    {column.label}
                                                 </TableCell>
                                             ))}
                                         </TableRow>
-                                    ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                    <TablePagination
-                        rowsPerPageOptions={[10, 25, 100]}
-                        component="div"
-                        count={rows.length}
-                        rowsPerPage={rowsPerPage}
-                        page={page}
-                        onPageChange={handleChangePage}
-                        onRowsPerPageChange={handleChangeRowsPerPage}
-                    />
-                </Paper>
-            </Container>
-            <Footer />
+                                    </TableHead>
+                                    <TableBody>
+                                        {rows
+                                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                            .map((row, rowIndex) => (
+                                                <TableRow hover role="checkbox" tabIndex={-1} key={row.numero}>
+                                                    {columns.map((column) => (
+                                                        <TableCell key={column.id} align={column.align}>
+                                                            {row[column.id]}
+                                                        </TableCell>
+                                                    ))}
+                                                </TableRow>
+                                            ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                            <TablePagination
+                                rowsPerPageOptions={[10, 25, 100]}
+                                component="div"
+                                count={rows.length}
+                                rowsPerPage={rowsPerPage}
+                                page={page}
+                                onPageChange={handleChangePage}
+                                onRowsPerPageChange={handleChangeRowsPerPage}
+                            />
+                        </Paper>
+                    </Container>
+                    <Footer />
+                </>
+        }
+
         </>
     );
 }
