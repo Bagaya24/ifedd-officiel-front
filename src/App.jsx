@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { createBrowserRouter, Outlet, RouterProvider } from 'react-router'
+import { createBrowserRouter, Outlet, RouterProvider, useRouteError } from 'react-router'
 import { CssBaseline } from '@mui/material'
 import Header from './components/appbar'
 import { Accueil } from './pages/accueil'
@@ -24,6 +24,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Header/>,
+    errorElement: <PageError/>,
     children:[
       {
         path:"",
@@ -118,6 +119,17 @@ const router = createBrowserRouter([
     element: <Deconexion/>
   }
 ])
+
+function PageError() {
+  const  error = useRouteError();
+  console.error("Page Error:", error);
+  return (
+    <div>
+      <h1>Erreur</h1>
+      <p>{error?.error?.toString ?? error?.toString}</p>
+    </div>
+  );
+}
 
 function App() {
  

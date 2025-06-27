@@ -17,6 +17,7 @@ import AddCommentaires from '../components/articles/AddCommentaires';
 import Commentaires from '../components/articles/commentaires';
 import { useEffect } from 'react';
 
+
 export function ArticleDetail() {
     const {articles} = useLoaderData();
     const { id } = useParams();

@@ -10,15 +10,33 @@ import { Container, Grid, Dialog, DialogTitle, DialogContent, Box } from '@mui/m
 import { RemoveRedEyeOutlined } from '@mui/icons-material';
 import { Footer } from '../components/footer';
 import { TitleHeader } from '../components/titleHeader';
-import { useLoaderData } from 'react-router';
+;
+import { api } from '../api/Api';
 
 export function Photos() {
-  const {photos} = useLoaderData();
+  const [photos, setPhotos] = useState([]); 
   const [page, setPage] = useState(0);
   const photosPerPage = 9;
   console.log(photos)
   const [open, setOpen] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const [loader, setLoarder]=useState(false)
+
+  const getPhoto=async()=>{
+    setLoarder(true);
+    try {
+      const respose=await api.get("galerie/see");
+      setPhotos(respose.data);
+       setLoarder(false);
+    } catch (error) {
+       setLoarder(false);
+      
+    }
+  }
+
+  React.useEffect(()=>{
+    getPhoto();
+  },[])
 
   const handleOpenModal = (photo) => {
     setSelectedPhoto(photo);
@@ -38,6 +56,12 @@ export function Photos() {
 
   return (
     <>
+    {
+      loader===true?(
+        <div>
+          <p>Chargemnt....</p>
+        </div>
+      ):<>
       <Container maxWidth="xl" sx={{ mt: 10, mb: 4 }}>
         <TitleHeader>Photos</TitleHeader>
 
@@ -106,6 +130,9 @@ export function Photos() {
       </Dialog>
 
       <Footer />
+      </>
+    }
+      
     </>
   );
 }
