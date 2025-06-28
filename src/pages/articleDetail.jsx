@@ -11,7 +11,7 @@ import { useEffect } from 'react';
 
 
 export function ArticleDetail() {
-  const { articles, getArticle, commentaires, getCommentaires } = UseFetch();
+  const { articles, getArticle, commentaires, getCommentaires, loader } = UseFetch();
   const { id } = useParams();
   
 
@@ -30,7 +30,7 @@ export function ArticleDetail() {
   const article = articles.find((a) => a.idArticle.toString() === id);
   const autresArticles = articles.filter((a) => a.idArticle.toString() !== id);
 
-  if (!article) return <Typography>Article non trouvé</Typography>;
+  if (!article) return <Typography></Typography>;
 
     return (<>
         <Container
@@ -42,6 +42,7 @@ export function ArticleDetail() {
 
             }}
         >
+            
             <Grid container spacing={2} sx={{ height: '100%' }}>
                 {/* Article principal */}
                 <Grid
@@ -88,7 +89,7 @@ export function ArticleDetail() {
                 </Grid>
 
                 {/* Autres articles */}
-
+                    
                 <Grid
                     size={{ xs: 12, sm: 12, md: 3, lg: 3 }}
                     sx={{

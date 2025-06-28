@@ -52,7 +52,7 @@ export function Realisation() {
                 
 
                 return (
-                    <Card key={index} sx={{ maxWidth: {xs:300, sm:350, md:400}, height: 450}}>
+                    <Card key={index} sx={{ maxWidth: {sm:270, md:350, lg: 370}, height: {sm: 500, lg: 450}}}>
                         <CardMedia
                             sx={{ height: 200 }}
                             image={
@@ -67,7 +67,7 @@ export function Realisation() {
                                 {article.titre.slice(0, 80)+"..."}
                             </Typography>
                             
-                                    <Box dangerouslySetInnerHTML={{__html:paragraphs}} style={{textAlign: "justify", fontSize:{textSize}}}></Box>
+                                    <Box dangerouslySetInnerHTML={{__html:paragraphs}} style={{textAlign: "justify", fontSize:{xs: "0.5rem", sm:"0.7rem"}}}></Box>
                    
                         </CardContent>
                         <CardActions>

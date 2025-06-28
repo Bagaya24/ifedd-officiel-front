@@ -42,7 +42,7 @@ export function Articles() {
         <>
             <Container maxWidth="xl" sx={{ py: 10 }}>
                 <TitleHeader>Articles</TitleHeader>
-
+                
                 <Grid container spacing={{xs:2, sm:3, md:4}} sx={{ mt: 4 }}>
                     {currentArticles.map((article) => (
                         <Grid item key={article.idArticle} size={{xs: 12, sm: 6, md: 4}}>

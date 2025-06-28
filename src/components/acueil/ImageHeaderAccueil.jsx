@@ -8,8 +8,8 @@ import { Image } from '../image';
 
 export function ImageHeaderAccueil() {
   const handleDownload = () => {
-    // Lien absolu ou relatif vers le fichier
-    const fileUrl = `/publier/mon-document.pdf`;
+    
+    const fileUrl = `/Depliant 3.2.pdf`;
     const link = document.createElement('a');
     link.href = fileUrl;
     link.download = "brochure_ifedd.pdf"; 

@@ -13,6 +13,7 @@ import { TitleHeader } from '../components/titleHeader';
 ;
 import { api } from '../api/Api';
 import UseFetch from '../hooks/useFetch';
+import Spinner from '../components/spinners/Spinner';
 
 export function Photos() {
   const {galeries, getGalerie, loader} = UseFetch()
@@ -46,22 +47,20 @@ export function Photos() {
   const hasNext = startIndex + photosPerPage < galeries.length;
 
   return (
+    
     <>
-    {
-      loader===true?(
-        <div>
-          <Typography variant='h5' align='center'>
-            Chargement...
-          </Typography>
-        </div>
-      ):<>
       <Container maxWidth="xl" sx={{ mt: 10, mb: 4 }}>
         <TitleHeader>Photos</TitleHeader>
-
-        <Grid container rowSpacing={{xs:1, md:2}} columnSpacing={{ xs: 1, sm: 2, md: 3, lg: 3 }} sx={{ mt: 4 }}>
+        {
+          loader ? 
+          <Spinner
+      loader={loader}
+      />
+      :
+      <Grid container rowSpacing={{xs:1, md:2}} columnSpacing={{ xs: 1, sm: 2, md: 3, lg: 3 }} sx={{ mt: 4 }}>
           {paginatedPhotos.map((photo, index) => (
             <Grid size={{xs:12, sm:6, md:4}} key={index}>
-              <Card sx={{ width: {xs: 360, sm: 380, md: 460} }}>
+              <Card sx={{ width: {xs: 360, sm: 380, md: 400} }}>
                 <CardMedia
                   component="img"
                   
@@ -88,6 +87,8 @@ export function Photos() {
             </Grid>
           ))}
         </Grid>
+        }
+        
 
         {/* Pagination Buttons */}
         <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 4 }}>
@@ -123,8 +124,7 @@ export function Photos() {
       </Dialog>
 
       
-      </>
-    }
+      
       <Footer />
     </>
   );

@@ -76,7 +76,7 @@ export function AxesInterventions() {
                                 boxShadow: 3,
                                 borderRadius: 3,
                                 height: 100,
-                                width: {xs:300, sm:300, md: 400},
+                                width: {xs:200, sm:250, md: 300, lg: 400},
                                 display: "flex",
                                 alignItems: "center",
                                 justifyContent: "center",

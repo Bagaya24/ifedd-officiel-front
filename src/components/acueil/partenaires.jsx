@@ -38,9 +38,10 @@ export function Partenaire() {
         <Typography variant="h3" align="center" color="#1769aa" gutterBottom sx={{ fontWeight: 600, mb: 4 }}>
             Nos Partenaires
         </Typography>
+        
       <Grid container spacing={3} justifyContent="center">
         {partenaires.map((partenaire, index) => (
-          <Grid size={gridSize} key={index}>
+          <Grid size={{xs: 6, sm: 3, md: 2}} key={index}>
             <Box
               sx={{
                 p: 3,
@@ -52,7 +53,7 @@ export function Partenaire() {
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
-                height: 180,
+                height: {xs: 80, sm: 100, md: 120},
               }}
             >
               <img src={

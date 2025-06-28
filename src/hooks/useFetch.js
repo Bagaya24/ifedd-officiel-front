@@ -35,7 +35,7 @@ function UseFetch() {
   const getRapport = async () => {
     setLoader(true);
     try {
-      const response=await apiFormData.get("rapport/");
+      const response=await api.get("rapport/");
       setRapport(response.data);
       setLoader(false);
     } catch (error) {
