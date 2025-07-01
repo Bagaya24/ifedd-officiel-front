@@ -42,7 +42,7 @@ const PublicationArticles = () => {
         formData.append("redacteur", redacteur);
 
         try {
-            const response = await fetch(`${urlbase}/articles/publication/`, {
+            const response = await fetch(`${urlbase}articles/publication/`, {
                 method: "POST",
                 body: formData,
             });
