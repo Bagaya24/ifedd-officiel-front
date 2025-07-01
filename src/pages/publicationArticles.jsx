@@ -3,9 +3,9 @@ import { Editor } from '@tinymce/tinymce-react';
 import { Container, TextField, Button, Paper, Box, Alert } from '@mui/material';
 import { Footer } from '../components/footer';
 import { TitleHeader } from '../components/titleHeader';
+import { urlbase } from '../api/Api';
 
 
-const key = import.meta.env.VITE_TINY_API_KEY
 
 const PublicationArticles = () => {
     const [title, setTitle] = useState('');
@@ -42,10 +42,11 @@ const PublicationArticles = () => {
         formData.append("redacteur", redacteur);
 
         try {
-            const response = await fetch(`${API_BASE}/articles/publication/`, {
+            const response = await fetch(`${urlbase}/articles/publication/`, {
                 method: "POST",
                 body: formData,
             });
+            
 
             if (!response.ok) {
                 throw new Error("Erreur serveur");
@@ -121,7 +122,7 @@ const PublicationArticles = () => {
 
                         <Box sx={{ mt: 3, mb: 3 }}>
                             <Editor
-                                apiKey={`${key}`}
+                                apiKey={`${import.meta.env.VITE_TINY_API_KEY}`}
                                 onInit={(evt, editor) => (editorRef.current = editor)}
                                 value={content}
                                 onEditorChange={(newContent) => setContent(newContent)}

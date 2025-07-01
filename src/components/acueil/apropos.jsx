@@ -18,9 +18,9 @@ export function Apropos() {
     <Container
       disableGutters
       maxWidth="xl"
-  
+      
     >
-      <Grid container columnSpacing={{sm:2, md:3}} rowSpacing={2}>
+      <Grid container columnSpacing={{sm:2, md:3}} rowSpacing={2} mt={3}>
        
         <Grid size={{xs:12, md:6}}>
 

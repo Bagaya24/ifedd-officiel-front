@@ -15,8 +15,8 @@ export function Accueil() {
   return (
     <>
      <ImageHeaderAccueil/>
-     <FeatureAccueil/>
      <Apropos/>
+     <FeatureAccueil/>
      <AxesInterventions/>
      <Realisation/>
      <BookCard />

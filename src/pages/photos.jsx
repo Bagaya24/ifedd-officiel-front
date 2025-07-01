@@ -7,11 +7,9 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Container, Grid, Dialog, DialogTitle, DialogContent, Box } from '@mui/material';
-import { RemoveRedEyeOutlined } from '@mui/icons-material';
+
 import { Footer } from '../components/footer';
 import { TitleHeader } from '../components/titleHeader';
-;
-import { api } from '../api/Api';
 import UseFetch from '../hooks/useFetch';
 import Spinner from '../components/spinners/Spinner';
 
@@ -49,7 +47,7 @@ export function Photos() {
   return (
     
     <>
-      <Container maxWidth="xl" sx={{ mt: 10, mb: 4 }}>
+      <Container maxWidth="xl" sx={{ mt: 3, mb: 4 }}>
         <TitleHeader>Photos</TitleHeader>
         {
           loader ? 
@@ -72,17 +70,14 @@ export function Photos() {
                   }
                   alt={photo.legende}
                   sx={{ objectFit: 'cover', height: {xs: 200, md:250} }}
+                  onClick={() => handleOpenModal(photo)}
                 />
                 <CardContent>
                   <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                     {photo.legende?.slice(0, 100)} ...
                   </Typography>
                 </CardContent>
-                <CardActions>
-                  <Button onClick={() => handleOpenModal(photo)}>
-                    <RemoveRedEyeOutlined color="primary" />
-                  </Button>
-                </CardActions>
+              
               </Card>
             </Grid>
           ))}
@@ -108,7 +103,7 @@ export function Photos() {
             <DialogTitle>Image en grand</DialogTitle>
             <DialogContent>
               <img
-                src={selectedPhoto.photo_url ||' https://images.unsplash.com/photo-1455849318743-b2233052fcff?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cmFuZG9tfGVufDB8fDB8fHww'}
+                src={selectedPhoto.photo_url ||'https://images.unsplash.com/photo-1455849318743-b2233052fcff?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cmFuZG9tfGVufDB8fDB8fHww'}
                 alt={selectedPhoto.legende}
                 style={{ width: '100%', height: 'auto', objectFit: 'contain' }}
               />
@@ -121,10 +116,7 @@ export function Photos() {
             </DialogContent>
           </>
         )}
-      </Dialog>
-
-      
-      
+      </Dialog>    
       <Footer />
     </>
   );

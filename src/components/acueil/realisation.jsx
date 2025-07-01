@@ -16,33 +16,12 @@ import { useState } from 'react';
 
 export function Realisation() {
     const {articles, getArticle} = UseFetch()
-    const [textSize, setTextSize] = useState("0.7rem");
+   
 
     useEffect(() => {
         getArticle()
     }, [])
-       useEffect(() => {
-      const handleResize = () => {
-        const width = window.innerWidth;
-        if (width < 600) {
-          setTextSize("0.5rem"); // pleine largeur sur mobile
-        } else if (width < 960) {
-          setTextSize("0.6rem"); // moitié sur tablette
-        } else {
-          setTextSize("0.7rem"); // un tiers sur desktop
-        }
-      };
-  
-      // Exécuter une fois au chargement
-      handleResize();
-      // Réécoute sur redimensionnement
-      window.addEventListener("resize", handleResize);
-  
-      // Nettoyage de l'écouteur
-      return () => {
-        window.removeEventListener("resize", handleResize);
-      };
-    }, []);
+   
 
     return (
                    
@@ -52,7 +31,7 @@ export function Realisation() {
                 
 
                 return (
-                    <Card key={index} sx={{ maxWidth: {sm:270, md:350, lg: 370}, height: {sm: 500, lg: 450}}}>
+                    <Card key={index} sx={{ maxWidth: {sm:270, md:330, lg: 350}, height: {sm: 500, lg: 450}}}>
                         <CardMedia
                             sx={{ height: 200 }}
                             image={

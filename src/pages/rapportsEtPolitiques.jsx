@@ -12,6 +12,7 @@ import UseFetch from '../hooks/useFetch';
 import { useEffect, useState } from 'react';
 import { supabase } from '../hooks/config';
 import Spinner from '../components/spinners/Spinner';
+import { TitleHeader } from '../components/titleHeader';
 
 
 
@@ -114,10 +115,8 @@ export function RapportsEtPolitiques() {
     return (
        
                 <>
-                    <Container maxWidth="lg" sx={{ mt: 10, mb: 4 }}>
-                        <Typography variant="h3" align="center" sx={{ mt: 6, mb: 3, fontWeight: 600 }}>
-                            Rapports et Politiques
-                        </Typography>
+                    <Container maxWidth="lg" sx={{ mt: 3, mb: 4 }}>
+                       <TitleHeader>Rapports et Politiques</TitleHeader>
                         {
                             loader ? 
                             <Spinner

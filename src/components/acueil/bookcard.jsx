@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import {
   Card, CardMedia, CardContent, CardActions,
   Button, Typography, Dialog, DialogTitle, DialogContent,
-  IconButton
+  IconButton,
+  CircularProgress
 } from '@mui/material';
 
 import CloseIcon from '@mui/icons-material/Close';
@@ -12,9 +13,8 @@ import { supabase } from '../../hooks/config'; // assure-toi que ton client supa
 import Spinner from '../spinners/Spinner';
 
 export function BookCard() {
-  const [open, setOpen] = useState(false);
-  const [pdfDataUrl, setPdfDataUrl] = useState(null);
-  const [loadingPdf, setLoadingPdf] = useState(false);
+  const [isDownload, setIsDownload] = useState(false);
+  
 
   const { rapports, getRapport, loader } = UseFetch();
 
@@ -22,59 +22,23 @@ export function BookCard() {
     getRapport();
   }, []);
 
-  // const handleReadClick = async (documentUrl) => {
-  //   try {
-  //     setLoadingPdf(true);
-  //     setPdfDataUrl(null);
 
-  //     const { data, error } = await supabase
-  //       .storage
-  //       .from('rapport')
-  //       .download(`documents/${documentUrl}`);
-
-  //     if (error) {
-  //       console.error("Erreur téléchargement:", error.message);
-  //       alert("Erreur lors du téléchargement");
-  //       setLoadingPdf(false);
-  //       return;
-  //     }
-
-  //     // ✅ Convertir en base64
-  //     const blob = data;
-  //     const reader = new FileReader();
-  //     reader.onloadend = () => {
-  //       const base64data = reader.result;
-  //       setPdfDataUrl(base64data);
-  //       setOpen(true);
-  //       setLoadingPdf(false);
-  //     };
-  //     reader.readAsDataURL(blob);
-
-  //   } catch (e) {
-  //     console.error("Exception lors du téléchargement:", e);
-  //     alert("Erreur lors du téléchargement");
-  //     setLoadingPdf(false);
-  //   }
-  // };
-
-  // const handleClose = () => {
-  //   setOpen(false);
-  //   setPdfDataUrl(null);
-  // };
 
   const handleDownload = async (documentUrl, titre) => {
     try {
+      setIsDownload(true)
       const { data, error } = await supabase
         .storage
         .from('rapport')
         .download(`documents/${documentUrl}`);
 
       if (error) {
+        setIsDownload(false)
         console.error("Erreur téléchargement:", error.message);
         alert("Erreur lors du téléchargement");
         return;
       }
-
+      setIsDownload(false)
       const url = URL.createObjectURL(data);
       const a = document.createElement('a');
       a.href = url;
@@ -121,38 +85,10 @@ export function BookCard() {
                     size="small"
                     onClick={() => handleDownload(rapport.document_url, rapport.titre)}
                   >
-                    Télécharger
+                    {isDownload ? <CircularProgress size={24} color="inherit" /> : "Télécharger"}
                   </Button>
                 </CardActions>
               </Card>
-
-              {/* <Dialog open={open} onClose={handleClose} fullWidth maxWidth="lg">
-                <DialogTitle>
-                  {rapport.titre}
-                  <IconButton
-                    aria-label="fermer"
-                    onClick={handleClose}
-                    sx={{ position: 'absolute', right: 8, top: 8 }}
-                  >
-                    <CloseIcon />
-                  </IconButton>
-                </DialogTitle>
-                <DialogContent dividers sx={{ height: '80vh' }}>
-                  {loadingPdf ? (
-                    <Typography>Chargement...</Typography>
-                  ) : pdfDataUrl ? (
-                    <iframe
-                      src={pdfDataUrl}
-                      width="100%"
-                      height="100%"
-                      style={{ border: 'none' }}
-                      title={`Lecture du rapport`}
-                    />
-                  ) : (
-                    <Typography>Aucun document à afficher</Typography>
-                  )}
-                </DialogContent>
-              </Dialog> */}
             </div>
           ))}
         />
