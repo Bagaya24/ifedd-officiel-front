@@ -31,15 +31,17 @@ export function FeatureAccueil() {
         container
         spacing={{ xs: 2, sm: 3, md: 4 }}
       >
+        
+
         <Grid size={{ xs: 12, sm: 6, md: 4 }}>
           <Box sx={featureBoxStyle}>
-            <VisibilityOutlined fontSize="large" sx={{ mb: 2, color: 'primary.main' }} />
+            <FlagOutlined fontSize="large" sx={{ mb: 2, color: 'primary.main' }} />
             <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
-              Vision
+              Objectif
             </Typography>
             <Typography variant="body1" color="text.secondary">
-              Notre vision est d'assurer la bonne gestion des ressources naturelles
-              en tenant compte du développement des communautés et de la protection de l'environnement.
+              Contribuer à l'amélioration de la qualité de vie des communautés
+              affectées par les conflits et l’exploitation des ressources naturelles.
             </Typography>
           </Box>
         </Grid>
@@ -57,15 +59,17 @@ export function FeatureAccueil() {
           </Box>
         </Grid>
 
+        
+
         <Grid size={{ xs: 12, sm: 6, md: 4 }}>
           <Box sx={featureBoxStyle}>
-            <FlagOutlined fontSize="large" sx={{ mb: 2, color: 'primary.main' }} />
+            <VisibilityOutlined fontSize="large" sx={{ mb: 2, color: 'primary.main' }} />
             <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
-              Objectif
+              Vision
             </Typography>
             <Typography variant="body1" color="text.secondary">
-              Contribuer à l'amélioration de la qualité de vie des communautés
-              affectées par les conflits et l’exploitation des ressources naturelles.
+              Notre vision est d'assurer la bonne gestion des ressources naturelles
+              en tenant compte du développement des communautés et de la protection de l'environnement.
             </Typography>
           </Box>
         </Grid>
