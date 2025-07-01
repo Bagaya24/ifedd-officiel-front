@@ -5,7 +5,8 @@ import Header from "../components/appbar";
 import ProtectRoutes from "./ProtectRoute";
 import { publicRoutes, protectedRoutes } from "./DataRoute";
 import Login from "../pages/login";
-import Deconnexion from "../deconexion";
+import Deconnexion from "../pages/deconexion";
+
 
 
 function Router() {

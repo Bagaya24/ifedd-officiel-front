@@ -5,17 +5,16 @@ import {
   IconButton
 } from '@mui/material';
 
+import CloseIcon from '@mui/icons-material/Close';
 import CustomCarousel from './cunstomeCarousel';
 import UseFetch from '../../hooks/useFetch';
 import { supabase } from '../../hooks/config'; // assure-toi que ton client supabase est importé
 import Spinner from '../spinners/Spinner';
 
-
-
-
 export function BookCard() {
-//   const [open, setOpen] = useState(false);
-//   const [selectedBook, setSelectedBook] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [pdfDataUrl, setPdfDataUrl] = useState(null);
+  const [loadingPdf, setLoadingPdf] = useState(false);
 
   const { rapports, getRapport, loader } = UseFetch();
 
@@ -23,19 +22,48 @@ export function BookCard() {
     getRapport();
   }, []);
 
-//   const handleReadClick = (rapport) => {
-//     setSelectedBook(rapport);
-//     setOpen(true);
-//   };
+  // const handleReadClick = async (documentUrl) => {
+  //   try {
+  //     setLoadingPdf(true);
+  //     setPdfDataUrl(null);
 
-//   const handleClose = () => {
-//     setOpen(false);
-//     setSelectedBook(null);
-//   };
+  //     const { data, error } = await supabase
+  //       .storage
+  //       .from('rapport')
+  //       .download(`documents/${documentUrl}`);
+
+  //     if (error) {
+  //       console.error("Erreur téléchargement:", error.message);
+  //       alert("Erreur lors du téléchargement");
+  //       setLoadingPdf(false);
+  //       return;
+  //     }
+
+  //     // ✅ Convertir en base64
+  //     const blob = data;
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => {
+  //       const base64data = reader.result;
+  //       setPdfDataUrl(base64data);
+  //       setOpen(true);
+  //       setLoadingPdf(false);
+  //     };
+  //     reader.readAsDataURL(blob);
+
+  //   } catch (e) {
+  //     console.error("Exception lors du téléchargement:", e);
+  //     alert("Erreur lors du téléchargement");
+  //     setLoadingPdf(false);
+  //   }
+  // };
+
+  // const handleClose = () => {
+  //   setOpen(false);
+  //   setPdfDataUrl(null);
+  // };
 
   const handleDownload = async (documentUrl, titre) => {
     try {
-    
       const { data, error } = await supabase
         .storage
         .from('rapport')
@@ -47,18 +75,13 @@ export function BookCard() {
         return;
       }
 
-      // Créer un URL local temporaire
       const url = URL.createObjectURL(data);
-
-      // Créer un lien temporaire et le déclencher
       const a = document.createElement('a');
       a.href = url;
       a.download = `${titre}.pdf`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
-
-      // Libérer l'URL quand terminé
       URL.revokeObjectURL(url);
     } catch (e) {
       console.error("Exception lors du téléchargement:", e);
@@ -68,76 +91,71 @@ export function BookCard() {
 
   return (
     <>
-    {loader ? 
-    
-    <Spinner
-    loader={loader}
-    />
-    : 
-    <CustomCarousel title={"Nos Rapports"} slide={
-      rapports.map((rapport, index) => (
-         
-    <div key={index}>
-          <Card sx={{ maxWidth: 300 }}>
-            <CardMedia
-              component="img"
-              height="180"
-              image={rapport.image_url
-                ? rapport.image_url
-                : 'https://via.placeholder.com/300x180?text=Pas+de+couverture'}
-              alt={`Couverture du rapport ${rapport.titre}`}
-            />
-            <CardContent>
-              <Typography variant="h6" component="div">
-                {rapport.titre}
-              </Typography>
-            </CardContent>
-            <CardActions>
-              {/* <Button size="small" onClick={() => handleReadClick(rapport)}>
-                Lire en ligne
-              </Button> */}
-              <Button
-                size="small"
-                onClick={() => handleDownload(rapport.document_url, rapport.titre)}
-              >
-                Télécharger
-              </Button>
-            </CardActions>
-          </Card>
-          {/* Modal PDF */}
-          {/* <Dialog open={open} onClose={handleClose} fullWidth maxWidth="lg">
-            <DialogTitle>
-              {selectedBook?.titre}
-              <IconButton
-                aria-label="fermer"
-                onClick={handleClose}
-                sx={{ position: 'absolute', right: 8, top: 8 }}
-              >
-                <CloseIcon />
-              </IconButton>
-            </DialogTitle>
-            <DialogContent dividers sx={{ height: '80vh' }}>
-              {selectedBook?.document_url ? (
-                <iframe
-                  src={`data:application/pdf;base64,${selectedBook.document_url}`}
-                  width="100%"
-                  height="100%"
-                  style={{ border: 'none' }}
-                  title={`Lecture de ${selectedBook.titre}`}
+      {loader ? (
+        <Spinner loader={loader} />
+      ) : (
+        <CustomCarousel
+          title={"Nos Rapports"}
+          slide={rapports.map((rapport, index) => (
+            <div key={index}>
+              <Card sx={{ maxWidth: 300 }}>
+                <CardMedia
+                  component="img"
+                  height="180"
+                  image={rapport.image_url
+                    ? rapport.image_url
+                    : 'https://via.placeholder.com/300x180?text=Pas+de+couverture'}
+                  alt={`Couverture du rapport ${rapport.titre}`}
                 />
-              ) : (
-                <Typography>Aucun document à afficher</Typography>
-              )}
-            </DialogContent>
-          </Dialog> */}
-        </div>
-    
-        
-      ))
-    } />
-    }
-    
+                <CardContent>
+                  <Typography variant="h6" component="div">
+                    {rapport.titre}
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  {/* <Button size="small" onClick={() => handleReadClick(rapport.document_url)}>
+                    Lire en ligne
+                  </Button> */}
+                  <Button
+                    size="small"
+                    onClick={() => handleDownload(rapport.document_url, rapport.titre)}
+                  >
+                    Télécharger
+                  </Button>
+                </CardActions>
+              </Card>
+
+              {/* <Dialog open={open} onClose={handleClose} fullWidth maxWidth="lg">
+                <DialogTitle>
+                  {rapport.titre}
+                  <IconButton
+                    aria-label="fermer"
+                    onClick={handleClose}
+                    sx={{ position: 'absolute', right: 8, top: 8 }}
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                </DialogTitle>
+                <DialogContent dividers sx={{ height: '80vh' }}>
+                  {loadingPdf ? (
+                    <Typography>Chargement...</Typography>
+                  ) : pdfDataUrl ? (
+                    <iframe
+                      src={pdfDataUrl}
+                      width="100%"
+                      height="100%"
+                      style={{ border: 'none' }}
+                      title={`Lecture du rapport`}
+                    />
+                  ) : (
+                    <Typography>Aucun document à afficher</Typography>
+                  )}
+                </DialogContent>
+              </Dialog> */}
+            </div>
+          ))}
+        />
+      )}
     </>
-    
   );
 }

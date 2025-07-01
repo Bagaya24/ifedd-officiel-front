@@ -8,6 +8,7 @@ import AddCommentaires from '../components/articles/AddCommentaires';
 import Commentaires from '../components/articles/commentaires';
 import UseFetch from '../hooks/useFetch';
 import { useEffect } from 'react';
+import Spinner from '../components/spinners/Spinner';
 
 
 export function ArticleDetail() {
@@ -30,7 +31,9 @@ export function ArticleDetail() {
   const article = articles.find((a) => a.idArticle.toString() === id);
   const autresArticles = articles.filter((a) => a.idArticle.toString() !== id);
 
-  if (!article) return <Typography></Typography>;
+  if (!article) return <Spinner
+  loader={loader}
+  />;
 
     return (<>
         <Container

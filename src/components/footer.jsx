@@ -38,19 +38,19 @@ export function Footer() {
             <Typography variant="h6" fontWeight="bold" gutterBottom color='#eceff1'>
               Nos adresses
             </Typography>
-            <Link href="https://maps.app.goo.gl/KjuT43mASjtUDT1G7" underline="none" color="#eceff1" display="block" sx={{ mb: 1, ":hover": {color: "blue" } }}>
+            <Link href="https://maps.app.goo.gl/KjuT43mASjtUDT1G7" underline="none" color="#eceff1" display="block" sx={{ mb: 1, ":hover": {color: "blue" }, size:{xs:"0.6rem", md:"0.8"} }}>
               <RoomOutlined/> Notre adresse à Goma: N° 81 Av présidentielle,  Quartier Himbi, commune de Goma, ville de Goma/RDC
             </Link>
-            <Link href="https://maps.app.goo.gl/KjuT43mASjtUDT1G7" underline="none" color="#eceff1" display="block" sx={{ mb: 1, ":hover": {color: "blue" } }}>
+            <Link href="https://maps.app.goo.gl/KjuT43mASjtUDT1G7" underline="none" color="#eceff1" display="block" sx={{ mb: 1, ":hover": {color: "blue" }, size:{xs:"0.6rem", md:"0.8"} }}>
               <RoomOutlined/> Notre adresse à Kolwezi: N°03, avenue Mumba 1, Quartier Dilungu, Commune de Dilala, Ville de Kolwezi.
             </Link>
             <Link href="#" underline="none" color="#eceff1" display="block" sx={{ mb: 1 }}>
               <PhoneEnabled/> +243 823 938 632
             </Link>
-            <Link href="https://ifedd-rdc.org/" underline="none" color="#eceff1" display="block" sx={{ mb: 1, ":hover": {color: "blue" } }}>
+            <Link href="https://ifedd-rdc.org/" underline="none" color="#eceff1" display="block" sx={{ mb: 1, ":hover": {color: "blue" }, size:{xs:"0.6rem", md:"0.8"} }}>
               <LanguageOutlined/> ifedd@ifedd-rdc.org
             </Link>
-            <Link href="#" underline="none" color="#eceff1" display="block" sx={{ mb: 1 , ":hover": {color: "blue" }}}>
+            <Link href="#" underline="none" color="#eceff1" display="block" sx={{ mb: 1 , ":hover": {color: "blue" }, size:{xs:"0.6rem", md:"0.8"}}}>
               <EmailOutlined/>  ifeddrdc@gmail.com
             </Link>
           </Grid>
