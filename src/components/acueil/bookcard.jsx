@@ -8,7 +8,7 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import CustomCarousel from './cunstomeCarousel';
 import UseFetch from '../../hooks/useFetch';
-// import { supabase } from '../../hooks/config'; // assure-toi que ton client supabase est importé
+import { supabase } from '../../hooks/config'; // assure-toi que ton client supabase est importé
 import Spinner from '../spinners/Spinner';
 
 export function BookCard() {
@@ -63,31 +63,31 @@ export function BookCard() {
   // };
 
   const handleDownload = async (documentUrl, titre) => {
-    // try {
-    //   const { data, error } = await supabase
-    //     .storage
-    //     .from('rapport')
-    //     .download(`documents/${documentUrl}`);
+    try {
+      const { data, error } = await supabase
+        .storage
+        .from('rapport')
+        .download(`documents/${documentUrl}`);
 
-    //   if (error) {
-    //     console.error("Erreur téléchargement:", error.message);
-    //     alert("Erreur lors du téléchargement");
-    //     return;
-    //   }
+      if (error) {
+        console.error("Erreur téléchargement:", error.message);
+        alert("Erreur lors du téléchargement");
+        return;
+      }
 
-    //   const url = URL.createObjectURL(data);
-    //   const a = document.createElement('a');
-    //   a.href = url;
-    //   a.download = `${titre}.pdf`;
-    //   document.body.appendChild(a);
-    //   a.click();
-    //   document.body.removeChild(a);
-    //   URL.revokeObjectURL(url);
-    // } catch (e) {
-    //   console.error("Exception lors du téléchargement:", e);
-    //   alert("Erreur lors du téléchargement");
-    // }
-    console.log(documentUrl)
+      const url = URL.createObjectURL(data);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${titre}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch (e) {
+      console.error("Exception lors du téléchargement:", e);
+      alert("Erreur lors du téléchargement");
+    }
+  
   };
 
   return (
