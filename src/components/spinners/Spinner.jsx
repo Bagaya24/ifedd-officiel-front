@@ -1,5 +1,5 @@
-import React from 'react'
-import { DotLoader } from 'react-spinners';
+
+import {HashLoader} from 'react-spinners';
 
 const override = {
   display: "block",
@@ -9,7 +9,7 @@ const override = {
 
 export default function Spinner({loader}) {
   return (
-    <DotLoader
+    <HashLoader
         color="#1769aa"
         loading={loader}
         cssOverride={override}
