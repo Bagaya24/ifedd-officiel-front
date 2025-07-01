@@ -10,7 +10,7 @@ import { Button, Container, Typography } from '@mui/material';
 import { Footer } from '../components/footer';
 import UseFetch from '../hooks/useFetch';
 import { useEffect, useState } from 'react';
-// import { supabase } from '../hooks/config';
+import { supabase } from '../hooks/config';
 import Spinner from '../components/spinners/Spinner';
 
 
@@ -39,37 +39,37 @@ const columns = [
 ];
 
   const handleDownload = async (documentUrl, titre) => {
-    // try {
-    //     console.log(documentUrl)
-    //   const { data, error } = await supabase
-    //     .storage
-    //     .from('rapport')
-    //     .download(`documents/${documentUrl}`);
+    try {
+        console.log(documentUrl)
+      const { data, error } = await supabase
+        .storage
+        .from('rapport')
+        .download(`documents/${documentUrl}`);
 
-    //   if (error) {
-    //     console.error("Erreur téléchargement:", error.message);
-    //     alert("Erreur lors du téléchargement");
-    //     return;
-    //   }
+      if (error) {
+        console.error("Erreur téléchargement:", error.message);
+        alert("Erreur lors du téléchargement");
+        return;
+      }
 
-    //   // Créer un URL local temporaire
-    //   const url = URL.createObjectURL(data);
+      // Créer un URL local temporaire
+      const url = URL.createObjectURL(data);
 
-    //   // Créer un lien temporaire et le déclencher
-    //   const a = document.createElement('a');
-    //   a.href = url;
-    //   a.download = `${titre}.pdf`;
-    //   document.body.appendChild(a);
-    //   a.click();
-    //   document.body.removeChild(a);
+      // Créer un lien temporaire et le déclencher
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${titre}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
 
-    //   // Libérer l'URL quand terminé
-    //   URL.revokeObjectURL(url);
-    // } catch (e) {
-    //   console.error("Exception lors du téléchargement:", e);
-    //   alert("Erreur lors du téléchargement");
-    // }
-    console.log(documentUrl)
+      // Libérer l'URL quand terminé
+      URL.revokeObjectURL(url);
+    } catch (e) {
+      console.error("Exception lors du téléchargement:", e);
+      alert("Erreur lors du téléchargement");
+    }
+    
   };
 
 
