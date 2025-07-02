@@ -63,7 +63,7 @@ export function BookCard() {
           title={"Nos Rapports"}
           slide={rapports.map((rapport, index) => (
             <div key={index}>
-              <Card sx={{ maxWidth: 300 }}>
+              <Card >
                 <CardMedia
                   component="img"
                   height="180"
@@ -78,9 +78,7 @@ export function BookCard() {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  {/* <Button size="small" onClick={() => handleReadClick(rapport.document_url)}>
-                    Lire en ligne
-                  </Button> */}
+                 
                   <Button
                     size="small"
                     onClick={() => handleDownload(rapport.document_url, rapport.titre)}

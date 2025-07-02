@@ -31,7 +31,7 @@ export function Realisation() {
                 
 
                 return (
-                    <Card key={index} sx={{ maxWidth: {sm:270, md:330, lg: 350}, height: {sm: 500, lg: 450}}}>
+                    <Card key={index} sx={{height: {sm: 500, lg: 450}}}>
                         <CardMedia
                             sx={{ height: 200 }}
                             image={
