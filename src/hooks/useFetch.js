@@ -59,7 +59,7 @@ function UseFetch() {
   
     try {
     
-      const response=await api.get(`articles/commentaire/${id}`);
+      const response=await api.get(`articles/commentaire/${id}/`);
       setCommentaires(response.data);
       
     } catch (error) {

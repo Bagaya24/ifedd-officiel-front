@@ -1,8 +1,8 @@
 
-import { Box, Button, Container, Paper, TextField, Typography } from '@mui/material';
+import { Box, Button, Paper, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
 
-import { urlbase } from '../../api/Api';
+import { api } from '../../api/Api';
 
 export default function AddCommentaires({ id, onCommentAdded }) {
   const [auteur, setAuteur] = useState('');
@@ -17,7 +17,7 @@ export default function AddCommentaires({ id, onCommentAdded }) {
     formData.append("content", content);
 
     try {
-      const response = await fetch(`${urlbase}articles/add-commentaire/${id}`, {
+      const response = await api.post(`articles/add-commentaire/${id}/`, {
         method: "POST",
         body: formData,
       });

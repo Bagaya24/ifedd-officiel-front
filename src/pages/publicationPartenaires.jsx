@@ -4,14 +4,15 @@ import {
     Box,
     Button,
     TextField,
-  
+
     Paper,
     Container,
     Alert,
+    CircularProgress,
 } from '@mui/material';
 import { Footer } from '../components/footer';
 import { TitleHeader } from '../components/titleHeader';
-import { urlbase } from '../api/Api';
+import { apiFormData, urlbase } from '../api/Api';
 
 const PublicationsPartenaires = () => {
     const [logo, setLogo] = useState(null);
@@ -20,8 +21,7 @@ const PublicationsPartenaires = () => {
     const [preview, setPreview] = useState(null);
     const [alertType, setAlertType] = useState(null);
     const [alertMessage, setAlertMessage] = useState('');
-
-
+    const [isUpload, setIsUpload] = useState(false)
 
 
     const handleImageChange = (e) => {
@@ -41,24 +41,21 @@ const PublicationsPartenaires = () => {
             setAlertMessage("Veuillez remplir tous les champs et ajouter une logo.");
             return;
         }
-
+        setIsUpload(true)
         const formData = new FormData();
         formData.append("logo", logo);
         formData.append("name", name)
 
         try {
-            const response = await fetch(`${urlbase}partenaire/publication`, {
-                method: "POST",
-                body: formData,
-            });
 
-            if (!response.ok) {
+            const response = await apiFormData.post(`partenaire/publication/`, formData)
+            if (!response) {
+                setIsUpload(false)
                 throw new Error("Erreur serveur");
             }
 
-            const result = await response.json();
-
-            console.log(result)
+            setIsUpload(false)
+            console.log(response)
             setLogo(null);
             setPreview(null);
             setName("")
@@ -90,7 +87,7 @@ const PublicationsPartenaires = () => {
                     )}
                     <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2 }}>
                         <input
-                            accept="logo/*"
+                            accept="image/*"
                             style={{ display: 'none' }}
                             id="logo-upload"
                             type="file"
@@ -133,9 +130,10 @@ const PublicationsPartenaires = () => {
                             type="submit"
                             variant="contained"
                             color="primary"
+                            disabled={isUpload ? true : false}
                             fullWidth
                         >
-                            Publier
+                            {isUpload ? <CircularProgress size={24} color="inherit" /> : "Publier"}
                         </Button>
                     </Box>
                 </Paper>
