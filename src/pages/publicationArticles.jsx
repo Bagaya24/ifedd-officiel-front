@@ -1,11 +1,12 @@
 import { useState, useRef } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
-import { Container, TextField, Button, Paper, Box, Alert } from '@mui/material';
+import { Container, TextField, Button, Paper, Box, Alert, CircularProgress } from '@mui/material';
 import { Footer } from '../components/footer';
 import { TitleHeader } from '../components/titleHeader';
+import { apiFormData, urlbase } from '../api/Api';
+import TableArticles from '../components/tables/TablesArticles';
 
 
-const key = import.meta.env.VITE_TINY_API_KEY
 
 const PublicationArticles = () => {
     const [title, setTitle] = useState('');
@@ -15,9 +16,10 @@ const PublicationArticles = () => {
 
     const [alertType, setAlertType] = useState(null);
     const [alertMessage, setAlertMessage] = useState('');
+    const [isUpload, setIsUpload] = useState(false)
 
     const editorRef = useRef(null);
-   
+
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -35,6 +37,7 @@ const PublicationArticles = () => {
             return;
         }
 
+        setIsUpload(true)
         const formData = new FormData();
         formData.append("title", title);
         formData.append("content", editorRef.current.getContent());
@@ -42,14 +45,17 @@ const PublicationArticles = () => {
         formData.append("redacteur", redacteur);
 
         try {
-            const response = await fetch(`${API_BASE}/articles/publication/`, {
-                method: "POST",
-                body: formData,
-            });
 
-            if (!response.ok) {
+            const response = await apiFormData.post(`articles/publication/`, formData)
+
+
+            if (!response) {
+                setIsUpload(false)
                 throw new Error("Erreur serveur");
             }
+
+            setIsUpload(false)
+            console.log(response)
             setTitle("");
             setPreview(null);
             setContent("");
@@ -65,13 +71,13 @@ const PublicationArticles = () => {
 
     return (
         <>
-        
+
             <Container maxWidth="lg" sx={{ py: 10 }}>
-                    <TitleHeader>
-                         Publier un article
-                    </TitleHeader>
+                <TitleHeader>
+                    Publier un article
+                </TitleHeader>
                 <Paper elevation={3} sx={{ p: 4 }}>
-                    
+
 
                     {alertType && (
                         <Alert
@@ -121,7 +127,7 @@ const PublicationArticles = () => {
 
                         <Box sx={{ mt: 3, mb: 3 }}>
                             <Editor
-                                apiKey={`${key}`}
+                                apiKey={`${import.meta.env.VITE_TINY_API_KEY}`}
                                 onInit={(evt, editor) => (editorRef.current = editor)}
                                 value={content}
                                 onEditorChange={(newContent) => setContent(newContent)}
@@ -147,13 +153,15 @@ const PublicationArticles = () => {
                             variant="contained"
                             color="primary"
                             size="large"
+                            disabled={isUpload ? true : false}
                             sx={{ mt: 4 }}
                         >
-                            Publier l'article
+                            {isUpload ? <CircularProgress size={24} color="inherit" /> : "Publier l'article"}
                         </Button>
                     </Box>
                 </Paper>
             </Container>
+            <TableArticles />
             <Footer />
         </>
     );

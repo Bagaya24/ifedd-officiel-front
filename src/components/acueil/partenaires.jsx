@@ -2,33 +2,25 @@ import { Container, Grid, Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useLoaderData } from "react-router";
 import UseFetch from "../../hooks/useFetch";
+import { Delete } from "@mui/icons-material";
+import { api } from "../../api/Api";
 
 export function Partenaire() {
   const {partenaires, getPartenaires} = UseFetch()
-  const [gridSize, setGridSize] = useState(2); // valeur par défaut (1/3 de la grille)
-  
-    useEffect(() => {
-      const handleResize = () => {
-        const width = window.innerWidth;
-        if (width < 600) {
-          setGridSize(6); // pleine largeur sur mobile
-        } else if (width < 960) {
-          setGridSize(4); // moitié sur tablette
-        } else {
-          setGridSize(2); // un tiers sur desktop
+
+  const name = localStorage.getItem('username');
+
+   const handleDelete = async (id) => {
+        try {
+            const response = await api.delete(`partenaire/delete/${id}/`);
+            console.log(response)
+            
+            getPartenaires();
+        } catch (e) {
+            console.error("Erreur lors de la suppression:", e);
+            alert("Erreur lors de la suppression.");
         }
-      };
-  
-      // Exécuter une fois au chargement
-      handleResize();
-      // Réécoute sur redimensionnement
-      window.addEventListener("resize", handleResize);
-  
-      // Nettoyage de l'écouteur
-      return () => {
-        window.removeEventListener("resize", handleResize);
-      };
-    }, []);
+    };
 
     useEffect(() => {
       getPartenaires()
@@ -64,6 +56,15 @@ export function Partenaire() {
               alt={partenaire.name} 
               style={{ width: 60, height: 60, objectFit: "contain" }}/>
               <Typography sx={{ mt: 2, fontWeight: 500 }}>{partenaire.name}</Typography>
+              {
+                name && 
+                <Delete
+                size="small"
+                color="error"
+                onClick={() => handleDelete(partenaire.id)}
+              />
+              }
+              
             </Box>
           </Grid>
         ))}

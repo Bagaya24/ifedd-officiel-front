@@ -12,6 +12,8 @@ import UseFetch from '../hooks/useFetch';
 import { useEffect, useState } from 'react';
 import { supabase } from '../hooks/config';
 import Spinner from '../components/spinners/Spinner';
+import { TitleHeader } from '../components/titleHeader';
+import { api } from '../api/Api';
 
 
 
@@ -38,39 +40,51 @@ const columns = [
     },
 ];
 
-  const handleDownload = async (documentUrl, titre) => {
+const handleDownload = async (documentUrl, titre) => {
     try {
         console.log(documentUrl)
-      const { data, error } = await supabase
-        .storage
-        .from('rapport')
-        .download(`documents/${documentUrl}`);
+        const { data, error } = await supabase
+            .storage
+            .from('rapport')
+            .download(`documents/${documentUrl}`);
 
-      if (error) {
-        console.error("Erreur téléchargement:", error.message);
-        alert("Erreur lors du téléchargement");
-        return;
-      }
+        if (error) {
+            console.error("Erreur téléchargement:", error.message);
+            alert("Erreur lors du téléchargement");
+            return;
+        }
 
-      // Créer un URL local temporaire
-      const url = URL.createObjectURL(data);
+        // Créer un URL local temporaire
+        const url = URL.createObjectURL(data);
 
-      // Créer un lien temporaire et le déclencher
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `${titre}.pdf`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
+        // Créer un lien temporaire et le déclencher
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${titre}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
 
-      // Libérer l'URL quand terminé
-      URL.revokeObjectURL(url);
+        // Libérer l'URL quand terminé
+        URL.revokeObjectURL(url);
     } catch (e) {
-      console.error("Exception lors du téléchargement:", e);
-      alert("Erreur lors du téléchargement");
+        console.error("Exception lors du téléchargement:", e);
+        alert("Erreur lors du téléchargement");
     }
-    
-  };
+
+};
+
+const handleDelete = async (id) => {
+    try {
+        const response = await api.delete(`rapport/delete/${id}/`)
+        console.log(response)
+
+    }
+    catch (e) {
+        console.error("Exception lors de la suppression: ", e);
+        alert("Erreur lors de la suppressiont");
+    }
+}
 
 
 function createData(index, rapport) {
@@ -80,12 +94,23 @@ function createData(index, rapport) {
         annee: rapport.annee, // tu peux changer ça si tu as une vraie date
         type: rapport.types, // ou une propriété dynamique si disponible
         action: (
-            <Button
-                size="small"
-                onClick={() => handleDownload(rapport.document_url, rapport.titre)}
-              >
-                Télécharger
-              </Button>
+            <>
+                <Button
+                    size="small"
+                    onClick={() => handleDownload(rapport.document_url, rapport.titre)}
+                >
+                    Télécharger
+                </Button>
+                <Button
+                    size="small"
+                    color='error'
+                    onClick={() => handleDelete(rapport.id)}
+                >
+                    supprimer
+                </Button>
+
+            </>
+
         ),
     };
 }
@@ -95,7 +120,7 @@ export function RapportsEtPolitiques() {
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
     const { rapports, getRapport, loader } = UseFetch()
-   
+
     useEffect(() => {
         getRapport();
     }, [])
@@ -112,19 +137,17 @@ export function RapportsEtPolitiques() {
     };
 
     return (
-       
-                <>
-                    <Container maxWidth="lg" sx={{ mt: 10, mb: 4 }}>
-                        <Typography variant="h3" align="center" sx={{ mt: 6, mb: 3, fontWeight: 600 }}>
-                            Rapports et Politiques
-                        </Typography>
-                        {
-                            loader ? 
-                            <Spinner
+
+        <>
+            <Container maxWidth="lg" sx={{ mt: 3, mb: 4 }}>
+                <TitleHeader>Rapports et Politiques</TitleHeader>
+                {
+                    loader ?
+                        <Spinner
                             loader={loader}
-                            />
-                            :
-                             <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+                        />
+                        :
+                        <Paper sx={{ width: '100%', overflow: 'hidden' }}>
 
                             <TableContainer sx={{ maxHeight: 440 }}>
                                 <Table stickyHeader aria-label="sticky table">
@@ -166,12 +189,12 @@ export function RapportsEtPolitiques() {
                                 onRowsPerPageChange={handleChangeRowsPerPage}
                             />
                         </Paper>
-                        }
-                       
-                    </Container>
-                    <Footer />
-                </>
-        
+                }
+
+            </Container>
+            <Footer />
+        </>
+
 
     );
 }

@@ -40,7 +40,7 @@ export function Articles() {
 
     return (
         <>
-            <Container maxWidth="xl" sx={{ py: 10 }}>
+            <Container maxWidth="xl" sx={{ py: 3 }}>
                 <TitleHeader>Articles</TitleHeader>
                 
                 <Grid container spacing={{xs:2, sm:3, md:4}} sx={{ mt: 4 }}>

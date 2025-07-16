@@ -24,7 +24,7 @@ function UseFetch() {
   const getGalerie=async()=>{
     setLoader(true);
     try {
-      const response=await api.get("galerie");
+      const response=await api.get("galerie/");
       setGalerie(response.data);
       setLoader(false);
     } catch (error) {
@@ -59,7 +59,7 @@ function UseFetch() {
   
     try {
     
-      const response=await api.get(`articles/commentaire/${id}`);
+      const response=await api.get(`articles/commentaire/${id}/`);
       setCommentaires(response.data);
       
     } catch (error) {

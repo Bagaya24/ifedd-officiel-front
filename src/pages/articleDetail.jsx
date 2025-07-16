@@ -1,6 +1,6 @@
 import {
-  Container, Grid, Card, CardMedia, CardContent,
-  Typography, Avatar, Box, Divider, Paper,
+    Container, Grid, Card, CardMedia, CardContent,
+    Typography, Avatar, Box, Divider, Paper,
 } from '@mui/material';
 import { NavLink, useParams } from 'react-router-dom';
 import { Footer } from '../components/footer';
@@ -12,28 +12,27 @@ import Spinner from '../components/spinners/Spinner';
 
 
 export function ArticleDetail() {
-  const { articles, getArticle, commentaires, getCommentaires, loader } = UseFetch();
-  const { id } = useParams();
-  
-
-  // Récupère les articles
-  useEffect(() => {
-    getArticle();
-    getCommentaires(id)
-  }, []);
+    const { articles, getArticle, commentaires, getCommentaires, loader } = UseFetch();
+    const { id } = useParams();
 
 
+    // Récupère les articles
+    useEffect(() => {
+        getArticle();
+        getCommentaires(id)
+    }, []);
 
-  useEffect(() => {
-    getCommentaires(id);
-  }, [id]);
 
-  const article = articles.find((a) => a.idArticle.toString() === id);
-  const autresArticles = articles.filter((a) => a.idArticle.toString() !== id);
+    useEffect(() => {
+        getCommentaires(id);
+    }, [id]);
 
-  if (!article) return <Spinner
-  loader={loader}
-  />;
+    const article = articles.find((a) => a.idArticle.toString() === id);
+    const autresArticles = articles.filter((a) => a.idArticle.toString() !== id);
+
+    if (!article) return <Spinner
+        loader={loader}
+    />;
 
     return (<>
         <Container
@@ -45,7 +44,7 @@ export function ArticleDetail() {
 
             }}
         >
-            
+
             <Grid container spacing={2} sx={{ height: '100%' }}>
                 {/* Article principal */}
                 <Grid
@@ -85,14 +84,14 @@ export function ArticleDetail() {
                                 </Typography>
                             </Box>
                             <Divider sx={{ my: 2 }} />
-                            <div dangerouslySetInnerHTML={{ __html: article.texte }} style={{textAlign: "justify"}} >
+                            <div dangerouslySetInnerHTML={{ __html: article.texte }} style={{ textAlign: "justify" }} >
                             </div>
                         </Box>
                     </Paper>
                 </Grid>
 
                 {/* Autres articles */}
-                    
+
                 <Grid
                     size={{ xs: 12, sm: 12, md: 3, lg: 3 }}
                     sx={{
@@ -100,21 +99,19 @@ export function ArticleDetail() {
                         overflowY: { xs: 'unset', md: 'auto' },
                         overflowX: { xs: 'auto', md: 'hidden' },
                         py: 2,
-                        display: 'flex',
-                        flexDirection: 'column',
                     }}
                 >
                     <Typography variant="h6" fontWeight={600} gutterBottom sx={{ pl: { xs: 1, md: 0 } }}>
                         Lire aussi
                     </Typography>
 
-                    {/* Conteneur scrollable horizontal sur mobile */}
                     <Box
                         sx={{
                             display: 'flex',
                             flexDirection: { xs: 'row', md: 'column' },
                             gap: 2,
                             overflowX: { xs: 'auto', md: 'unset' },
+                            width: '100%',
                             pb: { xs: 2, md: 0 },
                         }}
                     >
@@ -136,15 +133,11 @@ export function ArticleDetail() {
                                     },
                                 }}
                                 component={NavLink}
-                                to={`/articles/${a.idArticle}`}     
+                                to={`/articles/${a.idArticle}`}
                             >
                                 <CardMedia
                                     component="img"
-                                    image={
-                                        a.picture_url
-                                            ? a.picture_url
-                                            : 'https://images.unsplash.com/photo-1455849318743-b2233052fcff?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cmFuZG9tfGVufDB8fDB8fHww'
-                                    }
+                                    image={a.picture_url ? a.picture_url : 'https://images.unsplash.com/photo-1455849318743-b2233052fcff?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cmFuZG9tfGVufDB8fDB8fHww'}
                                     alt={a.titre}
                                     sx={{ width: 100, height: 100, objectFit: 'cover' }}
                                 />
@@ -153,25 +146,25 @@ export function ArticleDetail() {
                                         {a.titre.length > 50 ? a.titre.slice(0, 47) + '...' : a.titre}
                                     </Typography>
                                     <Typography variant="caption" color="text.secondary">
-                                        {a.DatePublication &&
-                                            new Date(a.DatePublication).toLocaleDateString()}
+                                        {a.DatePublication && new Date(a.DatePublication).toLocaleDateString()}
                                     </Typography>
                                 </CardContent>
                             </Card>
                         ))}
                     </Box>
                 </Grid>
+
             </Grid>
 
         </Container>
-      <Grid container spacing={2} sx={{ mt: 4, px: 2, backgroundColor: "#eceff1" }}>
-        <Grid xs={12} md={4}>
-          <AddCommentaires id={id} onCommentAdded={getCommentaires} />
+        <Grid container spacing={2} sx={{ mt: 4, px: 2, backgroundColor: "#eceff1" }}>
+            <Grid xs={12} md={4}>
+                <AddCommentaires id={id} onCommentAdded={getCommentaires} />
+            </Grid>
+            <Grid xs={12} md={8}>
+                <Commentaires commentaires={commentaires} />
+            </Grid>
         </Grid>
-        <Grid xs={12} md={8}>
-          <Commentaires commentaires={commentaires} />
-        </Grid>
-      </Grid>
 
         <Footer />
     </>

@@ -1,9 +1,8 @@
 import { Box, Container, Grid, Link, Typography, IconButton, Button } from '@mui/material';
 import FacebookIcon from '@mui/icons-material/Facebook';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import InstagramIcon from '@mui/icons-material/Instagram';
+
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import { EmailOutlined, LanguageOutlined, PhoneEnabled, RoomOutlined } from '@mui/icons-material';
+import { EmailOutlined, LanguageOutlined, PhoneEnabled, RoomOutlined, X, YouTube } from '@mui/icons-material';
 import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -38,19 +37,19 @@ export function Footer() {
             <Typography variant="h6" fontWeight="bold" gutterBottom color='#eceff1'>
               Nos adresses
             </Typography>
-            <Link href="https://maps.app.goo.gl/KjuT43mASjtUDT1G7" underline="none" color="#eceff1" display="block" sx={{ mb: 1, ":hover": {color: "blue" }, size:{xs:"0.6rem", md:"0.8"} }}>
+            <Link href="https://maps.app.goo.gl/KjuT43mASjtUDT1G7" underline="none" color="#eceff1" display="block" sx={{ mb: 1, ":hover": {color: "blue" }, size:{xs:"0.5rem", md:"0.8rem"} }}>
               <RoomOutlined/> Notre adresse à Goma: N° 81 Av présidentielle,  Quartier Himbi, commune de Goma, ville de Goma/RDC
             </Link>
-            <Link href="https://maps.app.goo.gl/KjuT43mASjtUDT1G7" underline="none" color="#eceff1" display="block" sx={{ mb: 1, ":hover": {color: "blue" }, size:{xs:"0.6rem", md:"0.8"} }}>
+            <Link href="#" underline="none" color="#eceff1" display="block" sx={{ mb: 1, ":hover": {color: "blue" }, size:{xs:"0.5rem", md:"0.8rem"} }}>
               <RoomOutlined/> Notre adresse à Kolwezi: N°03, avenue Mumba 1, Quartier Dilungu, Commune de Dilala, Ville de Kolwezi.
             </Link>
-            <Link href="#" underline="none" color="#eceff1" display="block" sx={{ mb: 1 }}>
+            <Link href="https://wa.me/+243823938632" underline="none" color="#eceff1" display="block" sx={{ mb: 1 }}>
               <PhoneEnabled/> +243 823 938 632
             </Link>
-            <Link href="https://ifedd-rdc.org/" underline="none" color="#eceff1" display="block" sx={{ mb: 1, ":hover": {color: "blue" }, size:{xs:"0.6rem", md:"0.8"} }}>
+            <Link href="https://ifedd-rdc.org/" underline="none" color="#eceff1" display="block" sx={{ mb: 1, ":hover": {color: "blue" }, size:{xs:"0.5rem", md:"0.8rem"} }}>
               <LanguageOutlined/> ifedd@ifedd-rdc.org
             </Link>
-            <Link href="#" underline="none" color="#eceff1" display="block" sx={{ mb: 1 , ":hover": {color: "blue" }, size:{xs:"0.6rem", md:"0.8"}}}>
+            <Link href="mailto:ifeddrdc@gmail.com" underline="none" color="#eceff1" display="block" sx={{ mb: 1 , ":hover": {color: "blue" }, size:{xs:"0.5rem", md:"0.8rem"}}}>
               <EmailOutlined/>  ifeddrdc@gmail.com
             </Link>
           </Grid>
@@ -70,8 +69,8 @@ export function Footer() {
           </Grid>
            <Grid size={{ xs:12, sm: 6, md: 3 }}>
             <Button
-                color="primary"
-                variant="contained"
+                color={isConnected ? "error" : "primary"}
+                variant={isConnected ? "outlined": "contained"}
                 sx={{ ml: 2 }}
                 component={NavLink}
                 to={isConnected ? "/deconnexion" : "/connexion"}
@@ -88,13 +87,13 @@ export function Footer() {
               <IconButton href="https://facebook.com" target="_blank" aria-label="Facebook" sx={{color:'#eceff1'}}>
                 <FacebookIcon />
               </IconButton>
-              <IconButton href="https://twitter.com" target="_blank" aria-label="Twitter" sx={{color:'#eceff1'}}>
-                <TwitterIcon />
+              <IconButton href="https://x.com/ifedd_rdc" target="_blank" aria-label="X" sx={{color:'#eceff1'}}>
+                <X/>
               </IconButton>
-              <IconButton href="https://instagram.com" target="_blank" aria-label="Instagram" sx={{color:'#eceff1'}}>
-                <InstagramIcon />
+              <IconButton href="https://www.youtube.com/@Ifedd-rdc/featured" target="_blank" aria-label="Youtube" sx={{color:'#eceff1'}}>
+                <YouTube />
               </IconButton>
-              <IconButton href="https://linkedin.com" target="_blank" aria-label="LinkedIn" sx={{color:'#eceff1'}}>
+              <IconButton href="https://www.linkedin.com/company/ifedd-rdc/?viewAsMember=true" target="_blank" aria-label="LinkedIn" sx={{color:'#eceff1'}}>
                 <LinkedInIcon />
               </IconButton>
             </Box>
