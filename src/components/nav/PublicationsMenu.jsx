@@ -1,6 +1,6 @@
 import { Button, Menu, MenuItem } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { NavLink } from 'react-router';
+import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
 
 export default function PublicationsMenu() {

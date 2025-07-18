@@ -7,12 +7,13 @@ import {
     TextField,
     Button,
     Stack,
-    Alert
+    Alert,
+    CircularProgress
 } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { Footer } from '../components/footer';
 import { TitleHeader } from '../components/titleHeader';
-import { API_BASE } from '../hooks/config';
+import { apiFormData, urlbase } from '../api/Api';
 
 const PublicationRapports = () => {
     const [title, setTitle] = useState('');
@@ -21,6 +22,7 @@ const PublicationRapports = () => {
     const [type, setType] = useState("")
     const [alertType, setAlertType] = useState(null);
     const [alertMessage, setAlertMessage] = useState('');
+    const [isUpload, setIsUpload] = useState(false)
 
 
     const handleCoverPageUpload = (event) => {
@@ -41,7 +43,7 @@ const PublicationRapports = () => {
             setAlertMessage("Veuillez remplir tous les champs et ajouter une logo.");
             return;
         }
-
+        setIsUpload(true)
         const formData = new FormData();
         formData.append('titre', title);
         formData.append('image', coverPage);
@@ -49,20 +51,15 @@ const PublicationRapports = () => {
         formData.append("types", type);
 
         try {
-            const response = await fetch(`${API_BASE}/rapport/publication`, {
-                method: "POST",
-                body: formData,
-            });
 
-            if (!response.ok) {
-                console.log(response)
+            const response = await apiFormData.post(`rapport/publication/`, formData)
+
+            if (!response) {
+                setIsUpload(false)
                 throw new Error("Erreur serveur");
             }
-
-
-            const result = await response.json();
-
-            console.log(result)
+            setIsUpload(false)
+            console.log(response)
             setReport(null)
             setCoverPage(null);
             setType("")
@@ -172,9 +169,10 @@ const PublicationRapports = () => {
                                 variant="contained"
                                 color="primary"
                                 size="large"
+                                disabled={isUpload ? true : false}
                                 sx={{ mt: 3 }}
                             >
-                                Publier le rapport
+                                {isUpload ? <CircularProgress size={24} color="inherit" /> : "publier le rapport"}
                             </Button>
                         </Stack>
                     </Box>

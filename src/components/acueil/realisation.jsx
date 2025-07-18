@@ -5,40 +5,49 @@ import {
     CardMedia,
     Typography,
     Button,
+    Box,
 } from '@mui/material';
-import { NavLink, useLoaderData } from 'react-router';
+import { NavLink, useLoaderData } from 'react-router-dom';
 import CustomCarousel from './cunstomeCarousel';
+import UseFetch from '../../hooks/useFetch';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 
 export function Realisation() {
-    const {articles} = useLoaderData()
+    const {articles, getArticle} = UseFetch()
+   
 
+    useEffect(() => {
+        getArticle()
+    }, [])
+   
 
     return (
                    
-            <CustomCarousel title={"Réalisations"} slide={
+            <CustomCarousel title={"Nos Réalisations"} slide={
                 articles.map((article, index) => {
                 const paragraphs = article.prelude?.slice(0, 200);
                 
 
                 return (
-                    <Card key={index} sx={{ maxWidth: 450, minHeight: 500, maxHeight: 500 }}>
+                    <Card key={index} sx={{height: {sm: 500, lg: 450}}}>
                         <CardMedia
                             sx={{ height: 200 }}
                             image={
                                     article.picture_url
                                         ? article.picture_url
-                                        : 'https://images.unsplash.com/photo-1455849318743-b2233052fcff?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cmFuZG9tfGVufDB8fDB8fHww'
+                                        : './Logo.png'
                                 }
                             title={article.titre}
                         />
                         <CardContent>
-                            <Typography gutterBottom variant="subtitle2" component="div" align='center' sx={{ fontWeight: 'bold' }}>
-                                {article.titre}
+                            <Typography gutterBottom component="div" align='center' sx={{ fontWeight: 'bold', fontSize: {xs:"0.7rem", sm:"0.9rem", md:"1rem"} }}>
+                                {article.titre.slice(0, 80)+"..."}
                             </Typography>
                             
-                                    <div dangerouslySetInnerHTML={{__html:paragraphs}}></div>
-                        
+                                    <Box dangerouslySetInnerHTML={{__html:paragraphs}} style={{textAlign: "justify", fontSize:{xs: "0.5rem", sm:"0.7rem"}}}></Box>
+                   
                         </CardContent>
                         <CardActions>
                             <CardActions>

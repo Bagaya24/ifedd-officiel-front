@@ -1,30 +1,70 @@
 import { useState } from 'react'
+import { api, apiFormData } from '../api/Api'
 
 function UseFetch() {
-  const [articles, setArticle] = useState()
-  const [galeries, setGalerie] = useState()
-  const [rapports, setRapport] = useState() 
+  const [articles, setArticle] = useState([])
+  const [galeries, setGalerie] = useState([])
+  const [rapports, setRapport] = useState([]) 
+  const [partenaires, setPartenaires] = useState([])
+  const [commentaires, setCommentaires] = useState([])
+  const [loader, setLoader] = useState(false)
 
   const getArticle = async () => {
-    const response = await fetch("http://127.0.0.1:8000/articles")
-    if (response.ok) {
-      setArticle(response.json().then((d) => d))
+    setLoader(true);
+    try{
+      const response = await api.get("articles/");
+      setArticle(response.data)
+    }
+    catch (error) {
+      setLoader(false);
+      throw console.error(error);
     }
   }
 
-  const getGalerie = async () => {
-    const response = await fetch("http://127.0.0.1:8000/galerie")
-    
-    if (response.ok) {
-      setGalerie(response.json().then((d) => d))
-      console.log(response.json().then((d) => d))
+  const getGalerie=async()=>{
+    setLoader(true);
+    try {
+      const response=await api.get("galerie/");
+      setGalerie(response.data);
+      setLoader(false);
+    } catch (error) {
+      setLoader(false);
+      throw console.error(error);
     }
   }
- 
   const getRapport = async () => {
-    const response = await fetch("http://127.0.0.1:8000/rapports")
-    if (response.ok) {
-      setRapport(response.json().then((d) => d))
+    setLoader(true);
+    try {
+      const response=await api.get("rapport/");
+      setRapport(response.data);
+      setLoader(false);
+    } catch (error) {
+      setLoader(false);
+      throw console.error(error);
+    }
+  }
+    const getPartenaires = async () => {
+    setLoader(true);
+    try {
+      const response=await apiFormData.get("partenaire/");
+      setPartenaires(response.data);
+      setLoader(false);
+    } catch (error) {
+      setLoader(false);
+      throw console.error(error);
+    }
+  }
+
+    const getCommentaires = async (id) => {
+  
+    try {
+    
+      const response=await api.get(`articles/commentaire/${id}/`);
+      setCommentaires(response.data);
+      
+    } catch (error) {
+  
+      throw console.error(error);
     }
   }
 
@@ -34,7 +74,14 @@ function UseFetch() {
     getGalerie, 
     galeries, 
     rapports, 
-    getRapport
+    getRapport,
+    partenaires,
+    getPartenaires,
+    commentaires,
+    getCommentaires,
+    loader,
+    setLoader,
+
   }
 }
 

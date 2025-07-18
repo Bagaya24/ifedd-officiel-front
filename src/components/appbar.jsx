@@ -10,7 +10,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 
-import { NavLink, Outlet } from 'react-router';
+import { NavLink, Outlet } from 'react-router-dom';
 import { HoverButton } from './hoverButton';
 
 import { verifyToken } from '../utils/auth';
@@ -62,7 +62,7 @@ export default function Header() {
           <ListItemText primary="Articles" />
         </ListItemButton>
         <ListItemButton component={NavLink} to="/rapports et politiques" onClick={handleDrawerToggle}>
-          <ListItemText primary="Rapports et Politiques" />
+          <ListItemText primary="Rapports et Politique" />
         </ListItemButton>
 
         {isConnected && (
@@ -97,19 +97,6 @@ export default function Header() {
             </ListItem>
           </>
         )}
-
-        <ListItem sx={{ mt: 2 }}>
-          <Button
-            color="primary"
-            variant="contained"
-            sx={{ width: '100%' }}
-            component={NavLink}
-            to={isConnected ? "/deconnexion" : "/connexion"}
-            onClick={handleDrawerToggle}
-          >
-            {isConnected ? 'Déconnexion' : 'Connexion'}
-          </Button>
-        </ListItem>
       </List>
     </Box>
   );

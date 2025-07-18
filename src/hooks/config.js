@@ -1,8 +1,8 @@
 // config.js
-export const API_BASE = "https://api.officiel.ifedd-rdc.org";
 
-export async function safeFetch(url) {
-  const res = await fetch(url);
-  if (!res.ok) throw new Response("Erreur serveur", { status: 500 });
-  return res.json();
-}
+import { createClient } from '@supabase/supabase-js'
+
+const key = import.meta.env.VITE_SUPABASE_KEY
+const url = import.meta.env.VITE_SUPABASE_URL
+// Create a single supabase client for interacting with your database
+export const supabase = createClient(url, key)

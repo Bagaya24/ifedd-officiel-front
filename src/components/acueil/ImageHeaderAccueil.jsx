@@ -7,6 +7,16 @@ import {
 import { Image } from '../image';
 
 export function ImageHeaderAccueil() {
+  const handleDownload = () => {
+    
+    const fileUrl = `/Depliant 3.2.pdf`;
+    const link = document.createElement('a');
+    link.href = fileUrl;
+    link.download = "brochure_ifedd.pdf"; 
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
   return (
     <Image
       src="/image2.jpg"
@@ -54,6 +64,7 @@ export function ImageHeaderAccueil() {
             px: { xs: 2, sm: 4 },
             py: { xs: 1, sm: 1.5 }
           }}
+          onClick={handleDownload}
         >
           Télécharger la brochure
         </Button>

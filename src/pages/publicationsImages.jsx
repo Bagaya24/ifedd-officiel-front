@@ -4,13 +4,14 @@ import {
     Box,
     Button,
     TextField,
-    Typography,
+
     Paper,
     Container,
     Alert,
+    CircularProgress,
 } from '@mui/material';
 import { TitleHeader } from '../components/titleHeader';
-import { API_BASE } from '../hooks/config';
+import { apiFormData, urlbase } from '../api/Api';
 
 const PublicationsImages = () => {
     const [image, setImage] = useState(null);
@@ -18,8 +19,8 @@ const PublicationsImages = () => {
     const [preview, setPreview] = useState(null);
     const [alertType, setAlertType] = useState(null);
     const [alertMessage, setAlertMessage] = useState('');
+    const [isUpload, setIsUpload] = useState(false)
 
- 
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -37,22 +38,21 @@ const PublicationsImages = () => {
             setAlertMessage("Veuillez remplir tous les champs et ajouter une image.");
             return;
         }
-
+        setIsUpload(true)
         const formData = new FormData();
         formData.append("legende", legende);
         formData.append("image", image);
 
         try {
-            const response = await fetch(`${API_BASE}/galerie/add`, {
-                method: "POST",
-                body: formData,
-            });
+            const response = await apiFormData.post(`galerie/publication/`, formData)
 
-            if (!response.ok) {
+            if (!response) {
+                setIsUpload(false)
                 throw new Error("Erreur serveur");
             }
 
-            const result = await response.json();
+            setIsUpload(false)
+            const result = response;
             console.log(result)
             setLegende("");
             setPreview(null);
@@ -125,9 +125,10 @@ const PublicationsImages = () => {
                         type="submit"
                         variant="contained"
                         color="primary"
+                        disabled={isUpload ? true : false}
                         fullWidth
                     >
-                        Publier
+                        {isUpload ? <CircularProgress size={24} color="inherit" /> : "Publier"}
                     </Button>
                 </Box>
             </Paper>

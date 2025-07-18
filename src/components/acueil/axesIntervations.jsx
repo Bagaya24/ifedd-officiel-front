@@ -11,49 +11,50 @@ import { Public,
      ComputerOutlined, 
      PeopleOutline } from "@mui/icons-material";
 
+const sizeIcon = {xs:30, sm:40, md:50}
 const cardData = [
     {
-        icon: <AccountBalanceOutlined sx={{ fontSize: 50, color: "#ab003c" }}  />,
+        icon: <AccountBalanceOutlined sx={{ fontSize: sizeIcon, color: "#ab003c" }}  />,
         title: "La bonne gourvenance des ressources naturelles",
         color: "#ab003c"
     },
     {
-        icon: <FoodBankOutlined sx={{ fontSize: 50, color: "#f50057" }} />,
+        icon: <FoodBankOutlined sx={{ fontSize: sizeIcon, color: "#f50057" }} />,
         title: "Sécurité alimentaire",
         color: "#f50057"
     },
     {
-        icon: <VolunteerActivismOutlined sx={{ fontSize: 50, color: "#ff6333" }} />,
+        icon: <VolunteerActivismOutlined sx={{ fontSize: sizeIcon, color: "#ff6333" }} />,
         title: "Santé",
         color: "#ff6333"
     },
     {
-        icon: <AttachMoneyOutlined sx={{ fontSize: 50, color: "#ff9100" }} />,
+        icon: <AttachMoneyOutlined sx={{ fontSize: sizeIcon, color: "#ff9100" }} />,
         title: "Révelement socie-economique",
         color: "#ff9100"
     },
     {
-        icon: <Diversity3Outlined sx={{ fontSize: 50, color:"#6fbf73" }} />,
+        icon: <Diversity3Outlined sx={{ fontSize: sizeIcon, color:"#6fbf73" }} />,
         title: "Droits humains et protection",
         color: "#6fbf73"
     },
     {
-        icon: <ForestOutlined sx={{ fontSize: 50, color:"#8bc34a" }} />,
+        icon: <ForestOutlined sx={{ fontSize: sizeIcon, color:"#8bc34a" }} />,
         title: "Environnement",
         color: "#8bc34a"
     },
     {
-        icon: <WaterDropOutlined sx={{ fontSize: 50, color:"#2196f3" }} />,
+        icon: <WaterDropOutlined sx={{ fontSize: sizeIcon, color:"#2196f3" }} />,
         title: "Eau, hygiène et assainissement",
         color: "#2196f3"
     },
     {
-        icon: <ComputerOutlined sx={{ fontSize: 50, color: "#1769aa" }}/>,
+        icon: <ComputerOutlined sx={{ fontSize: sizeIcon, color: "#1769aa" }}/>,
         title: "Innovation et technologie",
         color: "#1769aa"
     },
     {
-        icon: <Public sx={{ fontSize: 50, color: "#2979ff" }}/>,
+        icon: <Public sx={{ fontSize: sizeIcon, color: "#2979ff" }}/>,
         title: "Cohésion sociale et consolation de la paix",
         color: "#2979ff"
     },
@@ -74,7 +75,8 @@ export function AxesInterventions() {
                                 textAlign: "center",
                                 boxShadow: 3,
                                 borderRadius: 3,
-                                maxHeight: 150,
+                                height: 100,
+                               
                                 display: "flex",
                                 alignItems: "center",
                                 justifyContent: "center",
