@@ -37,14 +37,14 @@ export function Footer() {
             <Typography variant="h6" fontWeight="bold" gutterBottom color='#eceff1'>
               Nos adresses
             </Typography>
-            <Link href="https://maps.app.goo.gl/KjuT43mASjtUDT1G7" underline="none" color="#eceff1" display="block" sx={{ mb: 1, ":hover": {color: "blue" }, size:{xs:"0.5rem", md:"0.8rem"} }}>
+            <Link href="https://maps.app.goo.gl/AMEpxCCeLwdwhCHr6" underline="none" color="#eceff1" display="block" sx={{ mb: 1, ":hover": {color: "blue" }, size:{xs:"0.5rem", md:"0.8rem"} }}>
               <RoomOutlined/> Notre adresse à Goma: N° 81 Av présidentielle,  Quartier Himbi, commune de Goma, ville de Goma/RDC
             </Link>
             <Link href="#" underline="none" color="#eceff1" display="block" sx={{ mb: 1, ":hover": {color: "blue" }, size:{xs:"0.5rem", md:"0.8rem"} }}>
               <RoomOutlined/> Notre adresse à Kolwezi: N°03, avenue Mumba 1, Quartier Dilungu, Commune de Dilala, Ville de Kolwezi.
             </Link>
-            <Link href="https://wa.me/+243823938632" underline="none" color="#eceff1" display="block" sx={{ mb: 1 }}>
-              <PhoneEnabled/> +243 823 938 632
+            <Link href="https://wa.me/+243846520000" underline="none" color="#eceff1" display="block" sx={{ mb: 1 }}>
+              <PhoneEnabled/> +243 846 520 000
             </Link>
             <Link href="https://ifedd-rdc.org/" underline="none" color="#eceff1" display="block" sx={{ mb: 1, ":hover": {color: "blue" }, size:{xs:"0.5rem", md:"0.8rem"} }}>
               <LanguageOutlined/> ifedd@ifedd-rdc.org
