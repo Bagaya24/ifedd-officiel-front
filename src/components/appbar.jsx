@@ -55,11 +55,11 @@ export default function Header() {
         <ListItemButton component={NavLink} to="/" onClick={handleDrawerToggle}>
           <ListItemText primary="Accueil" />
         </ListItemButton>
-        <ListItemButton component={NavLink} to="/photos" onClick={handleDrawerToggle}>
-          <ListItemText primary="Photos" />
-        </ListItemButton>
         <ListItemButton component={NavLink} to="/articles" onClick={handleDrawerToggle}>
           <ListItemText primary="Articles" />
+        </ListItemButton>
+         <ListItemButton component={NavLink} to="/photos" onClick={handleDrawerToggle}>
+          <ListItemText primary="Photos" />
         </ListItemButton>
         <ListItemButton component={NavLink} to="/rapports et politiques" onClick={handleDrawerToggle}>
           <ListItemText primary="Rapports et Politique" />
@@ -122,8 +122,8 @@ export default function Header() {
             // --- VUE DESKTOP (utilise le composant original PublicationsMenu) ---
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <HoverButton component={NavLink} to="/">Accueil</HoverButton>
-              <HoverButton component={NavLink} to="/photos">Photos</HoverButton>
               <HoverButton component={NavLink} to="/articles">Articles</HoverButton>
+              <HoverButton component={NavLink} to="/photos">Photos</HoverButton>
               <HoverButton component={NavLink} to="/rapports et politiques">Rapports et Politiques</HoverButton>
 
               {/* Ici, on garde le composant original qui fonctionne sur desktop */}

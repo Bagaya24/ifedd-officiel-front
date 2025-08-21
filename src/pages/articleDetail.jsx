@@ -1,3 +1,6 @@
+
+import {Helmet} from 'react-helmet-async';
+
 import {
     Container, Grid, Card, CardMedia, CardContent,
     Typography, Avatar, Box, Divider, Paper,
@@ -35,6 +38,15 @@ export function ArticleDetail() {
     />;
 
     return (<>
+        <Helmet>
+            <title>{article.titre} - IFEDD</title>
+            <meta name="description" content={article.description || "Découvrez l'article sur l'Initiative des Femmes Entrepreneurs pour le Développement Durable."} />
+            <meta property="og:title" content={article.titre} />
+            <meta property="og:description" content={article.description || "Découvrez l'article sur l'Initiative des Femmes Entrepreneurs pour le Développement Durable."} />
+            <meta property="og:image" content={article.picture_url || "https://ifedd-rdc.org/Logo.png"} />
+            <meta property="og:url" content={`https://ifedd-rdc.org/articles/${id}`} />
+            <meta property="og:type" content="article" />
+        </Helmet>
         <Container
             maxWidth="xl"
             sx={{
