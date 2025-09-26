@@ -25,7 +25,7 @@ export function Realisation() {
 
     return (
                    
-            <CustomCarousel title={"Nos Réalisations"} slide={
+            <CustomCarousel title={"Nos Réalisations et Articles"} slide={
                 articles.map((article, index) => {
                 const paragraphs = article.prelude?.slice(0, 200);
                 
