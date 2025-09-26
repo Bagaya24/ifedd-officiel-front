@@ -12,8 +12,8 @@ export function Partenaire() {
 
    const handleDelete = async (id) => {
         try {
-            const response = await api.delete(`partenaire/delete/${id}/`);
-            console.log(response)
+            await api.delete(`partenaire/delete/${id}/`);
+            
             
             getPartenaires();
         } catch (e) {

@@ -8,7 +8,6 @@ import {
     Typography,
     Avatar,
     Box,
-    CardActions,
     Button,
 } from '@mui/material';
 import { NavLink} from 'react-router-dom';
@@ -17,7 +16,7 @@ import { TitleHeader } from '../components/titleHeader';
 import UseFetch from '../hooks/useFetch';
 
 export function Articles() {
-    const {articles, getArticle, loader} = UseFetch()
+    const {articles, getArticle} = UseFetch()
    
     const [currentPage, setCurrentPage] = useState(1);
 
