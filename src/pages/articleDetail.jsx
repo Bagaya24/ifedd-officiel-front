@@ -9,13 +9,22 @@ import Commentaires from '../components/articles/commentaires';
 import UseFetch from '../hooks/useFetch';
 import { useEffect } from 'react';
 import Spinner from '../components/spinners/Spinner';
+import SEO from '../components/SEO';
 
 
 export function ArticleDetail() {
-        const { articles, getArticle, commentaires, getCommentaires, loader } = UseFetch();
+    const { articles, getArticle, commentaires, getCommentaires, loader } = UseFetch();
     const { id } = useParams();
     const article = articles.find((a) => a.idArticle.toString() === id);
     const autresArticles = articles.filter((a) => a.idArticle.toString() !== id);
+
+    const getArticleDescription = (html) => {
+        if (!html) return 'Découvrez nos articles sur le développement durable en RDC.';
+        const div = document.createElement('div');
+        div.innerHTML = html;
+        const text = div.textContent || div.innerText || '';
+        return text.slice(0, 160).trim() + (text.length > 160 ? '...' : '');
+    };
 
     useEffect(() => {
         getCommentaires(id);
@@ -26,110 +35,22 @@ export function ArticleDetail() {
         getCommentaires(id);
     }, []);
 
-    useEffect(() => {
-        if (article) {
-            // Mise à jour du titre
-            document.title = `${article.titre} - IFEDD`;
-            
-            // Description extraite du contenu
-            const description = getArticleDescription(article.texte) || 'Lire cet article sur IFEDD.';
-            const imageUrl = article.picture_url || 'https://ifedd-rdc.org/Logo.png';
-            const currentUrl = window.location.href;
-
-            // Mise à jour des métadonnées existantes ou création
-            updateMetaTag('og:title', article.titre);
-            updateMetaTag('og:description', description);
-            updateMetaTag('og:image', imageUrl);
-            updateMetaTag('og:url', currentUrl);
-            updateMetaTag('og:type', 'article');
-            
-            updateMetaTag('twitter:title', article.titre);
-            updateMetaTag('twitter:description', description);
-            updateMetaTag('twitter:image', imageUrl);
-
-            // Ajout de balises spécifiques aux articles
-            updateMetaTag('article:published_time', article.DatePublication);
-            if (article.redacteur) {
-                updateMetaTag('article:author', article.redacteur);
-            }
-
-            // Forcer le re-scrap pour certains réseaux sociaux
-            forceSocialMediaRescrape(currentUrl);
-        }
-
-        return () => {
-            document.title = 'IFEDD';
-            // On ne supprime pas les métadonnées pour éviter les problèmes avec les robots
-        };
-    }, [article]);
-
-    const updateMetaTag = (property, content) => {
-        if (!content) return;
-        
-        // Pour les propriétés standard
-        let meta = document.querySelector(`meta[property="${property}"]`);
-        if (!meta) {
-            meta = document.querySelector(`meta[name="${property}"]`);
-        }
-        
-        if (!meta) {
-            meta = document.createElement('meta');
-            if (property.startsWith('og:')) {
-                meta.setAttribute('property', property);
-            } else {
-                meta.setAttribute('name', property);
-            }
-            document.head.appendChild(meta);
-        }
-        meta.setAttribute('content', content);
-    };
-
-    const getArticleDescription = (html) => {
-        if (!html) return null;
-        const div = document.createElement('div');
-        div.innerHTML = html;
-        const text = div.textContent || div.innerText || '';
-        return text.slice(0, 160).trim() + (text.length > 160 ? '...' : '');
-    };
-
-    const forceSocialMediaRescrape = (url) => {
-        // Forcer le re-scrap Facebook
-        if (window.FB) {
-            window.FB.XFBML.parse();
-        }
-        
-        // Informer Twitter
-        if (window.twttr) {
-            window.twttr.widgets.load();
-        }
-    };
 
     if (!article) return <Spinner loader={loader} />;
 
-    // Ajouter des métadonnées structurées JSON-LD (bon pour le SEO)
-    const structuredData = {
-        '@context': 'https://schema.org',
-        '@type': 'Article',
-        headline: article.titre,
-        description: getArticleDescription(article.texte),
-        image: article.picture_url || 'https://ifedd-rdc.org/Logo.png',
-        datePublished: article.DatePublication,
-        author: {
-            '@type': 'Person',
-            name: article.redacteur || 'IFEDD'
-        },
-        publisher: {
-            '@type': 'Organization',
-            name: 'IFEDD',
-            logo: {
-                '@type': 'ImageObject',
-                url: 'https://ifedd-rdc.org/Logo.png'
-            }
-        }
-    };
-    
+    const description = getArticleDescription(article.texte);
+    const imageUrl = article.picture_url || 'https://ifedd-rdc.org/Logo.png';
+    const currentUrl = window.location.href;
+
 
     return (<>
+        <SEO
+            title={`${article.titre} - IFEDD`}
+            description={description}
+            image={imageUrl}
+            url={currentUrl}
+            type="article"
+        />
         <Container
             maxWidth="xl"
             sx={{
@@ -251,11 +172,11 @@ export function ArticleDetail() {
             </Grid>
 
         </Container>
-        <Grid container spacing={1} sx={{ mt: 4, px: 2}}>
-            <Grid size={{xs: 12, md: 4}} >
+        <Grid container spacing={1} sx={{ mt: 4, px: 2 }}>
+            <Grid size={{ xs: 12, md: 4 }} >
                 <AddCommentaires id={id} onCommentAdded={getCommentaires} />
             </Grid>
-            <Grid size={{xs: 12, md: 8}} >
+            <Grid size={{ xs: 12, md: 8 }} >
                 <Commentaires commentaires={commentaires} />
             </Grid>
         </Grid>
