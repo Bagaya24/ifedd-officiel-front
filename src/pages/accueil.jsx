@@ -8,6 +8,7 @@ import { Partenaire } from '../components/acueil/partenaires';
 import { Footer } from '../components/footer';
 import { BookCard } from '../components/acueil/bookcard';
 import { AxesInterventions } from '../components/acueil/axesIntervations';
+import { DernierArticle } from '../components/acueil/dernierArticle';
 
 
 export function Accueil() {
@@ -18,6 +19,7 @@ export function Accueil() {
      <Apropos/>
      <FeatureAccueil/>
      <AxesInterventions/>
+     <DernierArticle/>
      <Realisation/>
      <BookCard />
      <Partenaire/>

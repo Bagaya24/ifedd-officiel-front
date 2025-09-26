@@ -31,7 +31,20 @@ export function Realisation() {
                 
 
                 return (
-                    <Card key={index} sx={{height: {sm: 500, lg: 450}}}>
+                    <Card 
+                        key={index} 
+                        component={NavLink}
+                        to={`/articles/${article.idArticle}`}
+                        sx={{
+                            height: {sm: 500, lg: 450},
+                            textDecoration: 'none',
+                            color: 'inherit',
+                            '&:hover': {
+                                transform: 'translateY(-6px)',
+                                transition: 'transform 0.2s ease-in-out',
+                            }
+                        }}
+                    >
                         <CardMedia
                             sx={{ height: 200 }}
                             image={
@@ -49,11 +62,6 @@ export function Realisation() {
                                     <Box dangerouslySetInnerHTML={{__html:paragraphs}} style={{textAlign: "justify", fontSize:{xs: "0.5rem", sm:"0.7rem"}}}></Box>
                    
                         </CardContent>
-                        <CardActions>
-                            <CardActions>
-                                <Button size="small" component={NavLink} to={`/articles/${article.idArticle}`}>Lire suite</Button>
-                            </CardActions>
-                        </CardActions>
                     </Card>
                 );
             })}

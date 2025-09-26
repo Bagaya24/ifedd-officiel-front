@@ -55,7 +55,6 @@ const PublicationsPartenaires = () => {
             }
 
             setIsUpload(false)
-            console.log(response)
             setLogo(null);
             setPreview(null);
             setName("")

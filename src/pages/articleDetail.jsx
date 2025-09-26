@@ -1,6 +1,3 @@
-
-import {Helmet} from 'react-helmet-async';
-
 import {
     Container, Grid, Card, CardMedia, CardContent,
     Typography, Avatar, Box, Divider, Paper,
@@ -17,7 +14,14 @@ import Spinner from '../components/spinners/Spinner';
 export function ArticleDetail() {
     const { articles, getArticle, commentaires, getCommentaires, loader } = UseFetch();
     const { id } = useParams();
+    const article = articles.find((a) => a.idArticle.toString() === id);
+    const autresArticles = articles.filter((a) => a.idArticle.toString() !== id);
 
+ 
+
+      useEffect(() => {
+        getCommentaires(id);
+    }, [id]);
 
     // Récupère les articles
     useEffect(() => {
@@ -25,28 +29,65 @@ export function ArticleDetail() {
         getCommentaires(id)
     }, []);
 
-
     useEffect(() => {
-        getCommentaires(id);
-    }, [id]);
+        if (article) {
+            // Mise à jour des métadonnées
+            document.title = article.titre;
+            
+            // Open Graph
+            updateMetaTag('og:title', article.titre);
+            updateMetaTag('og:description', getArticleDescription(article.texte?.slice(0, 100)) || 'Lire cet article sur IFEDD.');
+            updateMetaTag('og:image', article.picture_url || '/Logo.png');
+            updateMetaTag('og:url', window.location.href);
+            
+            // Twitter Card
+            updateMetaTag('twitter:title', article.titre);
+            updateMetaTag('twitter:description', getArticleDescription(article.texte?.slice(0, 100)) || 'Lire cet article sur IFEDD.');
+            updateMetaTag('twitter:image', article.picture_url || '/Logo.png');
+        }
+        
+        // Nettoyage lors du démontage
+        return () => {
+            document.title = 'IFedd';
+            removeMetaTags();
+        };
+    }, [article]);
 
-    const article = articles.find((a) => a.idArticle.toString() === id);
-    const autresArticles = articles.filter((a) => a.idArticle.toString() !== id);
+        // Fonction utilitaire pour mettre à jour ou créer une balise meta
+    const updateMetaTag = (property, content) => {
+        let meta = document.querySelector(`meta[property="${property}"]`);
+        if (!meta) {
+            meta = document.createElement('meta');
+            meta.setAttribute('property', property);
+            document.head.appendChild(meta);
+        }
+        meta.setAttribute('content', content);
+    };
 
-    if (!article) return <Spinner
+    // Fonction pour nettoyer les meta tags
+    const removeMetaTags = () => {
+        const metaTags = [
+            'og:title', 'og:description', 'og:image', 'og:url',
+            'twitter:title', 'twitter:description', 'twitter:image'
+        ];
+        metaTags.forEach(tag => {
+            const meta = document.querySelector(`meta[property="${tag}"]`);
+            if (meta) meta.remove();
+        });
+    };
+
+      const getArticleDescription = (html) => {
+        const div = document.createElement('div');
+        div.innerHTML = html;
+        const text = div.textContent || div.innerText || '';
+        return text.slice(0, 160) + '...'; // Limite à 160 caractères
+    };
+       if (!article) return <Spinner
         loader={loader}
     />;
+    
 
     return (<>
-        <Helmet>
-            <title>{article.titre} - IFEDD</title>
-            <meta name="description" content={article.description || "Découvrez l'article sur l'Initiative des Femmes Entrepreneurs pour le Développement Durable."} />
-            <meta property="og:title" content={article.titre} />
-            <meta property="og:description" content={article.description || "Découvrez l'article sur l'Initiative des Femmes Entrepreneurs pour le Développement Durable."} />
-            <meta property="og:image" content={article.picture_url || "https://ifedd-rdc.org/Logo.png"} />
-            <meta property="og:url" content={`https://ifedd-rdc.org/articles/${id}`} />
-            <meta property="og:type" content="article" />
-        </Helmet>
         <Container
             maxWidth="xl"
             sx={{
@@ -56,7 +97,6 @@ export function ArticleDetail() {
 
             }}
         >
-
             <Grid container spacing={2} sx={{ height: '100%' }}>
                 {/* Article principal */}
                 <Grid
@@ -169,11 +209,11 @@ export function ArticleDetail() {
             </Grid>
 
         </Container>
-        <Grid container spacing={2} sx={{ mt: 4, px: 2, backgroundColor: "#eceff1" }}>
-            <Grid xs={12} md={4}>
+        <Grid container spacing={1} sx={{ mt: 4, px: 2}}>
+            <Grid size={{xs: 12, md: 4}} >
                 <AddCommentaires id={id} onCommentAdded={getCommentaires} />
             </Grid>
-            <Grid xs={12} md={8}>
+            <Grid size={{xs: 12, md: 8}} >
                 <Commentaires commentaires={commentaires} />
             </Grid>
         </Grid>

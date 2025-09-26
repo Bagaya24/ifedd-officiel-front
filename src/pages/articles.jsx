@@ -45,8 +45,10 @@ export function Articles() {
                 
                 <Grid container spacing={{xs:2, sm:3, md:4}} sx={{ mt: 4 }}>
                     {currentArticles.map((article) => (
-                        <Grid item key={article.idArticle} size={{xs: 12, sm: 6, md: 4}}>
+                        <Grid key={article.idArticle} size={{xs: 12, sm: 6, md: 4}}>
                             <Card
+                                component={NavLink}
+                                to={`/articles/${article.idArticle}`}
                                 sx={{
                                     display: 'flex',
                                     flexDirection: 'column',
@@ -56,6 +58,7 @@ export function Articles() {
                                     overflow: 'hidden',
                                     boxShadow: 6,
                                     transition: 'transform 0.2s',
+                                    textDecoration: 'none',
                                     '&:hover': {
                                         transform: 'translateY(-6px)',
                                         boxShadow: 10,
@@ -91,15 +94,6 @@ export function Articles() {
                                         }}
                                     />
                                 </CardContent>
-                                <CardActions>
-                                    <Button
-                                        size="small"
-                                        component={NavLink}
-                                        to={`/articles/${article.idArticle}`}
-                                    >
-                                        Lire suite
-                                    </Button>
-                                </CardActions>
                                 <Box
                                     sx={{
                                         display: 'flex',

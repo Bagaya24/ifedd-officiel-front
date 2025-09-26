@@ -15,14 +15,12 @@ export default function AddCommentaires({ id, onCommentAdded }) {
     const formData = new FormData();
     formData.append("auteur", auteur);
     formData.append("content", content);
+    
 
     try {
-      const response = await api.post(`articles/add-commentaire/${id}/`, {
-        method: "POST",
-        body: formData,
-      });
+      const response = await api.post(`articles/add-commentaire/${id}/`, formData);
 
-      if (!response.ok) throw new Error("Erreur serveur");
+      if (!response) throw new Error("Erreur serveur");
 
       setAuteur("");
       setContent("");

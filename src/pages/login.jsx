@@ -16,8 +16,9 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
     if (!validateLoginForm(username, password, setError)) return;
-
+    console.log(password)
     setIsLoading(true);
     const { success, message } = await loginUser(username, password);
     setIsLoading(false);

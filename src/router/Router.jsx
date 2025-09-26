@@ -11,7 +11,7 @@ import Deconnexion from "../pages/deconexion";
 
 function Router() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/">
       <Routes>
         {/* Routes sans header */}
         <Route path="/connexion" element={<Login />} />
