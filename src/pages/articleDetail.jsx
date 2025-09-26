@@ -12,79 +12,121 @@ import Spinner from '../components/spinners/Spinner';
 
 
 export function ArticleDetail() {
-    const { articles, getArticle, commentaires, getCommentaires, loader } = UseFetch();
+        const { articles, getArticle, commentaires, getCommentaires, loader } = UseFetch();
     const { id } = useParams();
     const article = articles.find((a) => a.idArticle.toString() === id);
     const autresArticles = articles.filter((a) => a.idArticle.toString() !== id);
 
- 
-
-      useEffect(() => {
+    useEffect(() => {
         getCommentaires(id);
     }, [id]);
 
-    // Récupère les articles
     useEffect(() => {
         getArticle();
-        getCommentaires(id)
+        getCommentaires(id);
     }, []);
 
     useEffect(() => {
         if (article) {
-            // Mise à jour des métadonnées
-            document.title = article.titre;
+            // Mise à jour du titre
+            document.title = `${article.titre} - IFEDD`;
             
-            // Open Graph
+            // Description extraite du contenu
+            const description = getArticleDescription(article.texte) || 'Lire cet article sur IFEDD.';
+            const imageUrl = article.picture_url || 'https://ifedd-rdc.org/Logo.png';
+            const currentUrl = window.location.href;
+
+            // Mise à jour des métadonnées existantes ou création
             updateMetaTag('og:title', article.titre);
-            updateMetaTag('og:description', getArticleDescription(article.texte?.slice(0, 100)) || 'Lire cet article sur IFEDD.');
-            updateMetaTag('og:image', article.picture_url || '/Logo.png');
-            updateMetaTag('og:url', window.location.href);
+            updateMetaTag('og:description', description);
+            updateMetaTag('og:image', imageUrl);
+            updateMetaTag('og:url', currentUrl);
+            updateMetaTag('og:type', 'article');
             
-            // Twitter Card
             updateMetaTag('twitter:title', article.titre);
-            updateMetaTag('twitter:description', getArticleDescription(article.texte?.slice(0, 100)) || 'Lire cet article sur IFEDD.');
-            updateMetaTag('twitter:image', article.picture_url || '/Logo.png');
+            updateMetaTag('twitter:description', description);
+            updateMetaTag('twitter:image', imageUrl);
+
+            // Ajout de balises spécifiques aux articles
+            updateMetaTag('article:published_time', article.DatePublication);
+            if (article.redacteur) {
+                updateMetaTag('article:author', article.redacteur);
+            }
+
+            // Forcer le re-scrap pour certains réseaux sociaux
+            forceSocialMediaRescrape(currentUrl);
         }
-        
-        // Nettoyage lors du démontage
+
         return () => {
-            document.title = 'IFedd';
-            removeMetaTags();
+            document.title = 'IFEDD';
+            // On ne supprime pas les métadonnées pour éviter les problèmes avec les robots
         };
     }, [article]);
 
-        // Fonction utilitaire pour mettre à jour ou créer une balise meta
     const updateMetaTag = (property, content) => {
+        if (!content) return;
+        
+        // Pour les propriétés standard
         let meta = document.querySelector(`meta[property="${property}"]`);
         if (!meta) {
+            meta = document.querySelector(`meta[name="${property}"]`);
+        }
+        
+        if (!meta) {
             meta = document.createElement('meta');
-            meta.setAttribute('property', property);
+            if (property.startsWith('og:')) {
+                meta.setAttribute('property', property);
+            } else {
+                meta.setAttribute('name', property);
+            }
             document.head.appendChild(meta);
         }
         meta.setAttribute('content', content);
     };
 
-    // Fonction pour nettoyer les meta tags
-    const removeMetaTags = () => {
-        const metaTags = [
-            'og:title', 'og:description', 'og:image', 'og:url',
-            'twitter:title', 'twitter:description', 'twitter:image'
-        ];
-        metaTags.forEach(tag => {
-            const meta = document.querySelector(`meta[property="${tag}"]`);
-            if (meta) meta.remove();
-        });
-    };
-
-      const getArticleDescription = (html) => {
+    const getArticleDescription = (html) => {
+        if (!html) return null;
         const div = document.createElement('div');
         div.innerHTML = html;
         const text = div.textContent || div.innerText || '';
-        return text.slice(0, 160) + '...'; // Limite à 160 caractères
+        return text.slice(0, 160).trim() + (text.length > 160 ? '...' : '');
     };
-       if (!article) return <Spinner
-        loader={loader}
-    />;
+
+    const forceSocialMediaRescrape = (url) => {
+        // Forcer le re-scrap Facebook
+        if (window.FB) {
+            window.FB.XFBML.parse();
+        }
+        
+        // Informer Twitter
+        if (window.twttr) {
+            window.twttr.widgets.load();
+        }
+    };
+
+    if (!article) return <Spinner loader={loader} />;
+
+    // Ajouter des métadonnées structurées JSON-LD (bon pour le SEO)
+    const structuredData = {
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        headline: article.titre,
+        description: getArticleDescription(article.texte),
+        image: article.picture_url || 'https://ifedd-rdc.org/Logo.png',
+        datePublished: article.DatePublication,
+        author: {
+            '@type': 'Person',
+            name: article.redacteur || 'IFEDD'
+        },
+        publisher: {
+            '@type': 'Organization',
+            name: 'IFEDD',
+            logo: {
+                '@type': 'ImageObject',
+                url: 'https://ifedd-rdc.org/Logo.png'
+            }
+        }
+    };
     
 
     return (<>
