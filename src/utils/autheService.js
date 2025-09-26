@@ -16,7 +16,7 @@ export const loginUser = async (username, password) => {
   formDetails.append("password", password);
 
   try {
-    const response = await fetch(`${urlbase}/connexion/token` , {
+    const response = await fetch(`${urlbase}connexion/token` , {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"

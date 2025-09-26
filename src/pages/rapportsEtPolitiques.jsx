@@ -76,8 +76,8 @@ const handleDownload = async (documentUrl, titre) => {
 
 const handleDelete = async (id) => {
     try {
-        const response = await api.delete(`rapport/delete/${id}/`)
-        console.log(response)
+       await api.delete(`rapport/delete/${id}/`)
+        
 
     }
     catch (e) {
@@ -87,7 +87,7 @@ const handleDelete = async (id) => {
 }
 
 
-function createData(index, rapport) {
+function createData(index, rapport, name) {
     return {
         numero: `#${index + 1}`,
         titre: rapport.titre,
@@ -101,13 +101,18 @@ function createData(index, rapport) {
                 >
                     Télécharger
                 </Button>
-                <Button
+                {
+                    name && (
+                       <Button
                     size="small"
                     color='error'
                     onClick={() => handleDelete(rapport.id)}
                 >
                     supprimer
-                </Button>
+                </Button> 
+                    )
+                }
+                
 
             </>
 
@@ -120,12 +125,14 @@ export function RapportsEtPolitiques() {
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
     const { rapports, getRapport, loader } = UseFetch()
+    const name = localStorage.getItem('username');
+    
 
     useEffect(() => {
         getRapport();
     }, [])
 
-    const rows = rapports.map((rapport, index) => createData(index, rapport));
+    const rows = rapports.map((rapport, index) => createData(index, rapport, name));
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
