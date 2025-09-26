@@ -59,7 +59,6 @@ const PublicationRapports = () => {
                 throw new Error("Erreur serveur");
             }
             setIsUpload(false)
-            console.log(response)
             setReport(null)
             setCoverPage(null);
             setType("")

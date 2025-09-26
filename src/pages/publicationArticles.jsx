@@ -47,15 +47,12 @@ const PublicationArticles = () => {
         try {
 
             const response = await apiFormData.post(`articles/publication/`, formData)
-
-
             if (!response) {
                 setIsUpload(false)
                 throw new Error("Erreur serveur");
             }
 
             setIsUpload(false)
-            console.log(response)
             setTitle("");
             setPreview(null);
             setContent("");

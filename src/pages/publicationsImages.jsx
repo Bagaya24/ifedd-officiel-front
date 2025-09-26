@@ -1,10 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState} from 'react';
 import {
-
     Box,
     Button,
     TextField,
-
     Paper,
     Container,
     Alert,
@@ -51,9 +49,7 @@ const PublicationsImages = () => {
                 throw new Error("Erreur serveur");
             }
 
-            setIsUpload(false)
-            const result = response;
-            console.log(result)
+            setIsUpload(false);
             setLegende("");
             setPreview(null);
             setImage(null);

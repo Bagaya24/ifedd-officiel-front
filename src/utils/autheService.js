@@ -16,13 +16,14 @@ export const loginUser = async (username, password) => {
   formDetails.append("password", password);
 
   try {
-    const response = await fetch(`${urlbase}connexion/token` , {
+    const response = await fetch(`${urlbase}/connexion/token` , {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"
       },
       body: formDetails
     });
+    console.log(response)
 
     if (!response.ok) {
       const errorData = await response.json();
@@ -34,6 +35,7 @@ export const loginUser = async (username, password) => {
     localStorage.setItem("username", data.user);
     return { success: true };
   } catch (error) {
+    console.log(error)
     return {
       success: false,
       message: "Erreur lors de la tentative de connexion. Réessayez plus tard."
