@@ -12,6 +12,7 @@ import { Public,
      PeopleOutline } from "@mui/icons-material";
 
 const sizeIcon = {xs:30, sm:40, md:50}
+
 const cardData = [
     {
         icon: <AccountBalanceOutlined sx={{ fontSize: sizeIcon, color: "#ab003c" }}  />,

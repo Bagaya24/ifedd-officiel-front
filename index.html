@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -12,8 +12,14 @@
     />
 
     <!-- Balises Open Graph par défaut -->
-    <meta property="og:title" content="IFEDD - Initiative des Femmes pour le Développement Durable" />
-    <meta property="og:description" content="Découvrez nos articles sur le développement durable en RDC." />
+    <meta
+      property="og:title"
+      content="IFEDD - Initiative des Femmes pour le Développement Durable"
+    />
+    <meta
+      property="og:description"
+      content="Découvrez nos articles sur le développement durable en RDC."
+    />
     <meta property="og:image" content="https://ifedd-rdc.org/Logo.png" />
     <meta property="og:url" content="https://ifedd-rdc.org" />
     <meta property="og:type" content="website" />
@@ -23,12 +29,21 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@ifedd" />
     <meta name="twitter:creator" content="@ifedd" />
-    <meta name="twitter:title" content="IFEDD - Initiative des Femmes pour le Développement Durable" />
-    <meta name="twitter:description" content="Découvrez nos articles sur le développement durable en RDC." />
+    <meta
+      name="twitter:title"
+      content="IFEDD - Initiative des Femmes pour le Développement Durable"
+    />
+    <meta
+      name="twitter:description"
+      content="Découvrez nos articles sur le développement durable en RDC."
+    />
     <meta name="twitter:image" content="https://ifedd-rdc.org/Logo.png" />
-  
+
     <!-- Meta tags supplémentaires -->
-    <meta name="description" content="Initiative des Femmes pour le Développement Durable." />
+    <meta
+      name="description"
+      content="Initiative des Femmes pour le Développement Durable."
+    />
     <meta name="theme-color" content="#121858" />
 
     <title>IFEDD</title>
@@ -37,4 +52,18 @@
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
+  <!-- Google tag (gtag.js) -->
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-KWXJTZVBJS"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-KWXJTZVBJS");
+  </script>
 </html>

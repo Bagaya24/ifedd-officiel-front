@@ -23,7 +23,7 @@ export function ArticleDetail() {
         const div = document.createElement('div');
         div.innerHTML = html;
         const text = div.textContent || div.innerText || '';
-        return text.slice(0, 160).trim() + (text.length > 160 ? '...' : '');
+        return text.slice(0, 100).trim() + (text.length > 160 ? '...' : '');
     };
 
     useEffect(() => {
@@ -44,13 +44,15 @@ export function ArticleDetail() {
 
 
     return (<>
-        <SEO
-            title={`${article.titre} - IFEDD`}
-            description={description}
-            image={imageUrl}
-            url={currentUrl}
-            type="article"
-        />
+            <SEO 
+                title={`${article.titre} - IFEDD`}
+                description={description}
+                image={imageUrl}
+                url={currentUrl}
+                type="article"
+                author={article.redacteur}
+                publishedTime={article.DatePublication}
+            />
         <Container
             maxWidth="xl"
             sx={{
