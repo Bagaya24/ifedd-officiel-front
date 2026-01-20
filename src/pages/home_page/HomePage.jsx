@@ -4,9 +4,10 @@ import AxeIntervationSection from './section/AxeIntervationSection'
 import ArticlesSection from './section/ArticlesSection'
 import PartenaireSection from './section/PartenaireSection'
 import RapportsSection from './section/RapportsSection'
-import Footer from '../../components/Footer'
+
 import NavBar from "../../components/NavBar"
 import usePageSEO from '../../hooks/usePageSEO'
+import Footer from '../../components/Footer'
 
 export default function HomePage() {
   usePageSEO({

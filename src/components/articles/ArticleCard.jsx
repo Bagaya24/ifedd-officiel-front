@@ -11,7 +11,7 @@ export default function ArticleCard({ id, title, image, description, href = `/ar
           <img
             src={image}
             alt={title}
-            className="w-full h-[200px] object-cover transition-transform duration-500 hover:scale-110"
+            className="w-full h-50 object-cover transition-transform duration-500 hover:scale-110"
           />
         </div>
 
@@ -23,7 +23,7 @@ export default function ArticleCard({ id, title, image, description, href = `/ar
           </h3>
 
           {/* Description */}
-          <div className="text-sm md:text-base text-gray-700 line-clamp-2 mb-4 [&_img]:hidden [&_h1]:text-2xl [&_h2]:text-xl break-words" dangerouslySetInnerHTML={{ __html: description }} />
+          <div className="text-sm md:text-base text-gray-700 line-clamp-2 mb-4 [&_img]:hidden [&_h1]:text-2xl [&_h2]:text-xl wrap-break-word" dangerouslySetInnerHTML={{ __html: description }} />
 
           {/* Read More Link */}
           <div className="flex items-center text-[#1769aa] hover:text-blue-700 transition-colors duration-300">

@@ -1,5 +1,3 @@
-import React from 'react'
-import bgHero from "/bg_hero.jpg"
 import Button from '../../../components/home_page/Button'
 
 export default function HeroSection() {

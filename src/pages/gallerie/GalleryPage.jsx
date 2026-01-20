@@ -84,7 +84,7 @@ export default function GalleryPage() {
 
       >
         <img src={imageModal} alt={legende} className="md:scale-90 scale-80" />
-        <p className="text-gray-600  md:text-lg md:text-base font-meduim text-center">{legende}</p>
+        <p className="text-gray-600  lg:text-lg md:text-base font-meduim text-center">{legende}</p>
       </Modal>
       <Footer />
     </div>
