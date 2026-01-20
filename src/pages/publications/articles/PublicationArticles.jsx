@@ -9,7 +9,7 @@ import UseFetch from '../../../hooks/useFecth';
 
 import Alert from '../../../components/Alert';
 import Table from '../../../components/Table';
-import Modal from '../../../components/modals';
+import Modal from '../../../components/Modals';
 
 // Register the module
 Quill.register('modules/blotFormatter', BlotFormatter);

@@ -3,7 +3,7 @@ import NavBar from "../../components/NavBar";
 import CardPicture from "../../components/gallery/CardPicture";
 import TitleSection from "../../components/TitleSection";
 import Spinner from "../../components/Spinner"
-import Modal from "../../components/modals";
+import Modal from "../../components/Modals";
 import Footer from "../../components/Footer";
 import UseFetch from "../../hooks/useFecth";
 
