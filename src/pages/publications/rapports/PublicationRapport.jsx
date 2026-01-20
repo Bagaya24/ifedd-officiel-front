@@ -4,7 +4,7 @@ import NavBar from "../../../components/NavBar";
 import TitleSection from "../../../components/TitleSection";
 import DataTable from "../../../components/DataTable";
 import Alert from "../../../components/Alert";
-import Footer from "../../../components/Footer";
+import MFooter from "../../../components/MFooter";
 
 export default function PublicationRapport() {
     const [title, setTitle] = useState("");
@@ -155,7 +155,7 @@ export default function PublicationRapport() {
 
 
             </div>
-            <Footer />
+            <MFooter />
         </div>
     )
 }

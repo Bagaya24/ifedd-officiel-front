@@ -3,7 +3,7 @@ import { verifyToken } from "../api/auth";
 import { adresses, reseauxSociaux } from "../constants";
 import { Link } from "react-router-dom";
 
-export default function Footer() {
+export default function MFooter() {
   const [isConnected, setIsConnected] = useState(false);
   useEffect(() => {
     const fetchAuth = async () => {
