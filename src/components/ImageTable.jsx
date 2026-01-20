@@ -35,7 +35,7 @@ export default function ImageTable({ images, onDelete }) {
             {/* Table Container */}
             <div className="overflow-x-auto bg-white rounded-lg shadow-md">
                 <table className="w-full table-auto">
-                    <thead className="bg-gradient-to-r from-[#1769aa] to-blue-600 text-white">
+                    <thead className="bg-linear-to-r from-[#1769aa] to-blue-600 text-white">
                         <tr>
                             <th className="px-6 py-4 text-left text-sm font-semibold">Image</th>
                             <th className="px-6 py-4 text-left text-sm font-semibold">Legend</th>

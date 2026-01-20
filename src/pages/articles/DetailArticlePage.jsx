@@ -110,10 +110,10 @@ export default function DetailArticlePage() {
 
                         {/* Article principal */}
                         <div className="md:w-8/12">
-                            <div className="w-full lg:h-[600px] md:h-[400px] h-[200px] relative bg-cover overflow-hidden rounded-t-xl">
+                            <div className="w-full lg:h-150 md:h-100 h-50 relative bg-cover overflow-hidden rounded-t-xl">
                                 <img src={import.meta.env.VITE_CLOUD_URL_FILE + article_principale?.image} alt="" className="w-full h-full object-cover" />
                             </div>
-                            <div className="p-4 h-auto min-h-[200px]">
+                            <div className="p-4 h-auto min-h-100">
                                 <p className="text-base text-gray-500 font-semibold">
                                     {article_principale?.created_at &&
                                         new Date(article_principale?.created_at).toLocaleDateString()}
@@ -127,10 +127,10 @@ export default function DetailArticlePage() {
 
                                 <div className="h-0.5 w-full bg-gray-200 rounded-full mt-2 mb-2" />
 
-                                <div className={`relative ${!isExpanded ? 'max-h-[200px] overflow-hidden' : ''} transition-all duration-300`}>
+                                <div className={`relative ${!isExpanded ? 'max-h-50 overflow-hidden' : ''} transition-all duration-300`}>
                                     <div className="article-content mb-4" dangerouslySetInnerHTML={{ __html: article_principale?.content }} />
                                     {!isExpanded && (
-                                        <div className="absolute bottom-0 left-0 w-full h-12 bg-gradient-to-t from-white to-transparent"></div>
+                                        <div className="absolute bottom-0 left-0 w-full h-12 bg-linear-to-t from-white to-transparent"></div>
                                     )}
                                 </div>
                                 <button

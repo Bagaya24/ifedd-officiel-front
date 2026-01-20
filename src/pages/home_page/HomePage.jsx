@@ -28,7 +28,7 @@ export default function HomePage() {
       <ArticlesSection />
       <RapportsSection />
       <PartenaireSection />
-      {/* <Footer /> */}
+      <Footer />
     </>
   );
 }

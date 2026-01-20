@@ -43,7 +43,7 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-blue-50">
+        <div className="min-h-screen w-full flex items-center justify-center bg-linear-to-br from-blue-50 via-white to-blue-50">
             {/* Alert */}
             {alert.message && (
                 <div className="fixed top-8 left-1/2 transform -translate-x-1/2 z-50">
@@ -59,7 +59,7 @@ export default function LoginPage() {
                 {/* Card Container */}
                 <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
                     {/* Header avec gradient */}
-                    <div className="bg-gradient-to-r from-[#1769aa] to-blue-600 p-8 text-center">
+                    <div className="bg-linear-to-r from-[#1769aa] to-blue-600 p-8 text-center">
                         <div className="w-20 h-20 bg-white rounded-full mx-auto mb-4 flex items-center justify-center shadow-lg">
                             <UserCircleIcon className="w-12 h-12 text-[#1769aa]" />
                         </div>
@@ -134,7 +134,7 @@ export default function LoginPage() {
                             disabled={loading}
                             className={`w-full py-3 px-4 rounded-lg font-bold text-white transition-all duration-300 transform ${loading
                                 ? 'bg-gray-400 cursor-not-allowed'
-                                : 'bg-gradient-to-r from-[#1769aa] to-blue-600 hover:from-[#1557a] hover:to-blue-700 hover:shadow-lg hover:-translate-y-0.5'
+                                : 'bg-linear-to-r from-[#1769aa] to-blue-600 hover:from-[#1557a] hover:to-blue-700 hover:shadow-lg hover:-translate-y-0.5'
                                 }`}
                         >
                             {loading ? (
