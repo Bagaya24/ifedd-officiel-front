@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import NavBar from "../../components/NavBar";
 import TitleSection from "../../components/TitleSection";
 import ArticleCard from "../../components/articles/ArticleCard";
-import Footer from "../../components/Footer";
 import UseFetch from "../../hooks/useFecth";
 import Spinner from "../../components/Spinner";
+import MFooter from "../../components/MFooter";
 
 export default function ArticlesPage() {
     const [page, setPage] = useState(0);
@@ -68,7 +68,7 @@ export default function ArticlesPage() {
                 </div>
             </div>
 
-            <Footer />
+            <MFooter />
         </div>
     )
 }

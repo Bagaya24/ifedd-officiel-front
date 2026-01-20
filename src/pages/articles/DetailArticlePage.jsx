@@ -1,7 +1,5 @@
 import { useParams } from "react-router-dom";
 import ArticleCard from "../../components/articles/ArticleCard";
-
-import Footer from "../../components/Footer";
 import NavBar from "../../components/NavBar";
 import UseFetch from "../../hooks/useFecth";
 import { useEffect, useState } from "react";
@@ -9,6 +7,7 @@ import TitleSection from "../../components/TitleSection";
 import { HeartIcon, UserCircleIcon } from "@heroicons/react/16/solid";
 import Alert from "../../components/Alert";
 import usePageSEO from "../../hooks/usePageSEO";
+import MFooter from "../../components/MFooter";
 
 
 
@@ -229,7 +228,7 @@ export default function DetailArticlePage() {
                 </div>
             </div>
 
-            <Footer />
+            <MFooter />
         </div >
     )
 }

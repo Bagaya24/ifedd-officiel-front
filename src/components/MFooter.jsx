@@ -3,7 +3,7 @@ import { verifyToken } from "../api/auth";
 import { adresses, reseauxSociaux } from "../constants";
 import { Link } from "react-router-dom";
 
-export default function Footer() {
+export default function MFooter() {
   const [isConnected, setIsConnected] = useState(false);
   useEffect(() => {
     const fetchAuth = async () => {
@@ -36,7 +36,7 @@ export default function Footer() {
                   className="text-gray-100 hover:text-blue-400 "
                 >
                   {/* Render inline SVG safely (these icons come from your constants). */}
-                  <AddressIcon className="bg-[#e6e5e5] w-5 h-7 bg-blue-950" />
+                  <AddressIcon className="w-5 h-7 bg-blue-950" />
                   <span>{adresse.coordonne}</span>
                 </a>
               </li>

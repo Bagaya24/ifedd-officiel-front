@@ -3,13 +3,13 @@ import ReactQuill, { Quill } from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
 import BlotFormatter from 'quill-blot-formatter';
 import NavBar from '../../../components/NavBar';
-import Footer from '../../../components/Footer';
 import TitleSection from '../../../components/TitleSection';
 import UseFetch from '../../../hooks/useFecth';
 
 import Alert from '../../../components/Alert';
 import Table from '../../../components/Table';
-import Modal from '../../../components/Modals';
+import Modal from '../../../components/Modal';
+import MFooter from '../../../components/MFooter';
 
 // Register the module
 Quill.register('modules/blotFormatter', BlotFormatter);
@@ -263,7 +263,7 @@ export default function PublicationArticles() {
                     </Modal>
                 </div>
             </div>
-            <Footer />
+            <MFooter />
         </div>
     );
 }

@@ -3,9 +3,9 @@ import NavBar from "../../components/NavBar";
 import CardPicture from "../../components/gallery/CardPicture";
 import TitleSection from "../../components/TitleSection";
 import Spinner from "../../components/Spinner"
-import Modal from "../../components/Modals";
-import Footer from "../../components/Footer";
+import Modal from "../../components/Mods";
 import UseFetch from "../../hooks/useFecth";
+import MFooter from "../../components/MFooter";
 
 
 
@@ -86,7 +86,7 @@ export default function GalleryPage() {
         <img src={imageModal} alt={legende} className="md:scale-90 scale-80" />
         <p className="text-gray-600  lg:text-lg md:text-base font-meduim text-center">{legende}</p>
       </Modal>
-      <Footer />
+      <MFooter />
     </div>
   )
 }

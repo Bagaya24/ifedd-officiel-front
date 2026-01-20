@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import Footer from "../../../components/Footer";
 import NavBar from "../../../components/NavBar";
 import TitleSection from "../../../components/TitleSection";
 import Alert from "../../../components/Alert";
 import DataTable from "../../../components/DataTable";
 import UseFetch from "../../../hooks/useFecth";
+import MFooter from "../../../components/MFooter";
 
 export default function PublicationPartenaire() {
     const [title, setTitle] = useState('');
@@ -131,7 +131,7 @@ export default function PublicationPartenaire() {
                 </div>
 
             </div>
-            <Footer />
+            <MFooter />
         </div>
     )
 }

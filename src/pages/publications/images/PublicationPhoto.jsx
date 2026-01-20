@@ -4,7 +4,7 @@ import TitleSection from "../../../components/TitleSection";
 import UseFetch from "../../../hooks/useFecth";
 import Alert from "../../../components/Alert";
 import DataTable from "../../../components/DataTable";
-import Footer from "../../../components/Footer";
+import MFooter from "../../../components/MFooter";
 
 
 export default function PublicationPhoto() {
@@ -141,7 +141,7 @@ export default function PublicationPhoto() {
                     </div>
                 </div>
             </div>
-            <Footer />
+            <MFooter />
         </div>
     );
 }
