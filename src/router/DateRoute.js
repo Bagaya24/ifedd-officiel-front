@@ -8,32 +8,26 @@ import PublicationArticles from "../pages/publications/articles/PublicationArtic
 import PublicationPhoto from "../pages/publications/images/PublicationPhoto";
 import PublicationRapport from "../pages/publications/rapports/PublicationRapport";
 import PublicationPartenaire from "../pages/publications/partenaires/PublicationPartenaire";
+import ErrorPage from "../pages/error_page/ErrorPage";
 
 
 
-export interface RouteType {
-  path: string;
-  component: React.ElementType;
-  exact?: boolean;
-}
-
-export const protectedRoute: RouteType[] = [
-
-];
-
-
-export const publiqueRoute: RouteType[] = [
-  { path: "/", component: HomePage },
-  { path: "/galleries", component: GalleryPage },
-  { path: "/articles", component: ArticlesPage },
-  { path: "/article/:id", component: DetailArticlePage },
-  { path: "/galleries", component: GalleryPage },
+export const protectedRoute = [
   { path: "/publication/article", component: PublicationArticles },
   { path: "/publication/photo", component: PublicationPhoto },
   { path: "/publication/rapport", component: PublicationRapport },
   { path: "/publication/partenaire", component: PublicationPartenaire },
+];
+
+
+export const publiqueRoute = [
+  { path: "/", component: HomePage },
+  { path: "/galleries", component: GalleryPage },
+  { path: "/articles", component: ArticlesPage },
+  { path: "/article/:id", component: DetailArticlePage },
   { path: "/login", component: LoginPage },
-  { path: "/logout", component: Logout }
+  { path: "/logout", component: Logout },
+  { path: "*", component: ErrorPage }
   //  protected route
 
 ]

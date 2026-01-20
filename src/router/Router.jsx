@@ -1,6 +1,7 @@
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { protectedRoute, publiqueRoute } from './DateRoute'
+import ProtectedRoute from './ProtectedRoute'
 
 
 export default function Router() {
@@ -19,7 +20,7 @@ export default function Router() {
                 </Route>
                 {/* Protect routes */}
 
-                <Route>
+                <Route element= {<ProtectedRoute/>}>
                     {
                         protectedRoute.map((route, index) => (
                             <Route key={index} path={route.path} element={<route.component/>}/>
