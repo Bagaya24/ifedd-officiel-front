@@ -42,7 +42,7 @@ Application web officielle pour l'ONG IFEDD, une organisation dédiée au dével
 
 ### 1. Cloner le projet
 ```bash
-git clone <votre-url-repo>
+git clone https://github.com/Bagaya24/ifedd-officiel-front/pull/new/version_2
 cd front_v2
 ```
 
