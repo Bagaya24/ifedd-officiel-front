@@ -1,41 +1,33 @@
-// router/Router.jsx
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Header from "../components/appbar";
-import ProtectRoutes from "./ProtectRoute";
-import { publicRoutes, protectedRoutes } from "./DataRoute";
-import Login from "../pages/login";
-import Deconnexion from "../pages/deconexion";
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { protectedRoute, publiqueRoute } from './DateRoute'
+import ProtectedRoute from './ProtectedRoute'
 
 
-
-function Router() {
+export default function Router() {
   return (
-    <BrowserRouter basename="/">
-      <Routes>
-        {/* Routes sans header */}
-        <Route path="/connexion" element={<Login />} />
-        <Route path="/deconnexion" element={<Deconnexion />} />
+    <BrowserRouter basename='/'>
+            <Routes>
+                {/* Connexion et déconnexion */}
 
-        {/* Routes AVEC Header */}
-        <Route element={<Header />}>
-          {/* Routes publiques */}
-          {publicRoutes.map((route, index) =>
-            route.path !== "/connexion" && route.path !== "/deconnexion" ? (
-              <Route key={index} path={route.path} element={route.component} />
-            ) : null
-          )}
+                {/* Publiques routes */}
+                <Route>
+                    {
+                        publiqueRoute.map((route, index) => (
+                            <Route key={index} path={route.path} element={<route.component/>}/>
+                        ))
+                    }
+                </Route>
+                {/* Protect routes */}
 
-          {/* Routes protégées */}
-          <Route element={<ProtectRoutes />}>
-            {protectedRoutes.map((route, index) => (
-              <Route key={index} path={route.path} element={route.component} />
-            ))}
-          </Route>
-        </Route>
-      </Routes>
+                <Route element= {<ProtectedRoute/>}>
+                    {
+                        protectedRoute.map((route, index) => (
+                            <Route key={index} path={route.path} element={<route.component/>}/>
+                        ))
+                    }
+                </Route>
+            </Routes>
     </BrowserRouter>
-  );
+  )
 }
-
-export default Router;
