@@ -4,7 +4,7 @@ import AxeIntervationSection from "./section/AxeIntervationSection";
 import ArticlesSection from "./section/ArticlesSection";
 import PartenaireSection from "./section/PartenaireSection";
 import RapportsSection from "./section/RapportsSection";
-import Footer from "../../components/Footer";
+// import Footer from "../../components/Footer";
 import NavBar from "../../components/NavBar";
 import usePageSEO from "../../hooks/usePageSEO";
 
@@ -28,7 +28,7 @@ export default function HomePage() {
       <ArticlesSection />
       <RapportsSection />
       <PartenaireSection />
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }
