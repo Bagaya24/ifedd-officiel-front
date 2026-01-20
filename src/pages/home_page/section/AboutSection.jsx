@@ -6,7 +6,7 @@ import { cardAbout } from '../../../constants'
 export default function AboutSection() {
 
     return (
-        <section className='mt-[-100px]'>
+        <section className='-mt-25'>
             <TitleSection
                 title={"Qui sommes-nous?"}
                 sub={"Objectif, Mission, Vision"}

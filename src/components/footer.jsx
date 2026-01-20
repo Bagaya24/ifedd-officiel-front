@@ -35,7 +35,7 @@ export default function Footer() {
                             <li className='mb-1 md:text-sm text-xs' key={index}>
                                 <a href={adresse.lien} className='text-gray-100 hover:text-blue-400 '>
                                     {/* Render inline SVG safely (these icons come from your constants). */}
-                                    <AddressIcon className="bg-[#e6e5e5] w-5 h-7 bg-blue-950" />
+                                    <AddressIcon className="w-5 h-7 bg-blue-950" />
                                     <span>
                                         {adresse.coordonne}
                                     </span>

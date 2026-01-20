@@ -110,7 +110,7 @@ export default function DataTable({
             {/* Table Container */}
             <div className="overflow-x-auto bg-white rounded-lg shadow-md">
                 <table className="w-full table-auto">
-                    <thead className="bg-gradient-to-r from-[#1769aa] to-blue-600 text-white">
+                    <thead className="bg-linear-to-r from-[#1769aa] to-blue-600 text-white">
                         <tr>
                             {columns.map((column, index) => (
                                 <th
