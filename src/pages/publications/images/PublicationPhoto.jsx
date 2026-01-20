@@ -6,6 +6,7 @@ import Alert from "../../../components/Alert";
 import DataTable from "../../../components/DataTable";
 import Footer from "../../../components/Footer";
 
+
 export default function PublicationPhoto() {
 
     const [title, setTitle] = useState('');
