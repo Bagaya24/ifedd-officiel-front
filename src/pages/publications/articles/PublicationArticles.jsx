@@ -253,10 +253,10 @@ export default function PublicationArticles() {
                             <div className="flex justify-end pt-5">
                                 <button
                                     type="submit"
-                                    disabled={!loader ? true : false}
-                                    className={`bg-[#1769aa] text-white font-bold py-2 px-6 rounded-lg transition ${!loader ? "bg-gray-400 cursor-not-allowed" : "hover:bg-blue-800 cursor-pointer"}`}
+                                    disabled={loader ? true : false}
+                                    className={`bg-[#1769aa] text-white font-bold py-2 px-6 rounded-lg transition ${loader ? "bg-gray-400 cursor-not-allowed" : "hover:bg-blue-800 cursor-pointer"}`}
                                 >
-                                    {!loader ? "Modification..." : "Modifier"}
+                                    {loader ? "Modification..." : "Modifier"}
                                 </button>
                             </div>
                         </form>
