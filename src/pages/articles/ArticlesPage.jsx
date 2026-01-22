@@ -14,7 +14,7 @@ export default function ArticlesPage() {
         getArticle();
     }, []);
 
-    const articlesPerPage = 9;
+    const articlesPerPage = 12;
     const startIndex = page * articlesPerPage;
     const paginatedArticles = articles.slice(startIndex, startIndex + articlesPerPage);
     const hasPrev = page > 0;

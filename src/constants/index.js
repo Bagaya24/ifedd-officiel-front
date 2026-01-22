@@ -132,7 +132,7 @@ export const adresses = [
     {
         icon: MapPinIcon,
         lien: "https://maps.app.goo.gl/AMEpxCCeLwdwhCHr6",
-        coordonne: "Notre adresse à Goma: N° 81 Av présidentielle, Quartier Himbi, commune de Goma, ville de Goma/RDC"
+        coordonne: "Notre adresse à Goma: N°36, rue serufuki, ex avenue du Musée, quartier Himbi, commune de Goma, ville de Goma/RDC"
     },
     {
         icon: MapPinIcon,
@@ -155,7 +155,7 @@ export const adresses = [
         coordonne: "ifeddrdc@gmail.com"
     }
 
-]
+];
 
 export const reseauxSociaux = [
     {

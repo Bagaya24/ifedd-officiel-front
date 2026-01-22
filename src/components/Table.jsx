@@ -33,13 +33,13 @@ export default function Table({ data, onEdit, onDelete }) {
                                 <td className="py-4 px-6 text-right">
                                     <button
                                         onClick={() => onEdit(item)}
-                                        className="font-medium text-blue-600 hover:underline mr-4"
+                                        className="font-semibold bg-blue-100 text-blue-950 border border-blue-400 rounded-xl  py-1 px-1 cursor-pointer mr-4 mb-2"
                                     >
                                         Modifier
                                     </button>
                                     <button
                                         onClick={() => onDelete(item.id)}
-                                        className="font-medium text-red-600 hover:underline"
+                                        className="font-semibold bg-red-100 text-red-800 border border-red-400 rounded-xl  py-1 px-1 cursor-pointer mr-4"
                                     >
                                         Effacer
                                     </button>

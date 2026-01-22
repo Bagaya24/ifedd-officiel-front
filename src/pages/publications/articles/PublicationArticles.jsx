@@ -26,6 +26,8 @@ export default function PublicationArticles() {
 
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [editData, setEditData] = useState({ id: null, title: '', content: '' });
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 5;
 
     useEffect(() => {
         getArticle();
@@ -129,6 +131,24 @@ export default function PublicationArticles() {
         'link', 'image'
     ];
 
+    // Pagination logic
+    const totalPages = Math.ceil(articles.length / itemsPerPage);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const paginatedArticles = articles.slice(startIndex, endIndex);
+
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const handlePreviousPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
 
     return (
         <div className="w-full">
@@ -204,11 +224,44 @@ export default function PublicationArticles() {
                         <h2 className="text-2xl font-bold text-gray-800 mb-4">Liste des Articles</h2>
                         {loader && <p className="text-center text-red-600">Suppression en cours..</p>}
                         <Table
-                            data={articles}
+                            data={paginatedArticles}
                             onEdit={handleEditClick}
                             onDelete={handleDelete}
                             loader={loader}
                         />
+                        
+                        {/* Pagination Controls */}
+                        {totalPages > 1 && (
+                            <div className="flex justify-between items-center mt-6 p-4 bg-gray-100 rounded-lg">
+                                <button
+                                    onClick={handlePreviousPage}
+                                    disabled={currentPage === 1}
+                                    className={`px-4 py-2 rounded-lg font-semibold transition ${
+                                        currentPage === 1
+                                            ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                                            : 'bg-[#1769aa] text-white hover:bg-blue-800 cursor-pointer'
+                                    }`}
+                                >
+                                    ← Précédent
+                                </button>
+                                
+                                <span className="text-gray-700 font-semibold">
+                                    Page {currentPage} sur {totalPages}
+                                </span>
+                                
+                                <button
+                                    onClick={handleNextPage}
+                                    disabled={currentPage === totalPages}
+                                    className={`px-4 py-2 rounded-lg font-semibold transition ${
+                                        currentPage === totalPages
+                                            ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                                            : 'bg-[#1769aa] text-white hover:bg-blue-800 cursor-pointer'
+                                    }`}
+                                >
+                                    Suivant →
+                                </button>
+                            </div>
+                        )}
                     </div>
 
                     <Modal

@@ -8,17 +8,19 @@ import { HeartIcon, UserCircleIcon } from "@heroicons/react/16/solid";
 import Alert from "../../components/Alert";
 import usePageSEO from "../../hooks/usePageSEO";
 import MFooter from "../../components/MFooter";
+import Spinner from "../../components/Spinner";
 
 
 
 export default function DetailArticlePage() {
     const { id } = useParams();
-    const { articles, getArticle, addLike, getLike, likes, getCommentaires, commentaires, addComment } = UseFetch();
+    const { articles, getArticle, addLike, getLike, likes, getCommentaires, commentaires, addComment, loader } = UseFetch();
     const [isLiked, setIsLiked] = useState(false);
     const [newComment, setNewComment] = useState("");
     const [pseudo, setPseudo] = useState("");
     const [alert, setAlert] = useState({ message: '', type: '' });
     const [isExpanded, setIsExpanded] = useState(false);
+    const [localLikes, setLocalLikes] = useState(0);
 
 
     useEffect(() => {
@@ -39,8 +41,12 @@ export default function DetailArticlePage() {
     }, [id]);
 
     useEffect(() => {
-        getLike(id);
-    }, [isLiked, id]);
+        getLike(id).then((data) => {
+            if (data?.like) {
+                setLocalLikes(data.like);
+            }
+        });
+    }, [id]);
 
     const liked = (articleId) => {
         if (!articleId) return;
@@ -51,15 +57,18 @@ export default function DetailArticlePage() {
             // User is unliking
             const newLikedArticles = likedArticles.filter(item => item !== strId);
             localStorage.setItem("liked_articles", JSON.stringify(newLikedArticles));
+            // Update local likes immediately
+            setLocalLikes(prev => Math.max(0, prev - 1));
             addLike(articleId);
             setIsLiked(false);
-            // Optional: If there was a remote 'unlike' endpoint, we would call it here.
         } else {
             // User is liking
             if (!likedArticles.includes(strId)) {
                 likedArticles.push(strId);
                 localStorage.setItem("liked_articles", JSON.stringify(likedArticles));
             }
+            // Update local likes immediately
+            setLocalLikes(prev => prev + 1);
             addLike(articleId);
             setIsLiked(true);
         }
@@ -92,8 +101,10 @@ export default function DetailArticlePage() {
         ogImage: import.meta.env.VITE_CLOUD_URL_FILE + article_principale?.image,
         ogDescription: article_principale?.content?.replace(/<[^>]+>/g, '')?.slice(0, 100) + "...",
         ogTitle: article_principale?.title,
-        canonicalUrl: window.location.href
+        canonicalUrl: window.location.href,
+        ogType: "article"
     });
+
     return (
         <div className="w-full">
 
@@ -105,7 +116,11 @@ export default function DetailArticlePage() {
                         title="Articles"
                         sub={article_principale?.title}
                     />
-                    <div className="flex md:flex-row flex-col w-full gap-4">
+                    {loader ? <Spinner 
+                    loader={loader}
+
+                    /> : (
+                       <div className="flex md:flex-row flex-col w-full gap-4">
 
                         {/* Article principal */}
                         <div className="md:w-8/12">
@@ -141,7 +156,7 @@ export default function DetailArticlePage() {
                             </div>
                             <div className="flex justify-end gap-2 mr-4">
                                 <HeartIcon className={`w-9 h-9 text-gray-200 hover:text-red-200 cursor-pointer ${isLiked ? "text-red-500" : ""}`} onClick={() => liked(article_principale?.id)} />
-                                <p className="text-base font-semibold text-gray-600 mt-2">{likes.like}</p>
+                                <p className="text-base font-semibold text-gray-600 mt-2">{localLikes || likes.like || 0}</p>
                             </div>
 
                             {/* Comments Section */}
@@ -219,12 +234,14 @@ export default function DetailArticlePage() {
                         </div>
                         {/* Articles secondaire */}
 
-                        <div className="md:w-4/12 w-full md:overflow-y-auto overflow-x-auto flex md:flex-col flex-row md:h-280 h-auto md:space-y-2 space-x-4 pb-2">
+                        <div className="md:w-4/12 w-full md:overflow-y-auto overflow-x-auto flex md:flex-col flex-row md:h-360 h-auto md:space-y-2 space-x-4 pb-2">
                             {autre_articles.map((article, index) => (
                                 <ArticleCard key={index} id={article?.id} description={article?.content} image={import.meta.env.VITE_CLOUD_URL_FILE + article?.image} title={article?.title} />
                             ))}
                         </div>
-                    </div>
+                    </div> 
+                    )}
+                    
                 </div>
             </div>
 
