@@ -1,6 +1,29 @@
 import Slider from 'react-slick';
 
 
+
+function SampleNextArrow(props) {
+  const { className, style, onClick } = props;
+  return (
+    <div
+      className={className}
+      style={{ ...style, display: "block", background: "#1769aa"}}
+      onClick={onClick}
+    />
+  );
+}
+
+function SamplePrevArrow(props) {
+  const { className, style, onClick } = props;
+  return (
+    <div
+      className={className}
+      style={{ ...style, display: "block", background: "#1769aa" }}
+      onClick={onClick}
+    />
+  );
+}
+
 export default function Carousel({ data, slides = 3 }) {
 
 
@@ -31,7 +54,10 @@ export default function Carousel({ data, slides = 3 }) {
                     slidesToShow: 1,
                 }
             }
-        ]
+        ],
+        nextArrow: <SampleNextArrow />,
+        prevArrow: <SamplePrevArrow />
+
     };
 
 

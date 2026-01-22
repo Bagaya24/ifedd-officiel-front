@@ -46,7 +46,7 @@ export default function ArticlesSection() {
                                     data-aos-duration="500">
                                     {articles[0]?.title || "Pas d'article"}
                                 </h1>
-                                <div className='md:text-base text-sm text-gray-600 article-content article-content-no-images lg:line-clamp-17 md:line-clamp-13 line-clamp-10'
+                                <div className='md:text-base text-sm text-gray-600 article-content article-content-no-images lg:line-clamp-15 md:line-clamp-11 line-clamp-8'
                                     data-aos="fade-left"
                                     data-aos-offset="500"
                                     data-aos-duration="500"
