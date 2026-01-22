@@ -46,13 +46,13 @@ export default function ArticlesSection() {
                             <div className='md:w-1/2 w-full h-full '
 
                             >
-                                <h1 className='lg:text-2xl md:text-xl text-lg text-[#1769aa] font-bold py-3 text-left line-clamp-2'
+                                <h1 className='lg:text-2xl md:text-xl text-lg text-[#1769aa] font-bold py-3 text-left'
                                     data-aos="fade-left"
                                     data-aos-offset="500"
                                     data-aos-duration="500">
                                     {articles[0]?.title || "Pas d'article"}
                                 </h1>
-                                <div className='md:text-base text-sm text-gray-600 article-content article-content-no-images lg:line-clamp-15 md:line-clamp-11 line-clamp-8'
+                                <div className='md:text-base text-sm text-gray-600 article-content article-content-no-images lg:line-clamp-10 md:line-clamp- line-clamp-3'
                                     data-aos="fade-left"
                                     data-aos-offset="500"
                                     data-aos-duration="500"

@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import ArticleCard from "../../components/articles/ArticleCard";
 import NavBar from "../../components/NavBar";
 import UseFetch from "../../hooks/useFecth";
@@ -14,6 +14,7 @@ import Spinner from "../../components/Spinner";
 
 export default function DetailArticlePage() {
     const { id } = useParams();
+    const navigate = useNavigate();
     const { articles, getArticle, addLike, getLike, likes, getCommentaires, commentaires, addComment, loader } = UseFetch();
     const [isLiked, setIsLiked] = useState(false);
     const [newComment, setNewComment] = useState("");
@@ -112,9 +113,14 @@ export default function DetailArticlePage() {
             <div className="flex justify-center mt-24 mb-8">
 
                 <div className="w-11/12 ">
+                    <button
+                        onClick={() => navigate(-1)}
+                        className="mb-4 px-4 py-2 bg-[#1769aa] text-white rounded-lg hover:bg-blue-800 transition flex items-center gap-2 text-sm font-semibold"
+                    >
+                        ← Retour
+                    </button>
                     <TitleSection
-                        title="Articles"
-                     
+                        title={`${article_principale?.title}`}
                     />
                     {loader ? <Spinner 
                     loader={loader}
