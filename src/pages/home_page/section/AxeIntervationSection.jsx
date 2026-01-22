@@ -7,7 +7,7 @@ export default function AxeIntervationSection() {
 
 
   return (
-    <section className="py-10 md:px-20 md:5">
+    <section className="py-10 md:px-20 px-5">
       <TitleSection
         title={"NOS AXES D'INTERVATIONS"}
 
@@ -20,7 +20,7 @@ export default function AxeIntervationSection() {
                 <img src={card.icon} alt={card.title} />
               </div>
               <div className='flex justify-center items-center py-1 px-1'>
-                <h1 className={`md:text-lg text-sm text-[${card.color}] font-semibold`}>
+                <h1 className="md:text-lg text-sm font-semibold" style={{ color: card.color }}>
                   {card.title}
                 </h1>
               </div>

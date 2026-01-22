@@ -16,12 +16,15 @@ export default function ArticlesSection() {
     }, []);
 
     return (
-        <section className="px-5 md:px-20">
+        <section className="px-5 md:px-20 w-full">
             {/* Grid Layout */}
-            <TitleSection
+            <div className="flex justify-center">
+               <TitleSection
                 title={"NOS ARTICLES ET RÉALISATIONS"}
+            /> 
+            </div>
+            
 
-            />
             <div className='w-full h-full '>
                 {loader ? <Spinner
                 loader={loader}

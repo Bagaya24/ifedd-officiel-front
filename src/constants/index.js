@@ -144,11 +144,11 @@ export const adresses = [
         lien: "https://wa.me/+243846520000",
         coordonne: "+243 846 520 000"
     },
-    {
-        icon: GlobeEuropeAfricaIcon,
-        lien: "https://ifedd-rdc.org/",
-        coordonne: "ifedd-rdc.org"
-    },
+    // {
+    //     icon: GlobeEuropeAfricaIcon,
+    //     lien: "https://ifedd-rdc.org/",
+    //     coordonne: "ifedd-rdc.org"
+    // },
     {
         icon: EnvelopeIcon,
         lien: "mailto:ifeddrdc@gmail.com",
