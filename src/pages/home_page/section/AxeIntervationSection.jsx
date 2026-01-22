@@ -9,7 +9,7 @@ export default function AxeIntervationSection() {
   return (
     <section className="py-10 md:px-20 px-5">
       <TitleSection
-        title={"NOS AXES D'INTERVATIONS"}
+        title={"NOS AXES D'INTERVENTIONS"}
 
       />
       <Carousel
