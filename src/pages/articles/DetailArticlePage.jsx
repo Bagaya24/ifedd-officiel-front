@@ -114,7 +114,7 @@ export default function DetailArticlePage() {
                 <div className="w-11/12 ">
                     <TitleSection
                         title="Articles"
-                        sub={article_principale?.title}
+                     
                     />
                     {loader ? <Spinner 
                     loader={loader}

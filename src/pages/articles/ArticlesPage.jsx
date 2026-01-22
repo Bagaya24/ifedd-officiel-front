@@ -27,7 +27,7 @@ export default function ArticlesPage() {
                 <div className="w-9/12 mt-20">
                     <TitleSection
                         title={"ARTICLES"}
-                        sub={"Articles"}
+
                     />
                     {loader ? <Spinner /> : (
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">

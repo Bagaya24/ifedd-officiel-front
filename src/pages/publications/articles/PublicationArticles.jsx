@@ -20,7 +20,7 @@ export default function PublicationArticles() {
     const [imagePreview, setImagePreview] = useState('');
     const [description, setDescription] = useState('');
     const [alert, setAlert] = useState({ message: '', type: '' });
-    const { addArticle, uploadFile, loader, getArticle, articles, deleteArticle, updateArticle } = UseFetch();
+    const { addArticle, uploadFile, loader, loaderDelete, getArticle, articles, deleteArticle, updateArticle } = UseFetch();
     const quillRef = useRef(null);
     const editQuillRef = useRef(null);
 
@@ -163,7 +163,7 @@ export default function PublicationArticles() {
                     />
                 )}
                 <div className="w-10/12 md:w-8/12">
-                    <TitleSection title="PUBLIER UN ARTICLE" sub="Administration" />
+                    <TitleSection title="PUBLIER UN ARTICLE" />
 
                     <form onSubmit={handleSubmit} className="space-y-6 bg-white p-6 rounded-lg shadow-md border border-gray-100">
                         {/* Titre */}
@@ -222,12 +222,12 @@ export default function PublicationArticles() {
 
                     <div className="mt-12">
                         <h2 className="text-2xl font-bold text-gray-800 mb-4">Liste des Articles</h2>
-                        {loader && <p className="text-center text-red-600">Suppression en cours..</p>}
+                        {loaderDelete && <p className="text-center text-red-600">Suppression en cours..</p>}
                         <Table
                             data={paginatedArticles}
                             onEdit={handleEditClick}
                             onDelete={handleDelete}
-                            loader={loader}
+                            loader={loaderDelete}
                         />
                         
                         {/* Pagination Controls */}

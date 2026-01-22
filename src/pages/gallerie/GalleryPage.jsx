@@ -41,7 +41,7 @@ export default function GalleryPage() {
         <div className="w-9/12 mt-20">
           <TitleSection
             title={"GALLERIES"}
-            sub={"Articles"}
+   
           />
           {loader ? <Spinner
             loader={loader}

@@ -10,7 +10,7 @@ export default function AxeIntervationSection() {
     <section className="py-10 md:px-20 md:5">
       <TitleSection
         title={"NOS AXES D'INTERVATIONS"}
-        sub={"Où nous intervenons"}
+
       />
       <Carousel
         data={cardIntervation.map((card, index) => (

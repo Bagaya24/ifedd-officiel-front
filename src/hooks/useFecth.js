@@ -9,6 +9,7 @@ function UseFetch() {
     const [partenaires, setPartenaires] = useState([]);
     const [commentaires, setCommentaires] = useState([]);
     const [loader, setLoader] = useState(false);
+    const [loaderDelete, setLoaderDelete] = useState(false);
 
     // Articles
     const getArticle = async () => {
@@ -47,13 +48,13 @@ function UseFetch() {
     };
 
     const deleteArticle = async (id) => {
-        setLoader(true);
+        setLoaderDelete(true);
         try {
             await api.delete(`articles/delete/${id}/`);
-            setLoader(false);
+            setLoaderDelete(false);
             return true;
         } catch (error) {
-            setLoader(false);
+            setLoaderDelete(false);
             console.error(error);
             return false;
         }
@@ -121,13 +122,13 @@ function UseFetch() {
     };
 
     const deleteGalerie = async (id) => {
-        setLoader(true);
+            setLoaderDelete(true);
         try {
             const response = await api.delete(`gallery/delete/${id}/`);
-            setLoader(false);
+            setLoaderDelete(false);
             return response.data;
         } catch (error) {
-            setLoader(false);
+            setLoaderDelete(false);
             console.error(error);
             return null;
         }
@@ -163,13 +164,13 @@ function UseFetch() {
     };
 
     const deleteRapport = async (id) => {
-        setLoader(true);
+        setLoaderDelete(true);
         try {
             const response = await api.delete(`rapports/delete/${id}`);
-            setLoader(false);
+            setLoaderDelete(false);
             return response.data;
         } catch (error) {
-            setLoader(false);
+            setLoaderDelete(false);
             console.error(error);
             return null;
         }
@@ -204,13 +205,13 @@ function UseFetch() {
     };
 
     const deletePartenaire = async (id) => {
-        setLoader(true);
+        setLoaderDelete(true);
         try {
             const response = await api.delete(`partenaire/delete/${id}`);
-            setLoader(false);
+            setLoaderDelete(false);
             return response.data;
         } catch (error) {
-            setLoader(false);
+            setLoaderDelete(false);
             console.error(error);
             return null;
         }
@@ -295,7 +296,7 @@ function UseFetch() {
         likes,
         addComment,
         loader,
-        setLoader,
+        loaderDelete
 
     }
 }

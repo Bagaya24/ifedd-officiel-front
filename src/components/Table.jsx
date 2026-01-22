@@ -41,7 +41,7 @@ export default function Table({ data, onEdit, onDelete }) {
                                         onClick={() => onDelete(item.id)}
                                         className="font-semibold bg-red-100 text-red-800 border border-red-400 rounded-xl  py-1 px-1 cursor-pointer mr-4"
                                     >
-                                        Effacer
+                                        Supprimer
                                     </button>
                                 </td>
                             </tr>

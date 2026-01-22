@@ -14,7 +14,7 @@ export default function PublicationRapport() {
     const [filePreview, setFilePreview] = useState(null);
     const [alert, setAlert] = useState({ message: "", type: "" });
 
-    const { getRapport, rapports, loader, addRapport, deleteRapport } = UseFetch();
+    const { getRapport, rapports, loader, loaderDelete, addRapport, deleteRapport } = UseFetch();
 
     useEffect(() => {
         getRapport();
@@ -78,6 +78,7 @@ export default function PublicationRapport() {
             imageKey: 'cover_image'
         }
     ];
+
     return (
         <div className="w-full">
             <NavBar />
@@ -86,7 +87,7 @@ export default function PublicationRapport() {
                 <div className="w-10/12">
                     <TitleSection
                         title={"Publication des rapports"}
-                        sub={"Administration"}
+                 
                     />
                     <form onSubmit={handleSubmit} className="space-y-6 bg-white p-6 rounded-lg shadow-md border border-gray-100 ">
                         {/* Titre */}
@@ -144,7 +145,7 @@ export default function PublicationRapport() {
 
                     <div className="mt-12">
                         <h2 className="text-2xl font-bold mb-4">Liste des rapports </h2>
-                        {loader && <p className="text-center text-red-600">Suppression en cours..</p>}
+                        {loaderDelete && <p className="text-center text-red-600">Suppression en cours..</p>}
                         <DataTable
                             data={rapports}
                             columns={columns}

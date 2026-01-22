@@ -4,11 +4,12 @@ import Slider from 'react-slick';
 import { logo } from "../../constants";
 import UseFetch from "../../hooks/useFecth";
 import { useEffect } from "react";
+import Spinner from "../Spinner";
 
 
 
 export default function PartenairesCarousel({ direction = 'ltr' }) {
-  const { partenaires, getPartenaires } = UseFetch();
+  const { partenaires, getPartenaires, loader } = UseFetch();
 
   useEffect(() => {
     getPartenaires()
@@ -35,7 +36,11 @@ export default function PartenairesCarousel({ direction = 'ltr' }) {
   };
   return (
     <div className="slider-container">
-      <Slider {...settings}>
+      {loader ? 
+      <Spinner
+      loader={loader}
+      /> : (
+         <Slider {...settings}>
         {partenaires.map((partenaire, index) => (
           <div key={index} className="flex items-center justify-center p-4">
             <img
@@ -46,6 +51,8 @@ export default function PartenairesCarousel({ direction = 'ltr' }) {
           </div>
         ))}
       </Slider>
+      ) }
+     
     </div>
   );
 }

@@ -6,9 +6,10 @@ import { Link } from 'react-router-dom'
 import TitleSection from '../../../components/TitleSection'
 import UseFetch from '../../../hooks/useFecth'
 import { useEffect } from 'react'
+import Spinner from '../../../components/Spinner'
 
 export default function ArticlesSection() {
-    const { articles, getArticle } = UseFetch();
+    const { articles, getArticle, loader } = UseFetch();
 
     useEffect(() => {
         getArticle();
@@ -19,11 +20,13 @@ export default function ArticlesSection() {
             {/* Grid Layout */}
             <TitleSection
                 title={"NOS ARTICLES ET RÉALISATIONS"}
-                sub={"Notre dernier articles"}
+
             />
             <div className='w-full h-full '>
-
-                <div className='flex flex-col gap-3 w-full h-full'>
+                {loader ? <Spinner
+                loader={loader}
+                /> : (
+                    <div className='flex flex-col gap-3 w-full h-full'>
                     {/* top  */}
                     <Link to={"/article/" + articles[0]?.id} className="block no-underline h-full"
                         data-aos="fade-right"
@@ -72,7 +75,9 @@ export default function ArticlesSection() {
                             ))}
                         />
                     </div>
-                </div>
+                </div> 
+                )}
+               
             </div>
         </section>
     )
