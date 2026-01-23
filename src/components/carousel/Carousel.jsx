@@ -36,24 +36,14 @@ export default function Carousel({ data, slides = 3 }) {
         pauseOnHover: true,
 
         responsive: [
-            { // <= 1024px
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 3,
-                }
-            },
-            { // <= 768px
-                breakpoint: 768,
-                settings: {
-                    slidesToShow: 2,
-                }
-            },
-            { // <= 480px (phones)
-                breakpoint: 480,
-                settings: {
-                    slidesToShow: 1,
-                }
-            }
+              { breakpoint: 1536, settings: { slidesToShow: 8 } },
+      { breakpoint: 1280, settings: { slidesToShow: 6 } },
+      { breakpoint: 1024, settings: { slidesToShow: 5 } },
+      { breakpoint: 768, settings: { slidesToShow: 4 } },
+      { breakpoint: 640, settings: { slidesToShow: 3 } },
+      { breakpoint: 480, settings: { slidesToShow: 2 } },
+      { breakpoint: 375, settings: { slidesToShow: 2 } },
+      { breakpoint: 0, settings: { slidesToShow: 1 } },
         ],
         nextArrow: <SampleNextArrow />,
         prevArrow: <SamplePrevArrow />
