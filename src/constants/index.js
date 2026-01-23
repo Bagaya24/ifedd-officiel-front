@@ -39,7 +39,7 @@ export const cardIntervation = [
     },
     {
         icon: "/dollars.svg",
-        title: "Relèvement socie-economique",
+        title: "Relèvement socio-économique",
         color: "#ff9100"
     },
     {
