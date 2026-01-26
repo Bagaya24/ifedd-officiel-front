@@ -39,6 +39,10 @@ export default function PublicationRapport() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            if (title.length > 250) {
+                setAlert({ message: "Le titre ne doit pas dépasser 250 caractères.", type: 'error' });
+                return;
+            };
             const response = await addRapport(title, image, file);
             setAlert({ message: response.message || "rapport ajouté avec succès", type: "success" });
             setTitle("");
@@ -87,7 +91,7 @@ export default function PublicationRapport() {
                 <div className="w-10/12">
                     <TitleSection
                         title={"Publication des rapports"}
-                 
+
                     />
                     <form onSubmit={handleSubmit} className="space-y-6 bg-white p-6 rounded-lg shadow-md border border-gray-100 ">
                         {/* Titre */}

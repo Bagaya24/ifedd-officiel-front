@@ -3,38 +3,51 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from 'react-slick';
 import { logo } from "../../constants";
 import UseFetch from "../../hooks/useFecth";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Spinner from "../Spinner";
 
 
 
 export default function PartenairesCarousel({ direction = 'ltr' }) {
   const { partenaires, getPartenaires, loader } = UseFetch();
+  const [slides, setSlides] = useState(8);
 
   useEffect(() => {
     getPartenaires()
   }, []);
+
+  useEffect(() => {
+    const updateSlides = () => {
+      const width = window.innerWidth;
+      if (width >= 1536) setSlides(8);
+      if (width >= 1280) setSlides(6);
+      if (width >= 1024) setSlides(5);
+      if (width >= 768) setSlides(4);
+      if (width >= 640) setSlides(4);
+      if (width >= 480) setSlides(3);
+      if (width >= 375) setSlides(3);
+      if (width < 375) setSlides(3);
+    };
+
+    updateSlides();
+    window.addEventListener('resize', updateSlides);
+    return () => {
+      window.removeEventListener('resize', updateSlides);
+    };
+  }, []);
+
   const rtl = direction === 'rtl';
 
   const settings = {
     infinite: true,
-    slidesToShow: 8,
+    slidesToShow: slides,
     slidesToScroll: 1,
     autoplay: true,
     speed: 2000,
     autoplaySpeed: 2000,
     cssEase: "linear",
     rtl, // true => animation goes right-to-left
-    responsive: [
-      { breakpoint: 1536, settings: { slidesToShow: 8 } },
-      { breakpoint: 1280, settings: { slidesToShow: 6 } },
-      { breakpoint: 1024, settings: { slidesToShow: 5 } },
-      { breakpoint: 768, settings: { slidesToShow: 4 } },
-      { breakpoint: 640, settings: { slidesToShow: 3 } },
-      { breakpoint: 480, settings: { slidesToShow: 2 } },
-      { breakpoint: 375, settings: { slidesToShow: 2 } },
-      { breakpoint: 0, settings: { slidesToShow: 1 } },
-    ],
+
   };
   return (
     <div className="slider-container">

@@ -43,6 +43,10 @@ export default function PublicationPhoto() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            if (title.length > 250) {
+                setAlert({ message: "Le titre ne doit pas dépasser 250 caractères.", type: 'error' });
+                return;
+            };
             const response = await addGalerie(title, image);
             setAlert({ message: response.message || "Photo publiee avec succes !", type: "success" });
 
@@ -89,7 +93,7 @@ export default function PublicationPhoto() {
 
                     <TitleSection
                         title={"Publication des images"}
-      
+
                     />
                     <form onSubmit={handleSubmit} className="space-y-6 bg-white p-6 rounded-lg shadow-md border border-gray-100 ">
                         {/* Titre */}

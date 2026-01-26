@@ -29,6 +29,10 @@ export default function PublicationPartenaire() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            if (title.length > 250) {
+                setAlert({ message: "Le titre ne doit pas dépasser 250 caractères.", type: 'error' });
+                return;
+            };
             const response = await addPartenaire(title, image);
             setAlert({ message: response.message || "Partenaire publiee avec succes !", type: "success" });
 
@@ -83,7 +87,7 @@ export default function PublicationPartenaire() {
                 <div className="w-10/12">
                     <TitleSection
                         title={"Publication des partenaires"}
-                     
+
                     />
                     <form onSubmit={handleSubmit} className="space-y-6 bg-white p-6 rounded-lg shadow-md border border-gray-100 ">
                         {/* Titre */}

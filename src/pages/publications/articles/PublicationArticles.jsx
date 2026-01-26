@@ -73,6 +73,10 @@ export default function PublicationArticles() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            if (title.length > 250) {
+                setAlert({ message: "Le titre ne doit pas dépasser 250 caractères.", type: 'error' });
+                return;
+            };
             const response = await addArticle({ title, image, description });
             setAlert({ message: response.message || "Article publié avec succès !", type: 'success' });
 

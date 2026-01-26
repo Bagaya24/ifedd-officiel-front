@@ -19,7 +19,7 @@ export const cardAbout = [
         sub: "Notre vision est d'assurer la bonne gestion des ressources naturelles en tenant compte du développement des communautés et de la protection de l'environnement.",
         scale: 1
     },
-]
+];
 
 export const cardIntervation = [
     {
