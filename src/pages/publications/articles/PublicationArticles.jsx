@@ -31,11 +31,13 @@ export default function PublicationArticles() {
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
   const [description, setDescription] = useState("");
+  const [date, setDate] = useState("");
   const [alert, setAlert] = useState({ message: "", type: "" });
   const {
     addArticle,
     uploadFile,
     loader,
+    loaderDelete,
     getArticle,
     articles,
     deleteArticle,
@@ -50,6 +52,8 @@ export default function PublicationArticles() {
     title: "",
     content: "",
   });
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   useEffect(() => {
     getArticle();
@@ -102,9 +106,17 @@ export default function PublicationArticles() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await addArticle({ title, image, description });
+      if (title.length > 250) {
+        setAlert({
+          message: "Le titre ne doit pas dépasser 250 caractères.",
+          type: "error",
+        });
+        return;
+      }
+
+      const response = await addArticle({ title, image, description, date });
       setAlert({
-        message: response.message || "Article publié avec succès !",
+        message: response || "Article publié avec succès !",
         type: "success",
       });
 
@@ -113,6 +125,7 @@ export default function PublicationArticles() {
       setImage(null);
       setImagePreview("");
       setDescription("");
+      setDate("");
     } catch (error) {
       setAlert({ message: "Erreur lors de la publication.", type: "error" });
     }
@@ -177,6 +190,24 @@ export default function PublicationArticles() {
     "image",
   ];
 
+  // Pagination logic
+  const totalPages = Math.ceil(articles.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedArticles = articles.slice(startIndex, endIndex);
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
   return (
     <div className="w-full">
       <NavBar />
@@ -189,7 +220,7 @@ export default function PublicationArticles() {
           />
         )}
         <div className="w-10/12 md:w-8/12">
-          <TitleSection title="PUBLIER UN ARTICLE" sub="Administration" />
+          <TitleSection title="PUBLIER UN ARTICLE" />
 
           <form
             onSubmit={handleSubmit}
@@ -207,6 +238,17 @@ export default function PublicationArticles() {
                 className="w-full px-4 py-2 border rounded-lg border-gray-500 placeholder:text-gray-700 text-gray-700 font-medium bg-white focus:outline-none focus:border-0 focus:ring-2 focus:ring-[#1769aa]"
                 placeholder="Entrez le titre..."
                 required
+              />
+
+              <label className="block text-gray-700 font-bold mb-2">
+                Titre de l'article
+              </label>
+              <input
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                className="w-full px-4 py-2 border rounded-lg border-gray-500 placeholder:text-gray-700 text-gray-700 font-medium bg-white focus:outline-none focus:border-0 focus:ring-2 focus:ring-[#1769aa]"
+                placeholder="Entrez le titre..."
               />
             </div>
 
@@ -267,18 +309,51 @@ export default function PublicationArticles() {
             <h2 className="text-2xl font-bold text-gray-800 mb-4">
               Liste des Articles
             </h2>
-            {loader && (
+            {loaderDelete && (
               <p className="text-center text-red-600">Suppression en cours..</p>
             )}
             <Table
-              data={articles}
+              data={paginatedArticles}
               onEdit={handleEditClick}
               onDelete={handleDelete}
-              loader={loader}
+              loader={loaderDelete}
             />
+
+            {/* Pagination Controls */}
+            {totalPages > 1 && (
+              <div className="flex justify-between items-center mt-6 p-4 bg-gray-100 rounded-lg">
+                <button
+                  onClick={handlePreviousPage}
+                  disabled={currentPage === 1}
+                  className={`px-4 py-2 rounded-lg font-semibold transition ${
+                    currentPage === 1
+                      ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                      : "bg-[#1769aa] text-white hover:bg-blue-800 cursor-pointer"
+                  }`}
+                >
+                  ← Précédent
+                </button>
+
+                <span className="text-gray-700 font-semibold">
+                  Page {currentPage} sur {totalPages}
+                </span>
+
+                <button
+                  onClick={handleNextPage}
+                  disabled={currentPage === totalPages}
+                  className={`px-4 py-2 rounded-lg font-semibold transition ${
+                    currentPage === totalPages
+                      ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                      : "bg-[#1769aa] text-white hover:bg-blue-800 cursor-pointer"
+                  }`}
+                >
+                  Suivant →
+                </button>
+              </div>
+            )}
           </div>
 
-          <Modals
+          <Modal
             open={isEditModalOpen}
             setOpen={setIsEditModalOpen}
             title="Modifier l'article"
@@ -326,17 +401,17 @@ export default function PublicationArticles() {
               <div className="flex justify-end pt-5">
                 <button
                   type="submit"
-                  disabled={!loader ? true : false}
-                  className={`bg-[#1769aa] text-white font-bold py-2 px-6 rounded-lg transition ${!loader ? "bg-gray-400 cursor-not-allowed" : "hover:bg-blue-800 cursor-pointer"}`}
+                  disabled={loader ? true : false}
+                  className={`bg-[#1769aa] text-white font-bold py-2 px-6 rounded-lg transition ${loader ? "bg-gray-400 cursor-not-allowed" : "hover:bg-blue-800 cursor-pointer"}`}
                 >
-                  {!loader ? "Modification..." : "Modifier"}
+                  {loader ? "Modification..." : "Modifier"}
                 </button>
               </div>
             </form>
-          </Modals>
+          </Modal>
         </div>
       </div>
-      <Footer />
+      <MFooter />
     </div>
   );
 }

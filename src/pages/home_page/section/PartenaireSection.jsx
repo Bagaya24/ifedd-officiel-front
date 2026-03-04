@@ -6,8 +6,9 @@ export default function PartenaireSection() {
     <section className='py-10 md:px-20 md:5'>
       <TitleSection
         title={"NOS PARTENAIRES"}
-        sub={"nos associés"}
+
       />
+      
       <PartenairesCarousel />
       <PartenairesCarousel direction='rtl' />
     </section>

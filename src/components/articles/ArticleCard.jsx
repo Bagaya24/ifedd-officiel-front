@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 export default function ArticleCard({ id, title, image, description, href = `/article/${id}` }) {
   return (
-    <Link to={href} className={`block no-underline h-full`}>
+    <Link to={href} className={`block no-underline w-full h-full`}>
       <div className="card card-border rounded-xl overflow-hidden cursor-pointer transition-transform duration-300  hover:-translate-y-1 hover:shadow-lg h-full flex flex-col md:w-full w-60">
         <div className="glow" />
 

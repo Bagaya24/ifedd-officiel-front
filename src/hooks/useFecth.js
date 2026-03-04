@@ -9,6 +9,15 @@ function UseFetch() {
     const [partenaires, setPartenaires] = useState([]);
     const [commentaires, setCommentaires] = useState([]);
     const [loader, setLoader] = useState(false);
+    const [loaderDelete, setLoaderDelete] = useState(false);
+
+    const formatDate = () => {
+        const date = new Date();
+        const jour = String(date.getDate()).padStart(2, '0');
+        const mois = String(date.getMonth() + 1).padStart(2, '0');
+        const annee = date.getFullYear();
+        return annee + '-' + mois + "-" + jour
+    }
 
     // Articles
     const getArticle = async () => {
@@ -24,14 +33,18 @@ function UseFetch() {
         }
     };
 
-    const addArticle = async ({ title, image, description }) => {
+    const addArticle = async ({ title, image, description, date }) => {
         setLoader(true);
         try {
 
+            if (!date) {
+                date = formData();
+            };
             const formData = new FormData();
             formData.append("title", title);
             formData.append("content", description);
             formData.append("image", image);
+            formData.append("date", date);
             formData.append("author", "communication IFEDD");
             const response = await apiFormData.post("articles/publication/", formData);
             if (!response) {
@@ -47,13 +60,13 @@ function UseFetch() {
     };
 
     const deleteArticle = async (id) => {
-        setLoader(true);
+        setLoaderDelete(true);
         try {
             await api.delete(`articles/delete/${id}/`);
-            setLoader(false);
+            setLoaderDelete(false);
             return true;
         } catch (error) {
-            setLoader(false);
+            setLoaderDelete(false);
             console.error(error);
             return false;
         }
@@ -106,13 +119,14 @@ function UseFetch() {
         setLoader(true);
         try {
             const formData = new FormData();
-
+            const date = formatDate();
             formData.append("image", image);
             formData.append("legend", title);
+            formData.append("date", date)
 
             const response = await apiFormData.post("gallery/publication/", formData);
             setLoader(false);
-            return response.data;
+            return response.data.message;
         } catch (error) {
             setLoader(false);
             console.error(error);
@@ -121,13 +135,13 @@ function UseFetch() {
     };
 
     const deleteGalerie = async (id) => {
-        setLoader(true);
+        setLoaderDelete(true);
         try {
             const response = await api.delete(`gallery/delete/${id}/`);
-            setLoader(false);
+            setLoaderDelete(false);
             return response.data;
         } catch (error) {
-            setLoader(false);
+            setLoaderDelete(false);
             console.error(error);
             return null;
         }
@@ -148,13 +162,15 @@ function UseFetch() {
     const addRapport = async (title, image, file) => {
         setLoader(true);
         try {
+            const date = formatDate();
             const formData = new FormData();
             formData.append("title", title);
             formData.append("image", image);
             formData.append("document", file);
+            formData.append("date", date)
             const response = await apiFormData.post("rapports/publication/", formData);
             setLoader(false);
-            return response.data;
+            return response.data.message;
         } catch (error) {
             setLoader(false);
             console.error(error);
@@ -163,13 +179,13 @@ function UseFetch() {
     };
 
     const deleteRapport = async (id) => {
-        setLoader(true);
+        setLoaderDelete(true);
         try {
             const response = await api.delete(`rapports/delete/${id}`);
-            setLoader(false);
+            setLoaderDelete(false);
             return response.data;
         } catch (error) {
-            setLoader(false);
+            setLoaderDelete(false);
             console.error(error);
             return null;
         }
@@ -190,12 +206,14 @@ function UseFetch() {
     const addPartenaire = async (name, logo) => {
         setLoader(true);
         try {
+            const date = formatDate();
             const formData = new FormData();
             formData.append("name", name);
             formData.append("logo", logo);
+            formData.append("date", date)
             const response = await apiFormData.post("partenaire/publication/", formData);
             setLoader(false);
-            return response.data;
+            return response.data.message;
         } catch (error) {
             setLoader(false);
             console.error(error);
@@ -204,13 +222,13 @@ function UseFetch() {
     };
 
     const deletePartenaire = async (id) => {
-        setLoader(true);
+        setLoaderDelete(true);
         try {
             const response = await api.delete(`partenaire/delete/${id}`);
-            setLoader(false);
+            setLoaderDelete(false);
             return response.data;
         } catch (error) {
-            setLoader(false);
+            setLoaderDelete(false);
             console.error(error);
             return null;
         }
@@ -295,7 +313,7 @@ function UseFetch() {
         likes,
         addComment,
         loader,
-        setLoader,
+        loaderDelete
 
     }
 }

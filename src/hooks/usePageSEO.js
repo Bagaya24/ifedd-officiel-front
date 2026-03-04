@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-const usePageSEO = ({ title, description, ogImage, ogDescription, ogTitle, canonicalUrl }) => {
+const usePageSEO = ({ title, description, ogImage, ogDescription, ogTitle, canonicalUrl, ogType = "website" }) => {
     useEffect(() => {
         document.title = title;
         setMetaTag("name", "description", description);
@@ -8,20 +8,21 @@ const usePageSEO = ({ title, description, ogImage, ogDescription, ogTitle, canon
         setMetaTag("property", "og:description", ogDescription || description);
         setMetaTag("property", "og:image", ogImage);
         setMetaTag("property", "og:url", canonicalUrl || window.location.href);
+        setMetaTag("property", "og:type", ogType);
 
-    }, [title, description, ogImage, ogDescription, ogTitle, canonicalUrl]);
+    }, [title, description, ogImage, ogDescription, ogTitle, canonicalUrl, ogType]);
 }
+
 const setMetaTag = (attr, key, content) => {
     if (content) {
-        let elememt = document.querySelector(`meta[${attr}="${key}"]`);
-        if (!elememt) {
-            elememt = document.createElement("meta");
-            elememt.setAttribute(attr, key);
-            elememt.setAttribute("content", content);
-            document.head.appendChild(elememt);
+        let element = document.querySelector(`meta[${attr}="${key}"]`);
+        if (!element) {
+            element = document.createElement("meta");
+            element.setAttribute(attr, key);
+            document.head.appendChild(element);
         }
-        elememt.setAttribute("content", content);
+        element.setAttribute("content", content);
     }
-
 }
+
 export default usePageSEO;

@@ -1,7 +1,7 @@
 export default function Button({ id, text, className }) {
     const handleDownload = (e) => {
         e.preventDefault
-        const fileUrl = `/Depliant 3.2.pdf`;
+        const fileUrl = `/IFEDD_Depliant_version_2.pdf`;
         const link = document.createElement('a');
         link.href = fileUrl;
         link.download = "brochure_ifedd.pdf";

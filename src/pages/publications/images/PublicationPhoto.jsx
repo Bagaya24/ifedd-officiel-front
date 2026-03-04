@@ -14,7 +14,7 @@ export default function PublicationPhoto() {
     const [imagePreview, setImagePreview] = useState('');
     const [alert, setAlert] = useState({ message: "", type: "" });
 
-    const { galeries, getGalerie, loader, deleteGalerie, addGalerie } = UseFetch();
+    const { galeries, getGalerie, loader, loaderDelete, deleteGalerie, addGalerie } = UseFetch();
 
     useEffect(() => {
         getGalerie();
@@ -43,8 +43,13 @@ export default function PublicationPhoto() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            if (title.length > 250) {
+                setAlert({ message: "Le titre ne doit pas dépasser 250 caractères.", type: 'error' });
+                return;
+            };
             const response = await addGalerie(title, image);
-            setAlert({ message: response.message || "Photo publiee avec succes !", type: "success" });
+            console.log(response)
+            setAlert({ message: response || "Photo publiee avec succes !", type: "success" });
 
             setTitle("");
             setImage(null);
@@ -54,7 +59,7 @@ export default function PublicationPhoto() {
             console.error(error);
             setAlert({ message: "Erreur lors de la publication", type: "error" });
         }
-    }
+    };
 
     // Configuration des colonnes pour DataTable
     const columns = [
@@ -89,7 +94,7 @@ export default function PublicationPhoto() {
 
                     <TitleSection
                         title={"Publication des images"}
-                        sub={"Administration"}
+
                     />
                     <form onSubmit={handleSubmit} className="space-y-6 bg-white p-6 rounded-lg shadow-md border border-gray-100 ">
                         {/* Titre */}
@@ -132,7 +137,7 @@ export default function PublicationPhoto() {
                     {/* Liste des images avec pagination */}
                     <div className="mt-12">
                         <h2 className="text-2xl font-bold text-gray-800 mb-4">Liste des Images</h2>
-                        {loader && <p className="text-center text-red-600">Suppression en cours..</p>}
+                        {loaderDelete && <p className="text-center text-red-600">Suppression en cours..</p>}
                         <DataTable
                             data={galeries}
                             columns={columns}
