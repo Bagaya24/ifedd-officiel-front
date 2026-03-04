@@ -44,7 +44,7 @@ export default function PublicationRapport() {
                 return;
             };
             const response = await addRapport(title, image, file);
-            setAlert({ message: response.message || "rapport ajouté avec succès", type: "success" });
+            setAlert({ message: response || "rapport ajouté avec succès", type: "success" });
             setTitle("");
             setImage(null);
             setImagePreview(null);

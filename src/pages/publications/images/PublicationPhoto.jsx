@@ -48,7 +48,8 @@ export default function PublicationPhoto() {
                 return;
             };
             const response = await addGalerie(title, image);
-            setAlert({ message: response.message || "Photo publiee avec succes !", type: "success" });
+            console.log(response)
+            setAlert({ message: response || "Photo publiee avec succes !", type: "success" });
 
             setTitle("");
             setImage(null);

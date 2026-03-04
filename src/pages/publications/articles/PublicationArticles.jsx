@@ -19,6 +19,7 @@ export default function PublicationArticles() {
     const [image, setImage] = useState(null);
     const [imagePreview, setImagePreview] = useState('');
     const [description, setDescription] = useState('');
+    const [date, setDate] = useState('');
     const [alert, setAlert] = useState({ message: '', type: '' });
     const { addArticle, uploadFile, loader, loaderDelete, getArticle, articles, deleteArticle, updateArticle } = UseFetch();
     const quillRef = useRef(null);
@@ -69,7 +70,7 @@ export default function PublicationArticles() {
             setImagePreview(URL.createObjectURL(file));
         }
     };
-
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -77,14 +78,16 @@ export default function PublicationArticles() {
                 setAlert({ message: "Le titre ne doit pas dépasser 250 caractères.", type: 'error' });
                 return;
             };
-            const response = await addArticle({ title, image, description });
-            setAlert({ message: response.message || "Article publié avec succès !", type: 'success' });
+         
+            const response = await addArticle({ title, image, description, date });
+            setAlert({ message: response || "Article publié avec succès !", type: 'success' });
 
             // Reset form
             setTitle('');
             setImage(null);
             setImagePreview('');
             setDescription('');
+            setDate('')
         } catch (error) {
             setAlert({ message: "Erreur lors de la publication.", type: 'error' });
         }
@@ -180,6 +183,16 @@ export default function PublicationArticles() {
                                 className="w-full px-4 py-2 border rounded-lg border-gray-500 placeholder:text-gray-700 text-gray-700 font-medium bg-white focus:outline-none focus:border-0 focus:ring-2 focus:ring-[#1769aa]"
                                 placeholder="Entrez le titre..."
                                 required
+                            />
+
+                              <label className="block text-gray-700 font-bold mb-2">Titre de l'article</label>
+                            <input
+                                type="date"
+                                value={date}
+                                onChange={(e) => setDate(e.target.value)}
+                                className="w-full px-4 py-2 border rounded-lg border-gray-500 placeholder:text-gray-700 text-gray-700 font-medium bg-white focus:outline-none focus:border-0 focus:ring-2 focus:ring-[#1769aa]"
+                                placeholder="Entrez le titre..."
+                               
                             />
                         </div>
 

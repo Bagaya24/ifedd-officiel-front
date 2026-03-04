@@ -19,6 +19,8 @@ export default function NavBar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  
+
   useEffect(() => {
     const fetchAuth = async () => {
       const result = await verifyToken();

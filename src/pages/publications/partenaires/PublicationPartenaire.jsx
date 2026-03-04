@@ -34,7 +34,7 @@ export default function PublicationPartenaire() {
                 return;
             };
             const response = await addPartenaire(title, image);
-            setAlert({ message: response.message || "Partenaire publiee avec succes !", type: "success" });
+            setAlert({ message: response || "Partenaire publiee avec succes !", type: "success" });
 
             setTitle("");
             setImage(null);
