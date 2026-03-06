@@ -61,12 +61,12 @@ export default function NavBar() {
               <span className="underline absolute -bottom-1 left-0 w-0 h-0.5 bg-[#1769aa] transition-all duration-300 group-hover:w-full"></span>
             </li>
 
-            {/* <li className="text-[#1769aa] relative group">
-              <Link to="/rapports" className="transition-colors">
-                Rapports
+            <li className="text-[#1769aa] relative group">
+              <Link to="/applications" className="transition-colors">
+                Applications
               </Link>
               <span className="underline absolute -bottom-1 left-0 w-0 h-0.5 bg-[#1769aa] transition-all duration-300 group-hover:w-full"></span>
-            </li> */}
+            </li>
 
             {/* Dropdown Menu: Publications */}
             {isConnected && (
@@ -151,12 +151,12 @@ export default function NavBar() {
               Galeries
             </Link>
 
-            {/* <Link
-              to="/rapports"
+            <Link
+              to="/applications"
               className="block px-4 py-2 text-white-50 hover:bg-black-50 rounded transition-colors"
             >
-              Rapports
-            </Link> */}
+              Applications
+            </Link>
 
             {/* Mobile Dropdown Toggle */}
             {isConnected && (
