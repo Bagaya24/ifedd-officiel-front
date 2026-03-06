@@ -13,10 +13,8 @@ const applications = [
     },
     {
         title: "Efficacity Library",
-        description: ` La mission d’AKIBA-HERI est de digitaliser et simplifier la gestion financière des AVEC 
-        et GCEC, en offrant aux membres et responsables un outil fiable pour suivre les épargnes, les prêts et 
-        les transactions, tout en renforçant la transparence, l’efficacité et la responsabilisation dans la 
-        gestion des ressources financières.`,
+        description: `Efficacity-Library est une application de lecture et d’apprentissage conçue par IFEDD-RDC 
+        pour renforcer les capacités des acteurs communautaires et institutionnels.`,
         path: "https://pub-57ab420457dd436ebe7bd96c2f568013.r2.dev/applications/Efficacity%20Library.apk",
         image: "application/images/Efficacity logo 2.png"
     },
