@@ -15,7 +15,7 @@ export default function MFooter() {
     return (
         <footer className="bg-blue-950 w-full h-full md:px-20 md:py-10 px-10 pt-5  gap-2 position-absolute bottom-0">
             <div >
-                <div className="flex md:flex-row flex-col">
+                <div className="flex md:flex-row flex-col gap-4">
                     <div className="w-full h-full flex flex-col md:justity-center">
                         <h1 className="text-gray-100 font-semibold md:text-2xl text-xl hover:text-white mb-1">
                             IFEDD
