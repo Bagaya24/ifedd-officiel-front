@@ -8,7 +8,7 @@ const applications = [
         description: `AKIBA-HERI est une application mobile dédiée à la gestion financière des AVEC et GCEC. 
         Elle facilite l’enregistrement des épargnes, des prêts et des remboursements, tout en renforçant la 
         transparence, la traçabilité et la bonne gouvernance des groupes communautaires.`,
-        path: "application/appli/Akiba Heri.apk",
+        path: "https://pub-57ab420457dd436ebe7bd96c2f568013.r2.dev/applications/Akiba%20Heri.apk",
         image: "application/images/Akiba 11.png"
     },
     {
@@ -17,7 +17,7 @@ const applications = [
         et GCEC, en offrant aux membres et responsables un outil fiable pour suivre les épargnes, les prêts et 
         les transactions, tout en renforçant la transparence, l’efficacité et la responsabilisation dans la 
         gestion des ressources financières.`,
-        path: "application/appli/Efficacity Library.apk",
+        path: "https://pub-57ab420457dd436ebe7bd96c2f568013.r2.dev/applications/Efficacity%20Library.apk",
         image: "application/images/Efficacity logo 2.png"
     },
 
