@@ -46,10 +46,10 @@ export default function ApplicationPage() {
 
 
                         {applications.map(({ title, description, path, image }) => (
-                            <div className="flex  gap-2" key={title}>
+                            <div className="md:flex block md:gap-2 gap-4" key={title}>
 
                                 {/* Image */}
-                                <div className="w-60 h-60 bg-neutral-50 rounded-xl overflow-hidden">
+                                <div className="md:w-60 md:h-60 w-20 h-20 bg-neutral-50 rounded-xl overflow-hidden">
                                     <img src={image} alt={title} />
                                 </div>
                                 {/* Infomartion */}
@@ -57,7 +57,7 @@ export default function ApplicationPage() {
                                     <h3 className="text-2xl text-[#1769aa] font-semibold text-shadow-xs">
                                         {title}
                                     </h3>
-                                    <p className="text-gray-600 text-justify">
+                                    <p className="text-gray-600 text-justify md:text-sm text-xs">
                                         {description}
                                     </p>
                                     <div className="flex justify-start">
