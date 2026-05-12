@@ -122,6 +122,7 @@ export default function DetailArticlePage() {
   );
 
   const description = cleanQuillText(article_principale?.content);
+  const title = article_principale.title;
 
   const handleShare = async () => {
     if (!article_principale || !article_principale.image) {
@@ -130,12 +131,11 @@ export default function DetailArticlePage() {
     }
 
     const url = window.location.href;
-
     try {
       // 1. Préparer d'abord les données textuelles (pour éviter le undefined)
       const shareData = {
-        title: article_principale.title || "Titre de l'article",
-        text: article_principale.description?.substring(0, 150) + "...",
+        title: title || "Titre de l'article",
+        text: description?.substring(0, 150) + "...",
         url: url,
       };
 
@@ -150,7 +150,12 @@ export default function DetailArticlePage() {
       // 2. Vérifier si on peut partager le fichier
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
         // On ajoute le fichier aux données de base
-        await navigator.share({ ...shareData, files: [file] });
+        await navigator.share({
+          title: title,
+          text: description?.substring(0, 150) + "...",
+          url: url,
+          files: [file],
+        });
       } else {
         // On partage uniquement le texte et l'URL
         await navigator.share(shareData);
