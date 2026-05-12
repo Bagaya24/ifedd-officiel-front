@@ -118,7 +118,7 @@ export default function LoginPage() {
                         </div>
 
                         {/* Remember Me & Forgot Password */}
-                        <div className="flex items-center justify-between text-sm">
+                        {/* <div className="flex items-center justify-between text-sm">
                             <label className="flex items-center cursor-pointer">
                                 <input
                                     type="checkbox"
@@ -126,13 +126,13 @@ export default function LoginPage() {
                                 />
                                 <span className="ml-2 text-gray-600">Se souvenir de moi</span>
                             </label>
-                        </div>
+                        </div> */}
 
                         {/* Submit Button */}
                         <button
                             type="submit"
                             disabled={loading}
-                            className={`w-full py-3 px-4 rounded-lg font-bold text-white transition-all duration-300 transform ${loading
+                            className={`w-full py-3 px-4 rounded-lg font-bold text-white transition-all duration-300 transform cursor-pointer ${loading
                                 ? 'bg-gray-400 cursor-not-allowed'
                                 : 'bg-linear-to-r from-[#1769aa] to-blue-600 hover:from-[#1557a] hover:to-blue-700 hover:shadow-lg hover:-translate-y-0.5'
                                 }`}
@@ -155,7 +155,7 @@ export default function LoginPage() {
                     <div className="px-8 pb-8 text-center">
                         <p className="text-sm text-gray-600">
                             Pas encore de compte ?{' '}
-                            <a href="#" className="text-[#1769aa] hover:text-blue-700 font-semibold">
+                            <a href="mailto:ifeddrdc@gmail.com" className="text-[#1769aa] hover:text-blue-700 font-semibold">
                                 Contactez l'administrateur
                             </a>
                         </p>
@@ -166,7 +166,7 @@ export default function LoginPage() {
                 <div className="mt-6 text-center">
                     <button
                         onClick={() => navigate('/')}
-                        className="text-gray-600 hover:text-[#1769aa] font-medium transition-colors"
+                        className="text-gray-600 hover:text-[#1769aa] hover:underline font-medium transition-colors"
                     >
                         ← Retour à l'accueil
                     </button>

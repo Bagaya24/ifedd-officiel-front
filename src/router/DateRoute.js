@@ -9,6 +9,7 @@ import PublicationPhoto from "../pages/publications/images/PublicationPhoto";
 import PublicationRapport from "../pages/publications/rapports/PublicationRapport";
 import PublicationPartenaire from "../pages/publications/partenaires/PublicationPartenaire";
 import ErrorPage from "../pages/error_page/ErrorPage";
+import ApplicationPage from "../pages/application/ApplicationPage";
 
 
 
@@ -25,6 +26,7 @@ export const publiqueRoute = [
   { path: "/galleries", component: GalleryPage },
   { path: "/articles", component: ArticlesPage },
   { path: "/article/:id", component: DetailArticlePage },
+  { path: "/applications", component: ApplicationPage},
   { path: "/login", component: LoginPage },
   { path: "/logout", component: Logout },
   { path: "*", component: ErrorPage }

@@ -2,23 +2,36 @@ import { useEffect, useState } from "react";
 import NavBar from "../../components/NavBar";
 import TitleSection from "../../components/TitleSection";
 import ArticleCard from "../../components/articles/ArticleCard";
-import Footer from "../../components/Footer";
 import UseFetch from "../../hooks/useFecth";
 import Spinner from "../../components/Spinner";
+import MFooter from "../../components/MFooter";
 
 export default function ArticlesPage() {
     const [page, setPage] = useState(0);
     const { articles, getArticle, loader } = UseFetch();
+    const [searchArticles, setSearchArticles] = useState('');
+    const articlesPerPage = 12;
 
     useEffect(() => {
         getArticle();
     }, []);
 
-    const articlesPerPage = 9;
+    // Réinitialiser la page quand on cherche
+    useEffect(() => {
+        setPage(0);
+    }, [searchArticles]);
+
+    // Filtrer les articles
+    const filteredArticles = articles
+        ?.filter((article) =>
+            article?.title?.toLowerCase().includes(searchArticles.toLowerCase())
+        ) || [];
+
+    // Paginer les articles filtrés
     const startIndex = page * articlesPerPage;
-    const paginatedArticles = articles.slice(startIndex, startIndex + articlesPerPage);
+    const paginatedArticles = filteredArticles.slice(startIndex, startIndex + articlesPerPage);
     const hasPrev = page > 0;
-    const hasNext = startIndex + articlesPerPage < articles.length;
+    const hasNext = startIndex + articlesPerPage < filteredArticles.length;
 
     return (
         <div className="w-full">
@@ -27,8 +40,21 @@ export default function ArticlesPage() {
                 <div className="w-9/12 mt-20">
                     <TitleSection
                         title={"ARTICLES"}
-                        sub={"Articles"}
                     />
+                    <div className="mb-6">
+                        <input
+                            type="text"
+                            className="w-full border-2 border-gray-300 p-3 rounded-lg focus:border-[#1769aa] focus:outline-none transition"
+                            placeholder="Chercher un article..."
+                            value={searchArticles}
+                            onChange={(e) => setSearchArticles(e.target.value)}
+                        />
+                        {searchArticles && (
+                            <p className="text-sm text-gray-600 mt-2">
+                                {paginatedArticles.length} article(s) trouvé(s)
+                            </p>
+                        )}
+                    </div>
                     {loader ? <Spinner /> : (
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                             {paginatedArticles.map((article, index) => (
@@ -68,7 +94,7 @@ export default function ArticlesPage() {
                 </div>
             </div>
 
-            <Footer />
+            <MFooter />
         </div>
     )
 }

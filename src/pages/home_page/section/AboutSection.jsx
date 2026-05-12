@@ -9,7 +9,7 @@ export default function AboutSection() {
         <section className='-mt-25'>
             <TitleSection
                 title={"Qui sommes-nous?"}
-                sub={"Objectif, Mission, Vision"}
+            
             />
 
             <div className=' flex flex-col justify-center md:mx-40 mx-5'>

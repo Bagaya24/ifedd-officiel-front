@@ -19,7 +19,7 @@ export const cardAbout = [
         sub: "Notre vision est d'assurer la bonne gestion des ressources naturelles en tenant compte du développement des communautés et de la protection de l'environnement.",
         scale: 1
     },
-]
+];
 
 export const cardIntervation = [
     {
@@ -39,7 +39,7 @@ export const cardIntervation = [
     },
     {
         icon: "/dollars.svg",
-        title: "Révelement socie-economique",
+        title: "Relèvement socio-économique",
         color: "#ff9100"
     },
     {
@@ -132,7 +132,7 @@ export const adresses = [
     {
         icon: MapPinIcon,
         lien: "https://maps.app.goo.gl/AMEpxCCeLwdwhCHr6",
-        coordonne: "Notre adresse à Goma: N° 81 Av présidentielle, Quartier Himbi, commune de Goma, ville de Goma/RDC"
+        coordonne: "Notre adresse à Goma: N°36, rue serufuki, ex avenue du Musée, quartier Himbi, commune de Goma, ville de Goma/RDC"
     },
     {
         icon: MapPinIcon,
@@ -144,18 +144,18 @@ export const adresses = [
         lien: "https://wa.me/+243846520000",
         coordonne: "+243 846 520 000"
     },
-    {
-        icon: GlobeEuropeAfricaIcon,
-        lien: "https://ifedd-rdc.org/",
-        coordonne: "ifedd-rdc.org"
-    },
+    // {
+    //     icon: GlobeEuropeAfricaIcon,
+    //     lien: "https://ifedd-rdc.org/",
+    //     coordonne: "ifedd-rdc.org"
+    // },
     {
         icon: EnvelopeIcon,
         lien: "mailto:ifeddrdc@gmail.com",
         coordonne: "ifeddrdc@gmail.com"
     }
 
-]
+];
 
 export const reseauxSociaux = [
     {

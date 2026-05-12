@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import Footer from "../../../components/Footer";
 import NavBar from "../../../components/NavBar";
 import TitleSection from "../../../components/TitleSection";
 import Alert from "../../../components/Alert";
 import DataTable from "../../../components/DataTable";
 import UseFetch from "../../../hooks/useFecth";
+import MFooter from "../../../components/MFooter";
 
 export default function PublicationPartenaire() {
     const [title, setTitle] = useState('');
@@ -12,11 +12,12 @@ export default function PublicationPartenaire() {
     const [imagePreview, setImagePreview] = useState('');
     const [alert, setAlert] = useState({ message: "", type: "" });
 
-    const { partenaires, getPartenaires, loader, deletePartenaire, addPartenaire } = UseFetch();
+    const { partenaires, getPartenaires, loader, loaderDelete, deletePartenaire, addPartenaire } = UseFetch();
 
     useEffect(() => {
         getPartenaires();
     }, []);
+
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -24,11 +25,16 @@ export default function PublicationPartenaire() {
             setImagePreview(URL.createObjectURL(file));
         }
     };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            if (title.length > 250) {
+                setAlert({ message: "Le titre ne doit pas dépasser 250 caractères.", type: 'error' });
+                return;
+            };
             const response = await addPartenaire(title, image);
-            setAlert({ message: response.message || "Partenaire publiee avec succes !", type: "success" });
+            setAlert({ message: response || "Partenaire publiee avec succes !", type: "success" });
 
             setTitle("");
             setImage(null);
@@ -39,6 +45,7 @@ export default function PublicationPartenaire() {
             setAlert({ message: "Erreur lors de la publication", type: "error" });
         }
     };
+
     const handleDelete = async (id) => {
         if (window.confirm("Êtes-vous sûr de vouloir supprimer ce partenaire ?")) {
             const success = await deletePartenaire(id);
@@ -64,7 +71,8 @@ export default function PublicationPartenaire() {
             type: 'image',
             imageKey: 'file_name'
         }
-    ]
+    ];
+
     return (
         <div className="w-full">
             <NavBar />
@@ -79,7 +87,7 @@ export default function PublicationPartenaire() {
                 <div className="w-10/12">
                     <TitleSection
                         title={"Publication des partenaires"}
-                        sub={"Administration"}
+
                     />
                     <form onSubmit={handleSubmit} className="space-y-6 bg-white p-6 rounded-lg shadow-md border border-gray-100 ">
                         {/* Titre */}
@@ -120,7 +128,7 @@ export default function PublicationPartenaire() {
                     </form>
                     <div className="mt-12">
                         <h2 className="text-2xl font-bold mb-4">Liste des partenaires</h2>
-                        {loader && <p className="text-center text-red-600">Suppression en cours..</p>}
+                        {loaderDelete && <p className="text-center text-red-600">Suppression en cours..</p>}
                         <DataTable
                             columns={column}
                             data={partenaires}
@@ -131,7 +139,7 @@ export default function PublicationPartenaire() {
                 </div>
 
             </div>
-            <Footer />
+            <MFooter />
         </div>
     )
 }

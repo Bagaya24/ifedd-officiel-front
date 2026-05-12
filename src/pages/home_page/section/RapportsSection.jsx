@@ -4,9 +4,10 @@ import Carousel from '../../../components/carousel/Carousel'
 
 import RapportCard from '../../../components/home_page/RapportCard'
 import UseFetch from '../../../hooks/useFecth'
+import Spinner from '../../../components/Spinner';
 
 export default function RapportsSection() {
-  const { rapports, getRapport } = UseFetch();
+  const { rapports, getRapport, loader } = UseFetch();
 
   useEffect(() => {
     getRapport();
@@ -15,9 +16,13 @@ export default function RapportsSection() {
     <section className='py-10 md:px-20 md:5'>
       <TitleSection
         title={"NOS RAPPORTS"}
-        sub={"Articles"}
+  
       />
-      <div className='w-full f-full'>
+      { loader ? 
+      <Spinner
+      loader={loader}
+      />: (
+        <div className='w-full f-full'>
         <Carousel
           data={rapports.map((rapport) => (
             <RapportCard
@@ -30,6 +35,8 @@ export default function RapportsSection() {
           slides={2}
         />
       </div>
+      )}
+      
     </section>
   )
 }

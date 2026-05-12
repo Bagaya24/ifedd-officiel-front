@@ -19,6 +19,8 @@ export default function NavBar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  
+
   useEffect(() => {
     const fetchAuth = async () => {
       const result = await verifyToken();
@@ -39,36 +41,36 @@ export default function NavBar() {
       <div className="inner max-w-7xl mx-auto px-5 md:px-20 w-full flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="logo">
-          <span className="text-[#1769aa] text-2xl md:text-3xl font-bold">IFEDD</span>
+          <img src="/Logo.png" alt="IFEDD Logo" className="h-10 md:h-12" />
         </Link>
 
         {/* Desktop Navigation Menu */}
         <nav className="desktop hidden lg:flex items-center">
           <ul className="flex space-x-8">
-            <li className="text-[#1769aa] relative group">
+            <li className="text-[#1769aa] font-semibold relative group">
               <Link to="/articles" className="transition-colors">
                 Articles
               </Link>
               <span className="underline absolute -bottom-1 left-0 w-0 h-0.5 bg-[#1769aa] transition-all duration-300 group-hover:w-full"></span>
             </li>
 
-            <li className="text-[#1769aa] relative group">
+            <li className="text-[#1769aa] font-semibold relative group">
               <Link to="/galleries" className=" transition-colors">
                 Galeries
               </Link>
               <span className="underline absolute -bottom-1 left-0 w-0 h-0.5 bg-[#1769aa] transition-all duration-300 group-hover:w-full"></span>
             </li>
 
-            {/* <li className="text-[#1769aa] relative group">
-              <Link to="/rapports" className="transition-colors">
-                Rapports
+            <li className="text-[#1769aa] relative group">
+              <Link to="/applications" className="transition-colors">
+                Applications
               </Link>
               <span className="underline absolute -bottom-1 left-0 w-0 h-0.5 bg-[#1769aa] transition-all duration-300 group-hover:w-full"></span>
-            </li> */}
+            </li>
 
             {/* Dropdown Menu: Publications */}
             {isConnected && (
-              <li className="text-[#1769aa] relative group">
+              <li className="text-[#1769aa] font-semibold relative group">
                 <button className="transition-colors flex items-center gap-2">
                   Publications
                   <svg className="w-4 h-4 group-hover:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -110,8 +112,8 @@ export default function NavBar() {
           {/* User Auth Display */}
           {isConnected ? (
             <div className="hidden md:flex items-center gap-3">
-              <UserCircleIcon className='w-6 h-6 text-[#1769aa]' />
-              <span className="text-[#1769aa] text-sm">Communication IFEDD</span>
+              <UserCircleIcon className='w-6 h-6 text-[#1769aa] font-semibold' />
+              <span className="text-[#1769aa] text-sm font-semibold">Communication IFEDD</span>
 
             </div>
           ) : (
@@ -149,12 +151,12 @@ export default function NavBar() {
               Galeries
             </Link>
 
-            {/* <Link
-              to="/rapports"
+            <Link
+              to="/applications"
               className="block px-4 py-2 text-white-50 hover:bg-black-50 rounded transition-colors"
             >
-              Rapports
-            </Link> */}
+              Applications
+            </Link>
 
             {/* Mobile Dropdown Toggle */}
             {isConnected && (

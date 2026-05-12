@@ -3,9 +3,9 @@ import NavBar from "../../components/NavBar";
 import CardPicture from "../../components/gallery/CardPicture";
 import TitleSection from "../../components/TitleSection";
 import Spinner from "../../components/Spinner"
-import Modal from "../../components/Modals";
-import Footer from "../../components/Footer";
 import UseFetch from "../../hooks/useFecth";
+import MFooter from "../../components/MFooter";
+import Modal from "../../components/Modal";
 
 
 
@@ -21,7 +21,7 @@ export default function GalleryPage() {
     getGalerie()
   }, [])
 
-  console.log(galeries)
+  
   const startIndex = page * photosPerPage;
   const paginatedPhotos = galeries.slice(startIndex, startIndex + photosPerPage);
 
@@ -41,7 +41,7 @@ export default function GalleryPage() {
         <div className="w-9/12 mt-20">
           <TitleSection
             title={"GALLERIES"}
-            sub={"Articles"}
+   
           />
           {loader ? <Spinner
             loader={loader}
@@ -86,7 +86,7 @@ export default function GalleryPage() {
         <img src={imageModal} alt={legende} className="md:scale-90 scale-80" />
         <p className="text-gray-600  lg:text-lg md:text-base font-meduim text-center">{legende}</p>
       </Modal>
-      <Footer />
+      <MFooter />
     </div>
   )
 }
