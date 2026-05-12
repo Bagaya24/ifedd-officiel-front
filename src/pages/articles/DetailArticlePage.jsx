@@ -145,7 +145,7 @@ export default function DetailArticlePage() {
 
               const response = await fetch(
                 "https://api.akiba.ifedd-rdc.org/cEjDKc-Logo.png",
-              );
+              ); 
             if (!response.ok) throw new Error("Erreur image");
 
             const blob = await response.blob();
