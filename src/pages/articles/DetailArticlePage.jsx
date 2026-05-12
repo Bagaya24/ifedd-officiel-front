@@ -124,40 +124,41 @@ export default function DetailArticlePage() {
   const description = cleanQuillText(article_principale?.content);
 
   const handleShare = async () => {
-    // 1. Vérifier si l'article et l'image existent
     if (!article_principale || !article_principale.image) {
       setAlert({ message: "Données de l'article manquantes", type: "error" });
       return;
     }
 
     const url = window.location.href;
+
     try {
+      // 1. Préparer d'abord les données textuelles (pour éviter le undefined)
+      const shareData = {
+        title: article_principale.title || "Titre de l'article",
+        text: article_principale.description?.substring(0, 150) + "...",
+        url: url,
+      };
+
       const response = await fetch(
         "https://api.akiba.ifedd-rdc.org/VFCO8q-477366340_1141809927598541_1319598695180593163_n.jpg",
       );
-      if (!response.ok)
-        throw new Error("Erreur lors de la récupération de l'image");
+      if (!response.ok) throw new Error("Erreur image");
+
       const blob = await response.blob();
-      const type = blob.type || "image/jpeg";
-      const file = new File([blob], "article-image.jpg", { type });
+      const file = new File([blob], "article-image.jpg", { type: blob.type });
+
+      // 2. Vérifier si on peut partager le fichier
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        const shareData = {
-          title: article_principale.title,
-          text: article_principale.description?.substring(0, 150) + "...",
-          url: url,
-          files: [file], // On met le fichier ici
-        };
-        await navigator.share(shareData);
+        // On ajoute le fichier aux données de base
+        await navigator.share({ ...shareData, files: [file] });
       } else {
-        await navigator.share({
-          title: shareData.title,
-          text: shareData.text,
-          url: shareData.url,
-        });
+        // On partage uniquement le texte et l'URL
+        await navigator.share(shareData);
       }
     } catch (err) {
       console.error("Erreur de partage:", err);
       await navigator.clipboard.writeText(url);
+      setAlert({ message: "Lien copié !", type: "success" });
     }
   };
 
