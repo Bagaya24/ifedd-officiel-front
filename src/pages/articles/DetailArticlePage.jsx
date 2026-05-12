@@ -151,8 +151,8 @@ export default function DetailArticlePage() {
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
         // On ajoute le fichier aux données de base
         await navigator.share({
-          title: titles,
-          text: description?.substring(0, 150) + "...",
+          //   title: titles,
+          text: titles + "\n \n" + description?.substring(0, 150) + "...",
           url: url,
           files: [file],
         });
