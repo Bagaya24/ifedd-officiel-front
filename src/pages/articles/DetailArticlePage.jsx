@@ -122,50 +122,48 @@ export default function DetailArticlePage() {
   );
 
   const description = cleanQuillText(article_principale?.content);
-  const titles = article_principale?.title;
+  const title = article_principale?.title;
 
   const handleShare = async () => {
-    if (!article_principale || !article_principale.image) {
-      setAlert({ message: "Données de l'article manquantes", type: "error" });
-      return;
+  if (!article_principale) return;
+
+  const imageUrl = import.meta.env.VITE_CLOUD_URL_FILE + article_principale.image;
+  const url = window.location.href;
+  const shareTitle = title || "Article IFEDD";
+  const shareText = `${shareTitle}\n\n${description?.substring(0, 100)}...`;
+
+  try {
+    // On essaie de récupérer l'image
+    const response = await fetch(`${imageUrl}?cache-bust=${Date.now()}`); 
+    if (!response.ok) throw new Error("Image non accessible");
+    
+    const blob = await response.blob();
+    const file = new File([blob], "image.jpg", { type: blob.type });
+
+    // Configuration finale
+    const shareData = {
+      title: shareTitle,
+      text: shareText,
+      url: url,
+    };
+
+    // Test du partage de fichier
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      await navigator.share({ ...shareData, files: [file] });
+    } else {
+      await navigator.share(shareData);
     }
+  } catch (err) {
+   
+    if (err.name === 'AbortError') return;
 
-    const url = window.location.href;
-    try {
-      // 1. Préparer d'abord les données textuelles (pour éviter le undefined)
-      const shareData = {
-        title: titles || "Titre de l'article",
-        text: description?.substring(0, 150) + "...",
-        url: url,
-      };
+    console.error("Erreur de partage:", err);
+  
+    await navigator.clipboard.writeText(url);
+    setAlert({ message: "Lien copié dans le presse-papier !", type: "success" });
+  }
+};
 
-      const response = await fetch(
-        "https://api.akiba.ifedd-rdc.org/cEjDKc-Logo.png",
-      );
-      if (!response.ok) throw new Error("Erreur image");
-
-      const blob = await response.blob();
-      const file = new File([blob], "article-image.jpg", { type: blob.type });
-
-      // 2. Vérifier si on peut partager le fichier
-      if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        // On ajoute le fichier aux données de base
-        await navigator.share({
-          //   title: titles,
-          text: titles + "\n \n" + description?.substring(0, 150) + "...",
-          url: url,
-          files: [file],
-        });
-      } else {
-        // On partage uniquement le texte et l'URL
-        await navigator.share(shareData);
-      }
-    } catch (err) {
-      console.error("Erreur de partage:", err);
-      await navigator.clipboard.writeText(url);
-      setAlert({ message: "Lien copié !", type: "success" });
-    }
-  };
 
   return (
     <div className="w-full">
