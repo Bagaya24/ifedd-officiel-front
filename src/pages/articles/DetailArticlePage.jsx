@@ -141,15 +141,15 @@ export default function DetailArticlePage() {
                 url: url,
             };
 
-            // const response = await fetch(`${imageUrl}?cache-bust=${Date.now()}`);
+            const response = await fetch(`${imageUrl}?cache-bust=${Date.now()}`);
 
-              const response = await fetch(
-                "https://api.akiba.ifedd-rdc.org/cEjDKc-Logo.png",
-              ); 
+            //   const response = await fetch(
+            //     "https://api.akiba.ifedd-rdc.org/cEjDKc-Logo.png",
+            //   );
             if (!response.ok) throw new Error("Erreur image");
 
             const blob = await response.blob();
-            const file = new File([blob], "article-image.jpg", { type: blob.type });
+            const file = new File([blob], "article-image.jpg", { type: 'image/jpeg' });
 
             // 2. Vérifier si on peut partager le fichier
             if (navigator.canShare && navigator.canShare({ files: [file] })) {
