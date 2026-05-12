@@ -6,9 +6,9 @@ import { useEffect, useState } from "react";
 import TitleSection from "../../components/TitleSection";
 import { HeartIcon, UserCircleIcon } from "@heroicons/react/16/solid";
 import Alert from "../../components/Alert";
-import usePageSEO from "../../hooks/usePageSEO";
 import MFooter from "../../components/MFooter";
 import Spinner from "../../components/Spinner";
+import SEO from "../../hooks/usePageSEO";
 
 
 
@@ -93,22 +93,35 @@ export default function DetailArticlePage() {
 
     };
 
+    const cleanQuillText = (htmlString) => {
+  if (!htmlString) return "";
+  
+  // 1. Créer un document temporaire
+  const doc = new DOMParser().parseFromString(htmlString, 'text/html');
+  
+  // 2. Récupérer uniquement le texte (enlève les <p>, <b>, etc.)
+  let text = doc.body.textContent || "";
+  
+  // 3. Remplacer les espaces insécables (&nbsp;) par des espaces normaux
+  return text.replace(/\u00a0/g, " ").trim();
+};
+
     const article_principale = articles.find(article => article.id.toString() === id);
     const autre_articles = articles.filter(article => article.id.toString() !== id);
 
-    usePageSEO({
-        title: "IFEDD",
-        description: "Initiative des Femmes Entrepreneuses pour le Developpement Durable",
-        ogImage: import.meta.env.VITE_CLOUD_URL_FILE + article_principale?.image,
-        ogDescription: article_principale?.content?.replace(/<[^>]+>/g, '')?.slice(0, 100) + "...",
-        ogTitle: article_principale?.title,
-        canonicalUrl: window.location.href,
-        ogType: "article"
-    });
+    const description = cleanQuillText(article_principale?.content)
 
     return (
         <div className="w-full">
-
+            <SEO 
+        title={article_principale?.title}
+        ogtitle={article_principale?.title}
+        description={description.substring(0, 150) + "..."}
+        ogDescription={description.substring(0, 150) + "..."}
+        ogImage={import.meta.env.VITE_CLOUD_URL_FILE + article_principale?.image}
+        ogType="article"
+        canonicalUrl={window.location.href}
+      />
             <NavBar />
             <div className="flex justify-center mt-24 mb-8">
 
