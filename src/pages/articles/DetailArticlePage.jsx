@@ -10,6 +10,7 @@ import MFooter from "../../components/MFooter";
 import Spinner from "../../components/Spinner";
 import SEO from "../../hooks/usePageSEO";
 import { ShareIcon } from "@heroicons/react/24/outline";
+import { Helmet } from "react-helmet-async";
 
 export default function DetailArticlePage() {
   const { id } = useParams();
@@ -123,55 +124,92 @@ export default function DetailArticlePage() {
 
   const description = cleanQuillText(article_principale?.content);
 
+  const imageUrl =
+    import.meta.env.VITE_CLOUD_URL_FILE + article_principale?.image;
+
   const handleShare = async () => {
+    const url = window.location.href;
+
     try {
-      const imageUrl =
-        import.meta.env.VITE_CLOUD_URL_FILE + article_principale?.image;
+      // Télécharger l'image
+      //   const imageUrl =
+      //     import.meta.env.VITE_CLOUD_URL_FILE + article_principale?.image;
+      //   const response = await fetch(imageUrl);
+      //   const blob = await toBlobFromImage(imageUrl);
 
-      // Télécharger image
-      const response = await fetch(imageUrl);
+      //   const file = new File([blob], "article-image.jpg", {
+      //     type: "image/jpeg",
+      //   });
 
-      const blob = await response.blob();
-
-      // Créer fichier image
-      const file = new File([blob], "article-image.webp", { type: blob.type });
-
-      // Vérifie support fichiers
-      const canShareFiles =
-        navigator.canShare &&
-        navigator.canShare({
-          files: [file],
-        });
-
-      if (canShareFiles) {
+      // Vérifie si le navigateur supporte le partage de fichiers
+      //   if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      //     await navigator.share({
+      //       title: article_principale?.title,
+      //       text: description.substring(0, 150) + "...",
+      //       url: window.location.href,
+      //       files: [file],
+      //     });
+      //   } else
+      if (navigator.share) {
+        // Fallback partage classique
         await navigator.share({
           title: article_principale?.title,
           text: description.substring(0, 150) + "...",
           url: window.location.href,
-          files: [file],
         });
       } else {
-        // Fallback sans image
-        await navigator.share({
-          title: article_principale?.title,
-          text: description.substring(0, 150) + "...",
-          url: window.location.href,
-        });
+        // Fallback copier lien
+        await navigator.clipboard.writeText(url);
+
+        alert("Lien copié !");
       }
     } catch (err) {
       console.log(err);
-
-      await navigator.clipboard.writeText(window.location.href);
-
-      setAlert({
-        message: "Lien copié dans le presse-papier !",
-        type: "success",
-      });
     }
   };
 
+  //   const handleShare = async () => {
+  //     console.log(article_principale?.image);
+  //     const imageUrl =
+  //       import.meta.env.VITE_CLOUD_URL_FILE + article_principale?.image;
+  //     const shareData = {
+  //       title: article_principale?.title,
+  //       text: description.substring(0, 150) + "...",
+  //       url: window.location.href,
+  //     };
+  //     const response = await fetch(imageUrl);
+  //     const blob = await response.blob();
+  //     const file = new File([blob], "article-image.jpg", { type: blob.type });
+
+  //     try {
+  //       if (navigator.canShare && navigator.canShare({ files: [file] })) {
+  //         shareData.files = [file];
+  //       }
+
+  //       if (navigator.share) {
+  //         await navigator.share(shareData);
+  //       } else {
+  //         throw new Error("Web Share non supporté");
+  //       }
+  //     } catch (err) {
+  //       if (err.name !== "AbortError") {
+  //         navigator.clipboard.writeText(window.location.href);
+  //         setAlert({
+  //           message: "Lien copié dans le presse-papier !",
+  //           type: "success",
+  //         });
+  //       }
+  //     }
+  //   };
+
   return (
     <div className="w-full">
+      <Helmet>
+        <title>{article_principale?.title}</title>
+        <meta property="og:image" content={imageUrl} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={window.location.href} />
+      </Helmet>
       <SEO
         title={article_principale?.title}
         ogtitle={article_principale?.title}
