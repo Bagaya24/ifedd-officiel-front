@@ -140,7 +140,7 @@ export default function DetailArticlePage() {
       };
 
       const response = await fetch(
-        "https://api.akiba.ifedd-rdc.org/VFCO8q-477366340_1141809927598541_1319598695180593163_n.jpg",
+        "https://api.akiba.ifedd-rdc.org/cEjDKc-Logo.png",
       );
       if (!response.ok) throw new Error("Erreur image");
 
