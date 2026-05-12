@@ -12,7 +12,7 @@ import Modal from '../../../components/Modal';
 import MFooter from '../../../components/MFooter';
 
 // Register the module
-Quill.register('modules/blotFormatter', BlotFormatter);
+Quill.register("modules/blotFormatter", BlotFormatter);
 
 export default function PublicationArticles() {
     const [title, setTitle] = useState('');
@@ -30,38 +30,45 @@ export default function PublicationArticles() {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5;
 
-    useEffect(() => {
+  useEffect(() => {
+    getArticle();
+  }, []);
+
+  const handleDelete = async (id) => {
+    if (window.confirm("Êtes-vous sûr de vouloir supprimer cet article ?")) {
+      const success = await deleteArticle(id);
+      if (success) {
+        setAlert({ message: "Article supprimé avec succès", type: "success" });
         getArticle();
-    }, []);
+      } else {
+        setAlert({ message: "Erreur lors de la suppression", type: "error" });
+      }
+    }
+  };
 
-    const handleDelete = async (id) => {
-        if (window.confirm("Êtes-vous sûr de vouloir supprimer cet article ?")) {
-            const success = await deleteArticle(id);
-            if (success) {
-                setAlert({ message: "Article supprimé avec succès", type: 'success' });
-                getArticle();
-            } else {
-                setAlert({ message: "Erreur lors de la suppression", type: 'error' });
-            }
-        }
-    };
+  const handleEditClick = (article) => {
+    setEditData({
+      id: article.id,
+      title: article.title,
+      content: article.content,
+    });
+    setIsEditModalOpen(true);
+  };
 
-    const handleEditClick = (article) => {
-        setEditData({ id: article.id, title: article.title, content: article.content });
-        setIsEditModalOpen(true);
-    };
-
-    const handleUpdate = async (e) => {
-        e.preventDefault();
-        const res = await updateArticle(editData.id, { title: editData.title, content: editData.content });
-        if (res) {
-            setAlert({ message: "Article modifié avec succès", type: 'success' });
-            setIsEditModalOpen(false);
-            getArticle();
-        } else {
-            setAlert({ message: "Erreur lors de la modification", type: 'error' });
-        }
-    };
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    const res = await updateArticle(editData.id, {
+      title: editData.title,
+      content: editData.content,
+    });
+    if (res) {
+      setAlert({ message: "Article modifié avec succès", type: "success" });
+      setIsEditModalOpen(false);
+      getArticle();
+    } else {
+      setAlert({ message: "Erreur lors de la modification", type: "error" });
+    }
+  };
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -93,42 +100,50 @@ export default function PublicationArticles() {
         }
     };
 
-    const imageHandler = () => {
-        const input = document.createElement('input');
-        input.setAttribute('type', 'file');
-        input.setAttribute('accept', 'image/*');
-        input.click();
+  const imageHandler = () => {
+    const input = document.createElement("input");
+    input.setAttribute("type", "file");
+    input.setAttribute("accept", "image/*");
+    input.click();
 
-        input.onchange = async () => {
-            const file = input.files[0];
-            if (file) {
-                const res = await uploadFile(file);
-                if (res) {
-                    const quill = quillRef.current.getEditor();
-                    const range = quill.getSelection();
-                    const imageUrl = (import.meta.env.VITE_CLOUD_URL_FILE + res.file_name);
-                    quill.insertEmbed(range.index, 'image', imageUrl);
-                }
-            }
-        };
+    input.onchange = async () => {
+      const file = input.files[0];
+      if (file) {
+        const res = await uploadFile(file);
+        if (res) {
+          const quill = quillRef.current.getEditor();
+          const range = quill.getSelection();
+          const imageUrl = import.meta.env.VITE_CLOUD_URL_FILE + res.file_name;
+          quill.insertEmbed(range.index, "image", imageUrl);
+        }
+      }
     };
+  };
 
-    const modules = useMemo(() => ({
-        toolbar: {
-            container: [
-                [{ 'header': [1, 2, false] }],
-                ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-                [{ 'align': [] }],
-                [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
-                ['link', 'image'],
-                ['clean']
-            ],
-            handlers: {
-                image: imageHandler
-            }
+  const modules = useMemo(
+    () => ({
+      toolbar: {
+        container: [
+          [{ header: [1, 2, false] }],
+          ["bold", "italic", "underline", "strike", "blockquote"],
+          [{ align: [] }],
+          [
+            { list: "ordered" },
+            { list: "bullet" },
+            { indent: "-1" },
+            { indent: "+1" },
+          ],
+          ["link", "image"],
+          ["clean"],
+        ],
+        handlers: {
+          image: imageHandler,
         },
-        blotFormatter: {}
-    }), []);
+      },
+      blotFormatter: {},
+    }),
+    [],
+  );
 
     const formats = [
         'header',
@@ -196,46 +211,58 @@ export default function PublicationArticles() {
                             />
                         </div>
 
-                        {/* Image Principale */}
-                        <div>
-                            <label className="block text-gray-700 font-bold mb-2">Image Principale</label>
-                            <div className="flex items-center space-x-4">
-                                <label className="cursor-pointer text-gray-700 font-medium px-4 py-2 rounded-lg border border-gray-300 transition">
-                                    <span>Choisir une image</span>
-                                    <input type="file" className="hidden" accept="image/*" onChange={handleImageChange} />
-                                </label>
-                                {imagePreview && (
-                                    <img src={imagePreview} alt="Preview" className="h-20 w-32 object-cover rounded-lg border" />
-                                )}
-                            </div>
-                        </div>
+            {/* Image Principale */}
+            <div>
+              <label className="block text-gray-700 font-bold mb-2">
+                Image Principale
+              </label>
+              <div className="flex items-center space-x-4">
+                <label className="cursor-pointer text-gray-700 font-medium px-4 py-2 rounded-lg border border-gray-300 transition">
+                  <span>Choisir une image</span>
+                  <input
+                    type="file"
+                    className="hidden"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                  />
+                </label>
+                {imagePreview && (
+                  <img
+                    src={imagePreview}
+                    alt="Preview"
+                    className="h-20 w-32 object-cover rounded-lg border"
+                  />
+                )}
+              </div>
+            </div>
 
-                        {/* Description (Rich Text) */}
-                        <div className="h-96 pb-12">
-                            <label className="block text-gray-700 font-bold mb-2">Contenu de l'article</label>
-                            <ReactQuill
-                                ref={quillRef}
-                                theme="snow"
-                                value={description}
-                                onChange={setDescription}
-                                modules={modules}
-                                formats={formats}
-                                className="h-full"
-                            />
-                        </div>
+            {/* Description (Rich Text) */}
+            <div className="h-96 pb-12">
+              <label className="block text-gray-700 font-bold mb-2">
+                Contenu de l'article
+              </label>
+              <ReactQuill
+                ref={quillRef}
+                theme="snow"
+                value={description}
+                onChange={setDescription}
+                modules={modules}
+                formats={formats}
+                className="h-full"
+              />
+            </div>
 
-                        {/* Submit */}
-                        <div className="flex justify-end pt-5">
-                            <button
-                                type="submit"
-                                disabled={loader ? true : false}
-                                className={`bg-[#1769aa] text-white font-bold py-2 px-6 rounded-lg  transition ${loader ? "bg-gray-400 cursor-not-allowed" : "hover:bg-blue-800 cursor-pointer"}`}
-                            >
-                                {loader ? "Publiation en cours..." : "Publier l'article"}
-                            </button>
-                        </div>
-
-                    </form>
+            {/* Submit */}
+            <div className="flex justify-end pt-5">
+              <button
+                type="submit"
+                disabled={loader ? true : false}
+                className={`bg-[#1769aa] text-white font-bold py-2 px-6 rounded-lg  transition ${loader ? "bg-gray-400 cursor-not-allowed" : "hover:bg-blue-800 cursor-pointer"}`}
+              >
+                {loader ? "Publiation en cours..." : "Publier l'article"}
+              </button>
+            </div>
+          </form>
 
                     <div className="mt-12">
                         <h2 className="text-2xl font-bold text-gray-800 mb-4">Liste des Articles</h2>
