@@ -10,7 +10,6 @@ import MFooter from "../../components/MFooter";
 import Spinner from "../../components/Spinner";
 import SEO from "../../hooks/usePageSEO";
 import { ShareIcon } from "@heroicons/react/24/outline";
-import { Helmet } from "react-helmet-async";
 
 export default function DetailArticlePage() {
   const { id } = useParams();
@@ -124,49 +123,100 @@ export default function DetailArticlePage() {
 
   const description = cleanQuillText(article_principale?.content);
 
-  const imageUrl =
-    import.meta.env.VITE_CLOUD_URL_FILE + article_principale?.image;
-
   const handleShare = async () => {
+    // 1. Vérifier si l'article et l'image existent
+    if (!article_principale || !article_principale.image) {
+      alert("Données de l'article manquantes");
+      return;
+    }
+
     const url = window.location.href;
-
+    const imageUrl =
+      import.meta.env.VITE_CLOUD_URL_FILE + article_principale.image;
+    console.log(article_principale.image);
     try {
-      // Télécharger l'image
-      //   const imageUrl =
-      //     import.meta.env.VITE_CLOUD_URL_FILE + article_principale?.image;
-      //   const response = await fetch(imageUrl);
-      //   const blob = await toBlobFromImage(imageUrl);
+      // 2. Récupérer l'image et la transformer en Blob
+      const response = await fetch(
+        "https://api.akiba.ifedd-rdc.org/VFCO8q-477366340_1141809927598541_1319598695180593163_n.jpg",
+      );
+      console.log(response);
+      if (!response.ok)
+        throw new Error("Erreur lors de la récupération de l'image");
 
-      //   const file = new File([blob], "article-image.jpg", {
-      //     type: "image/jpeg",
-      //   });
+      const blob = await response.blob();
 
-      // Vérifie si le navigateur supporte le partage de fichiers
-      //   if (navigator.canShare && navigator.canShare({ files: [file] })) {
-      //     await navigator.share({
-      //       title: article_principale?.title,
-      //       text: description.substring(0, 150) + "...",
-      //       url: window.location.href,
-      //       files: [file],
-      //     });
-      //   } else
-      if (navigator.share) {
-        // Fallback partage classique
-        await navigator.share({
-          title: article_principale?.title,
-          text: description.substring(0, 150) + "...",
-          url: window.location.href,
-        });
+      // 3. Créer le fichier à partir du Blob
+      // On utilise le type MIME du blob pour l'extension (ex: image/jpeg -> jpeg)
+      const type = blob.type || "image/jpeg";
+      const file = new File([blob], "article-image.jpg", { type });
+
+      // 4. Préparer les données de partage
+      const shareData = {
+        title: article_principale.title,
+        text: article_principale.description?.substring(0, 150) + "...",
+        url: url,
+        files: [file], // On met le fichier ici
+      };
+
+      // 5. Partager (avec fallback si les fichiers ne sont pas supportés)
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share(shareData);
       } else {
-        // Fallback copier lien
-        await navigator.clipboard.writeText(url);
-
-        alert("Lien copié !");
+        // Fallback sans image si le navigateur bloque les fichiers
+        await navigator.share({
+          title: shareData.title,
+          text: shareData.text,
+          url: shareData.url,
+        });
       }
     } catch (err) {
-      console.log(err);
+      console.error("Erreur de partage:", err);
+      // Fallback ultime : copier le lien
+      await navigator.clipboard.writeText(url);
+      //   alert("Lien copié dans le presse-papier !");
     }
   };
+
+  //   const handleShare = async () => {
+  //     const url = window.location.href;
+
+  //     try {
+  //       // Télécharger l'image
+  //       //   const imageUrl =
+  //       //     import.meta.env.VITE_CLOUD_URL_FILE + article_principale?.image;
+  //       //   const response = await fetch(imageUrl);
+  //       //   const blob = await toBlobFromImage(imageUrl);
+
+  //       //   const file = new File([blob], "article-image.jpg", {
+  //       //     type: "image/jpeg",
+  //       //   });
+
+  //       // Vérifie si le navigateur supporte le partage de fichiers
+  //       //   if (navigator.canShare && navigator.canShare({ files: [file] })) {
+  //       //     await navigator.share({
+  //       //       title: article_principale?.title,
+  //       //       text: description.substring(0, 150) + "...",
+  //       //       url: window.location.href,
+  //       //       files: [file],
+  //       //     });
+  //       //   } else
+  //       if (navigator.share) {
+  //         // Fallback partage classique
+  //         await navigator.share({
+  //           title: article_principale?.title,
+  //           text: description.substring(0, 150) + "...",
+  //           url: window.location.href,
+  //         });
+  //       } else {
+  //         // Fallback copier lien
+  //         await navigator.clipboard.writeText(url);
+
+  //         alert("Lien copié !");
+  //       }
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   };
 
   //   const handleShare = async () => {
   //     console.log(article_principale?.image);
@@ -204,13 +254,7 @@ export default function DetailArticlePage() {
 
   return (
     <div className="w-full">
-      <Helmet>
-        <title>{article_principale?.title}</title>
-        <meta property="og:image" content={imageUrl} />
-        <meta property="og:description" content={description} />
-        <meta property="og:url" content={window.location.href} />
-      </Helmet>
-      {/* <SEO
+      <SEO
         title={article_principale?.title}
         ogtitle={article_principale?.title}
         description={description.substring(0, 150) + "..."}
@@ -220,7 +264,7 @@ export default function DetailArticlePage() {
         }
         ogType="article"
         canonicalUrl={window.location.href}
-      /> */}
+      />
       <NavBar />
       <div className="flex justify-center mt-24 mb-8">
         <div className="w-11/12 ">
