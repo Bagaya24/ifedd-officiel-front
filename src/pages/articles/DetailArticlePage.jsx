@@ -210,7 +210,7 @@ export default function DetailArticlePage() {
         <meta property="og:description" content={description} />
         <meta property="og:url" content={window.location.href} />
       </Helmet>
-      <SEO
+      {/* <SEO
         title={article_principale?.title}
         ogtitle={article_principale?.title}
         description={description.substring(0, 150) + "..."}
@@ -220,7 +220,7 @@ export default function DetailArticlePage() {
         }
         ogType="article"
         canonicalUrl={window.location.href}
-      />
+      /> */}
       <NavBar />
       <div className="flex justify-center mt-24 mb-8">
         <div className="w-11/12 ">
