@@ -5,7 +5,7 @@ import ArticleCard from '../../../components/articles/ArticleCard'
 import { Link } from 'react-router-dom'
 import TitleSection from '../../../components/TitleSection'
 import UseFetch from '../../../hooks/useFecth'
-import { use, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Spinner from '../../../components/Spinner'
 
 export default function ArticlesSection() {
@@ -13,7 +13,7 @@ export default function ArticlesSection() {
     const [slides, setSlides] = useState(3);
 
     useEffect(() => {
-        getArticle();
+        void getArticle();
     }, []);
 
     useEffect(() => {
@@ -87,7 +87,7 @@ export default function ArticlesSection() {
                                 slides={slides}
                                 data={articles.map((card, index) => (
                                     <ArticleCard
-                                        key={index}
+                                        key={card.id}
                                         id={card?.id || index}
                                         title={card?.title}
                                         image={import.meta.env.VITE_CLOUD_URL_FILE + card?.image}

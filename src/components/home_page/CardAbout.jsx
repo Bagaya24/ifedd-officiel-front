@@ -15,7 +15,7 @@ export default function CardAbout({ title, icon, sub, scale = 1, aos = 'fade-up'
             </div>
 
             <div className="mb-5">
-                <p className="text-gray-700 xl:text-lg text-sm text-justify">{sub}</p>
+                <p className="text-gray-700 xl:text-lg text-sm ">{sub}</p>
             </div>
         </div>
     )

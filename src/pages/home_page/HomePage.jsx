@@ -6,13 +6,13 @@ import PartenaireSection from "./section/PartenaireSection";
 import RapportsSection from "./section/RapportsSection";
 import NavBar from "../../components/NavBar";
 import MFooter from "../../components/MFooter";
-import SEO from "../../hooks/usePageSEO";
+import Seo from "../../hooks/usePageSEO";
 
 export default function HomePage() {
 
   return (
     <>
-    <SEO 
+    <Seo 
         title="IFEDD"
         description="Initiative des Femmes Entrepreneuses pour le Developpement Durable"
         ogImage="https://ifedd-rdc.org/Logo.png"

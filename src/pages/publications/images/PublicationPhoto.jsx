@@ -17,7 +17,7 @@ export default function PublicationPhoto() {
     const { galeries, getGalerie, loader, loaderDelete, deleteGalerie, addGalerie } = UseFetch();
 
     useEffect(() => {
-        getGalerie();
+        void getGalerie();
     }, []);
 
     const handleDelete = async (id) => {
@@ -25,7 +25,7 @@ export default function PublicationPhoto() {
             const success = await deleteGalerie(id);
             if (success) {
                 setAlert({ message: "Image supprimée avec succès", type: 'success' });
-                getGalerie();
+                await getGalerie();
             } else {
                 setAlert({ message: "Erreur lors de la suppression", type: 'error' });
             }
@@ -54,7 +54,7 @@ export default function PublicationPhoto() {
             setTitle("");
             setImage(null);
             setImagePreview("");
-            getGalerie();
+            await getGalerie();
         } catch (error) {
             console.error(error);
             setAlert({ message: "Erreur lors de la publication", type: "error" });

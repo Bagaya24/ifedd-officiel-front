@@ -13,7 +13,7 @@ export default function ArticlesPage() {
     const articlesPerPage = 12;
 
     useEffect(() => {
-        getArticle();
+        void getArticle();
     }, []);
 
     // Réinitialiser la page quand on cherche
@@ -57,9 +57,9 @@ export default function ArticlesPage() {
                     </div>
                     {loader ? <Spinner /> : (
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                            {paginatedArticles.map((article, index) => (
+                            {paginatedArticles.map((article) => (
                                 <ArticleCard
-                                    key={index}
+                                    key={article?.id}
                                     id={article?.id}
                                     image={import.meta.env.VITE_CLOUD_URL_FILE + article?.image}
                                     title={article?.title}

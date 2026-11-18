@@ -15,7 +15,7 @@ export default function PublicationPartenaire() {
     const { partenaires, getPartenaires, loader, loaderDelete, deletePartenaire, addPartenaire } = UseFetch();
 
     useEffect(() => {
-        getPartenaires();
+        void getPartenaires();
     }, []);
 
     const handleImageChange = (e) => {
@@ -39,7 +39,7 @@ export default function PublicationPartenaire() {
             setTitle("");
             setImage(null);
             setImagePreview("");
-            getPartenaires();
+            void getPartenaires();
         } catch (error) {
             console.error(error);
             setAlert({ message: "Erreur lors de la publication", type: "error" });
@@ -51,7 +51,7 @@ export default function PublicationPartenaire() {
             const success = await deletePartenaire(id);
             if (success) {
                 setAlert({ message: "Partenaire supprimee avec succes !", type: "success" });
-                getPartenaires();
+                void getPartenaires();
             } else {
                 setAlert({ message: "Erreur lors de la suppression", type: "error" });
             }

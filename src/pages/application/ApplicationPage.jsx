@@ -31,7 +31,7 @@ export default function ApplicationPage() {
         link.download = fileUrl.split("/")[2];
         document.body.appendChild(link);
         link.click();
-        document.body.removeChild(link);
+        link.remove();
     };
 
     return (

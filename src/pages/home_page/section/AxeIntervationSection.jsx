@@ -32,8 +32,8 @@ export default function AxeIntervationSection() {
       />
       <Carousel
         slides={slides}
-        data={cardIntervation.map((card, index) => (
-          <div key={index}>
+        data={cardIntervation.map((card) => (
+          <div key={card.title}>
             <div className='bg-gray-50 rounded-lg shadow-lg  h-37.5'>
               <div className='flex justify-center items-center py-2'>
                 <img src={card.icon} alt={card.title} />

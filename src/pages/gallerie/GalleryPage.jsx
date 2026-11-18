@@ -18,7 +18,7 @@ export default function GalleryPage() {
   const { galeries, getGalerie, loader } = UseFetch();
 
   useEffect(() => {
-    getGalerie()
+    void getGalerie()
   }, [])
 
   
@@ -49,7 +49,7 @@ export default function GalleryPage() {
             <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
               {paginatedPhotos.map((photo, index) => (
                 <CardPicture
-                  key={index}
+                  key={photo.file_name}
                   image={import.meta.env.VITE_CLOUD_URL_FILE + photo?.file_name}
                   title={`${photo?.legend}`}
                   onClick={() => openModal(import.meta.env.VITE_CLOUD_URL_FILE + photo?.file_name, photo?.legend)}

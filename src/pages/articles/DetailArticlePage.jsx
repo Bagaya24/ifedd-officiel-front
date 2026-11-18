@@ -8,7 +8,7 @@ import { HeartIcon, UserCircleIcon } from "@heroicons/react/16/solid";
 import Alert from "../../components/Alert";
 import MFooter from "../../components/MFooter";
 import Spinner from "../../components/Spinner";
-import SEO from "../../hooks/usePageSEO";
+import Seo from "../../hooks/usePageSEO";
 import { ShareIcon } from "@heroicons/react/24/outline";
 
 export default function DetailArticlePage() {
@@ -19,7 +19,6 @@ export default function DetailArticlePage() {
     getArticle,
     addLike,
     getLike,
-    likes,
     getCommentaires,
     commentaires,
     addComment,
@@ -33,9 +32,9 @@ export default function DetailArticlePage() {
   const [localLikes, setLocalLikes] = useState(0);
 
   useEffect(() => {
-    getArticle();
+    void getArticle();
     if (id) {
-      getCommentaires(id);
+      void getCommentaires(id);
     }
   }, [id]);
 
@@ -52,14 +51,14 @@ export default function DetailArticlePage() {
   }, [id]);
 
   useEffect(() => {
-    getLike(id).then((data) => {
+    void getLike(id).then((data) => {
       if (data?.like) {
         setLocalLikes(data.like);
       }
     });
   }, [id]);
 
-  const liked = (articleId) => {
+  const liked = async (articleId) => {
     if (!articleId) return;
     const strId = articleId.toString();
     const likedArticles = JSON.parse(
@@ -72,7 +71,7 @@ export default function DetailArticlePage() {
       localStorage.setItem("liked_articles", JSON.stringify(newLikedArticles));
       // Update local likes immediately
       setLocalLikes((prev) => Math.max(0, prev - 1));
-      addLike(articleId);
+      await addLike(articleId);
       setIsLiked(false);
     } else {
       // User is liking
@@ -82,7 +81,7 @@ export default function DetailArticlePage() {
       }
       // Update local likes immediately
       setLocalLikes((prev) => prev + 1);
-      addLike(articleId);
+      await addLike(articleId);
       setIsLiked(true);
     }
   };
@@ -100,7 +99,7 @@ export default function DetailArticlePage() {
     if (result) {
       setNewComment("");
       setPseudo("");
-      getCommentaires(id);
+      await getCommentaires(id);
     }
   };
 
@@ -111,7 +110,7 @@ export default function DetailArticlePage() {
 
     let text = doc.body.textContent || "";
 
-    return text.replace(/\u00a0/g, " ").trim();
+    return text.replaceALL(/\u00a0/g, " ").trim();
   };
 
   const article_principale = articles.find(
@@ -125,7 +124,7 @@ export default function DetailArticlePage() {
   const titles = article_principale?.title;
 
   const handleShare = async () => {
-    if (!article_principale || !article_principale.image) {
+    if (!article_principale.image) {
       setAlert({ message: "Données de l'article manquantes", type: "error" });
       return;
     }
@@ -148,7 +147,7 @@ export default function DetailArticlePage() {
       const file = new File([blob], "article-image.jpg", { type: blob.type });
 
       // 2. Vérifier si on peut partager le fichier
-      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      if (navigator.canShare?.({ files: [file] })) {
         // On ajoute le fichier aux données de base
         await navigator.share({
           //   title: titles,
@@ -169,7 +168,7 @@ export default function DetailArticlePage() {
 
   return (
     <div className="w-full">
-      <SEO
+      <Seo
         title={article_principale?.title}
         ogtitle={article_principale?.title}
         description={description.substring(0, 150) + "..."}
@@ -334,9 +333,9 @@ export default function DetailArticlePage() {
                     {/* Comments List */}
                     <div className="space-y-6">
                       {commentaires && commentaires.length > 0 ? (
-                        commentaires.map((comment, index) => (
+                        commentaires.map((comment) => (
                           <div
-                            key={index}
+                            key={comment?.pseudo}
                             className="bg-white border border-gray-100 p-4 rounded-lg shadow-sm"
                           >
                             <div className="flex justify-between items-start mb-2">
@@ -373,9 +372,9 @@ export default function DetailArticlePage() {
                 {/* Articles secondaire */}
 
                 <div className="md:w-4/12 w-full md:overflow-y-auto overflow-x-auto flex md:flex-col flex-row md:h-360 h-auto md:space-y-2 space-x-4 pb-2">
-                  {autre_articles.map((article, index) => (
+                  {autre_articles.map((article) => (
                     <ArticleCard
-                      key={index}
+                      key={article?.id}
                       id={article?.id}
                       description={article?.content}
                       image={

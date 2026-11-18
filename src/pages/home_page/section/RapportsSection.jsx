@@ -10,7 +10,7 @@ export default function RapportsSection() {
   const { rapports, getRapport, loader } = UseFetch();
 
   useEffect(() => {
-    getRapport();
+    void getRapport();
   }, []);
   return (
     <section className='py-10 md:px-20 md:5'>

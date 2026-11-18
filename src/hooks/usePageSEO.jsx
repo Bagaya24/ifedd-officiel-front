@@ -1,7 +1,7 @@
-import React from 'react';
+
 import { Helmet } from 'react-helmet-async';
 
-const SEO = ({ 
+const Seo = ({ 
   title, 
   description, 
   ogImage, 
@@ -45,4 +45,4 @@ const SEO = ({
   );
 };
 
-export default SEO;
+export default Seo;

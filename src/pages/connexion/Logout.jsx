@@ -6,7 +6,7 @@ export default function Logout() {
     useEffect(() => {
         localStorage.removeItem('token'); // Clear the token from local storage
         localStorage.removeItem('username'); // Clear the username from local storage
-        navigate('/'); // Redirect to the login page
+        void navigate('/'); // Redirect to the login page
     }, [navigate])
     return (
         <div>

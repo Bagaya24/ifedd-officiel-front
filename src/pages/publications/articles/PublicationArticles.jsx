@@ -46,7 +46,7 @@ export default function PublicationArticles() {
   const itemsPerPage = 5;
 
   useEffect(() => {
-    getArticle();
+    void getArticle();
   }, []);
 
   const handleDelete = async (id) => {
@@ -54,7 +54,7 @@ export default function PublicationArticles() {
       const success = await deleteArticle(id);
       if (success) {
         setAlert({ message: "Article supprimé avec succès", type: "success" });
-        getArticle();
+        void getArticle();
       } else {
         setAlert({ message: "Erreur lors de la suppression", type: "error" });
       }
@@ -79,7 +79,7 @@ export default function PublicationArticles() {
     if (res) {
       setAlert({ message: "Article modifié avec succès", type: "success" });
       setIsEditModalOpen(false);
-      getArticle();
+      await getArticle();
     } else {
       setAlert({ message: "Erreur lors de la modification", type: "error" });
     }
@@ -118,6 +118,8 @@ export default function PublicationArticles() {
       setDate("");
     } catch (error) {
       setAlert({ message: "Erreur lors de la publication.", type: "error" });
+      console.error(error);
+      
     }
   };
 

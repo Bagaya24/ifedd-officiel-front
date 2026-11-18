@@ -17,7 +17,7 @@ export default function PublicationRapport() {
     const { getRapport, rapports, loader, loaderDelete, addRapport, deleteRapport } = UseFetch();
 
     useEffect(() => {
-        getRapport();
+        void getRapport();
     }, []);
 
     const handleImageChange = (e) => {
@@ -50,7 +50,7 @@ export default function PublicationRapport() {
             setImagePreview(null);
             setFile(null);
             setFilePreview(null);
-            getRapport();
+            await getRapport();
         } catch (error) {
             console.error(error);
         }
@@ -61,7 +61,7 @@ export default function PublicationRapport() {
             try {
                 const response = await deleteRapport(id);
                 setAlert({ message: response.message || "rapport supprimé avec succès", type: "success" });
-                getRapport();
+                await getRapport();
             } catch (error) {
                 console.error(error);
             }
